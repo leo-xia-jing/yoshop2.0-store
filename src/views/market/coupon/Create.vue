@@ -18,7 +18,7 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item
-          v-show="form.getFieldValue('coupon_type') == 10"
+          v-if="form.getFieldValue('coupon_type') == 10"
           label="减免金额"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -31,7 +31,7 @@
           <span class="ml-5">元</span>
         </a-form-item>
         <a-form-item
-          v-show="form.getFieldValue('coupon_type') == 20"
+          v-if="form.getFieldValue('coupon_type') == 20"
           label="折扣率"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
