@@ -125,7 +125,7 @@
         <a-row :gutter="32">
           <a-col :span="6">
             <div class="item">
-              <router-link to="/">
+              <router-link to="/order/list/delivery">
                 <p class="name">待发货订单(笔)</p>
                 <p class="value">{{ data.pending.deliverOrderTotal }}</p>
               </router-link>
@@ -133,7 +133,7 @@
           </a-col>
           <a-col :span="6">
             <div class="item">
-              <router-link to="/">
+              <router-link to="/order/refund/index">
                 <p class="name">售后单(笔)</p>
                 <p class="value">{{ data.pending.refundTotal }}</p>
               </router-link>
@@ -141,7 +141,7 @@
           </a-col>
           <a-col :span="6">
             <div class="item">
-              <router-link to="/">
+              <router-link to="/order/list/pay">
                 <p class="name">待付款订单(笔)</p>
                 <p class="value">{{ data.pending.paidOrderTotal }}</p>
               </router-link>
@@ -149,7 +149,7 @@
           </a-col>
           <a-col :span="6">
             <div class="item">
-              <router-link to="/">
+              <router-link to="/goods/index">
                 <p class="name">已售罄商品</p>
                 <p class="value">{{ data.pending.soldoutGoodsTotal }}</p>
               </router-link>
@@ -405,7 +405,6 @@ export default {
       font-size: 26px;
     }
   }
-
 }
 
 // 待办事项
