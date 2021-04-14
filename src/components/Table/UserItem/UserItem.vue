@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info clearfix">
+  <div v-if="user" class="user-info clearfix">
     <div class="in-left">
       <a-tooltip>
         <template slot="title">会员ID: {{ user.user_id }}</template>
@@ -84,7 +84,7 @@ export default {
       }
 
       .MP-WEIXIN {
-        color: #04BE02;
+        color: #04be02;
       }
       .H5 {
         color: #e44c27;
