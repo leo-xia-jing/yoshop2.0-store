@@ -33,7 +33,7 @@
               class="fl-l"
               style="width: 200px"
               placeholder="搜索文件名称"
-              v-model="queryParam.file_name"
+              v-model="queryParam.fileName"
               @search="onSearch"
             />
             <!-- 上传按钮 -->
@@ -144,7 +144,9 @@ export default {
         // 当前页码
         page: 1,
         // 文件名称
-        file_name: ''
+        fileName: '',
+        // 文件分组
+        groupId: 0,
       },
       // modal(对话框)确定按钮 loading
       isLoading: true,
@@ -239,7 +241,7 @@ export default {
 
     // 记录选中的分组
     onSelectGroup (selectedKeys) {
-      this.queryParam.group_id = selectedKeys[0]
+      this.queryParam.groupId = selectedKeys[0]
       this.handleRefresh(true)
     },
 
@@ -285,7 +287,6 @@ export default {
      * 事件: 自定义上传事件
      */
     onUpload (info) {
-
       this.isLoading = true
       // 记录上传状态
       this.uploading.push(true)
@@ -293,6 +294,7 @@ export default {
       // 构建上传参数
       const formData = new FormData()
       formData.append('iFile', info.file)
+      formData.append('groupId', this.queryParam.groupId)
       // 开始上传
       UploadApi.image(formData)
         .then(result => {
@@ -395,7 +397,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 /deep/.ant-modal-header,
 /deep/.ant-modal-footer {
   border: none;
