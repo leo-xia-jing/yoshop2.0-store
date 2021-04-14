@@ -176,6 +176,10 @@ export default {
     }
   },
   created () {
+    // 默认的查询参数
+    if (this.$route.query.listType) {
+      this.queryParam.listType = this.$route.query.listType
+    }
     // 获取商品分类列表
     this.getCategoryList()
   },

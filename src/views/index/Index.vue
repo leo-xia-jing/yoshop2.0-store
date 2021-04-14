@@ -149,7 +149,7 @@
           </a-col>
           <a-col :span="6">
             <div class="item">
-              <router-link to="/goods/index">
+              <router-link :to="{ path: '/goods/index', query: { listType: 'sold_out' } }">
                 <p class="name">已售罄商品</p>
                 <p class="value">{{ data.pending.soldoutGoodsTotal }}</p>
               </router-link>
