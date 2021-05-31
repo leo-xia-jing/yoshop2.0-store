@@ -4,7 +4,7 @@ const pathname = window.location.pathname
 // 默认配置
 export const defaultConfig = {
   // 编辑器层级的基数,默认是900
-  zIndex: 2,
+  zIndex: 1000,
   // 编辑器自动被内容撑高
   autoHeightEnabled: false,
   // 初始容器高度
