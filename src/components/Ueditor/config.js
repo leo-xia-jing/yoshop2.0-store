@@ -33,7 +33,7 @@ export const defaultConfig = {
     'fontsize', '|',
     'indent', 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
     // 'simpleupload',
-    'insertvideo'
+    // 'insertvideo'
   ]]
   // 当鼠标放在工具栏上时显示的tooltip提示
   // labelMap: {
