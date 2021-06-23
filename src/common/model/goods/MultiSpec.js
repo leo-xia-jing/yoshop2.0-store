@@ -335,7 +335,7 @@ export default class MultiSpec {
       const skuItem = skuList[skuIndex]
       for (const colIndex in columns) {
         const value = skuItem[columns[colIndex].field]
-        if (value === '') {
+        if (value === '' || value === null) {
           this.error = `${columns[colIndex].name}不能为空`
           return false
         }
