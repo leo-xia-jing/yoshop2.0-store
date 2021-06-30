@@ -44,7 +44,7 @@
           />
           <span class="ml-5">%</span>
           <p class="form-item-help">
-            <small>折扣率范围0-10，9.5代表9.5折，0代表不折扣</small>
+            <small>折扣率范围 0-100，0代表不折扣</small>
           </p>
         </a-form-item>
         <a-form-item label="最低消费金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
