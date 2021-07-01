@@ -92,10 +92,10 @@
           <a-descriptions-item label="订单号">{{ record.order_no }}</a-descriptions-item>
           <a-descriptions-item label="实付款金额">￥{{ record.pay_price }}</a-descriptions-item>
           <a-descriptions-item label="支付方式">
-            <a-tag color="green">微信支付</a-tag>
+            <a-tag color="green">{{ PayTypeEnum[record.pay_type].name }}</a-tag>
           </a-descriptions-item>
           <a-descriptions-item label="配送方式">
-            <a-tag color="green">快递配送</a-tag>
+            <a-tag color="green">{{ DeliveryTypeEnum[record.delivery_type].name }}</a-tag>
           </a-descriptions-item>
           <a-descriptions-item label="运费金额">￥{{ record.express_price }}</a-descriptions-item>
           <a-descriptions-item label="订单状态">
