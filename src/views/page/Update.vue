@@ -134,8 +134,8 @@ export default {
      */
     onCheckAddItem (type) {
       const { data } = this
-      // 验证关注公众号组件只能存在一个
-      if (type === 'officialAccount') {
+      // 验证xx组件只能存在一个
+      if (type === 'xxx') {
         const itemsTypes = data.items.map(item => item.type)
         if (inArray(type, itemsTypes)) {
           this.$message.warning('该组件最多存在一个')

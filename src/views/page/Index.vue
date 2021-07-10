@@ -30,12 +30,12 @@
       </template>
       <!-- 操作 -->
       <span class="actions" slot="action" slot-scope="item">
+        <a v-if="$auth('/page/update')" @click="handleEdit(item)">编辑</a>
         <a
           v-action:setHome
           v-if="item.page_type != PageTypeEnum.HOME.value"
           @click="handleSetHome(item)"
         >设为首页</a>
-        <a v-if="$auth('/page/update')" @click="handleEdit(item)">编辑</a>
         <a
           v-action:delete
           v-if="item.page_type != PageTypeEnum.HOME.value"
