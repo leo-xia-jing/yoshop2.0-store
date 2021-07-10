@@ -38,13 +38,13 @@
         >
           <a-input-number
             :min="0"
-            :max="100"
-            :precision="0"
-            v-decorator="['discount', { initialValue: 0, rules: [{ required: true, message: '请输入折扣率' }] }]"
+            :max="9.9"
+            :precision="1"
+            v-decorator="['discount', { initialValue: 9.9, rules: [{ required: true, message: '请输入折扣率' }] }]"
           />
           <span class="ml-5">%</span>
           <p class="form-item-help">
-            <small>折扣率范围 0-100，80代表打8折，0代表不折扣</small>
+            <small>折扣率范围 0-9.9，8代表打8折，0代表不折扣</small>
           </p>
         </a-form-item>
         <a-form-item label="最低消费金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
