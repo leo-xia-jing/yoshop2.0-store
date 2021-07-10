@@ -47,7 +47,7 @@
         </template>
         <template v-if="item.coupon_type == 20">
           <span>打</span>
-          <span class="c-p mlr-2">{{ item.discount }}</span>
+          <span class="c-p mlr-2">{{ item.discount / 10 }}</span>
           <span>折</span>
         </template>
       </template>

@@ -42,12 +42,12 @@
       </template>
       <!-- 优惠方式 -->
       <template slot="discount" slot-scope="item">
-        <template v-if="item.coupon_type == 10">
+        <template v-if="item.coupon_type == CouponTypeEnum.FULL_DISCOUNT.value">
           <span>立减</span>
           <span class="c-p mlr-2">{{ item.reduce_price }}</span>
           <span>元</span>
         </template>
-        <template v-if="item.coupon_type == 20">
+        <template v-if="item.coupon_type == CouponTypeEnum.DISCOUNT.value">
           <span>打</span>
           <span class="c-p mlr-2">{{ item.discount }}</span>
           <span>折</span>
