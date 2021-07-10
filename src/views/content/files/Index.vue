@@ -18,8 +18,8 @@
             ></a-tree-select>
           </a-form-item>
           <a-form-item label="存储方式">
-            <a-select v-decorator="['storage', { initialValue: -1 }]">
-              <a-select-option :value="-1">全部</a-select-option>
+            <a-select v-decorator="['storage', { initialValue: '' }]">
+              <a-select-option :value="''">全部</a-select-option>
               <a-select-option
                 v-for="(item, index) in StorageEnum.data"
                 :key="index"
@@ -28,7 +28,8 @@
             </a-select>
           </a-form-item>
           <a-form-item label="上传来源">
-            <a-select v-decorator="['channel', { initialValue: ChannelEnum['STORE'].value }]">
+            <a-select v-decorator="['channel', { initialValue: -1 }]">
+              <a-select-option :value="-1">全部</a-select-option>
               <a-select-option
                 v-for="(item, index) in ChannelEnum.data"
                 :key="index"
@@ -47,7 +48,7 @@
       <!-- 操作板块 -->
       <div class="row-item-tab clearfix">
         <div class="tab-list fl-l">
-          <a-radio-group :defaultValue="queryParam.file_type" @change="handleTabs">
+          <a-radio-group :defaultValue="queryParam.fileType" @change="handleTabs">
             <a-radio-button :value="-1">全部</a-radio-button>
             <a-radio-button
               v-for="(item, index) in FileTypeEnum.data"
@@ -130,7 +131,7 @@ export default {
       searchForm: this.$form.createForm(this),
       // 查询参数
       queryParam: {
-        file_type: -1
+        fileType: -1
       },
       // 正在加载
       isLoading: false,
@@ -215,7 +216,7 @@ export default {
 
     // 切换tab
     handleTabs (e) {
-      this.queryParam.file_type = e.target.value
+      this.queryParam.fileType = e.target.value
       this.handleRefresh()
     },
 
