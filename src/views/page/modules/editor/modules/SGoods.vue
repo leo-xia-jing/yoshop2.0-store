@@ -40,8 +40,11 @@
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import draggable from 'vuedraggable'
-import cloneDeep from 'lodash.clonedeep'
+import { pick } from 'lodash'
 import { GoodsModal } from '@/components/Modal'
+
+// 仅需要的字段
+const itemColumns = ['goods_id', 'goods_name', 'goods_image', 'goods_price_min', 'line_price_min', 'selling_point', 'goods_sales']
 
 // 图片选择器组件
 export default {
@@ -93,7 +96,12 @@ export default {
     // 商品库modal确认回调
     handleSelectGoodsSubmit (result) {
       const { selectedItems } = result
-      this.onUpdate(cloneDeep(selectedItems))
+      this.onUpdate(this.filterItems(selectedItems))
+    },
+
+    // 过滤仅需要的数据
+    filterItems (selectedItems) {
+      return selectedItems.map(itm => pick(itm, itemColumns))
     },
 
     // 删除商品
