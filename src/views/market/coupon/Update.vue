@@ -216,7 +216,7 @@ export default {
       !isEmpty(form.getFieldsValue()) && $nextTick(() => {
         // 表单数据
         const data = pick(record, [
-          'name', 'coupon_type', 'reduce_price', 'discount', 'min_price',
+          'name', 'coupon_type', 'reduce_price', 'discount', 'min_price', 'status',
           'expire_type', 'expire_day', 'apply_range', 'total_num', 'describe', 'sort'
         ])
         // 时间范围
