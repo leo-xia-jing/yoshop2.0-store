@@ -1,6 +1,7 @@
 <template>
   <a-card :bordered="false">
     <div class="card-title">{{ $route.meta.title }}</div>
+    <a-alert message="注：优惠券只能抵扣商品金额，最多优惠到0.01元，不能抵扣运费" banner />
     <div class="table-operator">
       <a-row>
         <a-col :span="6">

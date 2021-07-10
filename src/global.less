@@ -289,3 +289,41 @@ ol {
   }
 
 }
+
+// Alert 警告提示 (banner)
+.ant-alert-banner {
+  margin-bottom: 15px;
+  padding-left: 40px;
+
+  .ant-alert-message {
+    font-size: 13px;
+  }
+
+  // 黄色警告
+  &.ant-alert-warning {
+    background-color: #fffcee;
+    border: 1px solid #fff0c1;
+  }
+
+  // 标题+描述
+  &.ant-alert-with-description {
+    padding-left: 55px;
+
+    .ant-alert-icon {
+      font-size: 18px;
+      top: 16px;
+      left: 25px;
+    }
+
+    .ant-alert-message {
+      font-size: 14px;
+      margin-bottom: 6px;
+      // margin-bottom: 0;
+    }
+
+    .ant-alert-description {
+      font-size: 12.3px;
+    }
+  }
+
+}
