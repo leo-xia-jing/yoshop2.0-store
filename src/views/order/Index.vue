@@ -109,11 +109,11 @@
                         }"
                       />
                     </td>
+                    <td>
+                      <p>￥{{ goodsItm.goods_price }}</p>
+                      <p>×{{ goodsItm.total_num }}</p>
+                    </td>
                     <template v-if="goodsIdx===0">
-                      <td :rowspan="item.goods.length">
-                        <p>￥{{ goodsItm.goods_price }}</p>
-                        <p>×{{ goodsItm.total_num }}</p>
-                      </td>
                       <td :rowspan="item.goods.length">
                         <p>￥{{ item.pay_price }}</p>
                         <p class="c-muted-1">(含运费：￥{{ item.express_price }})</p>
