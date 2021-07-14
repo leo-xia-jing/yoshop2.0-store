@@ -105,6 +105,7 @@
 
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
+import { debounce } from '@/utils/util'
 import * as FileApi from '@/api/files'
 import * as GroupApi from '@/api/files/group'
 import * as UploadApi from '@/api/upload'
@@ -123,7 +124,7 @@ export default {
     // 多选模式, 如果false为单选
     multiple: PropTypes.bool.def(false),
     // 最大选择的数量限制, multiple模式下有效
-    maxNum: PropTypes.integer.def(10),
+    maxNum: PropTypes.integer.def(100),
     // 已选择的数量
     selectedNum: PropTypes.integer.def(0)
   },
@@ -275,9 +276,17 @@ export default {
 
     // 事件: 上传文件之前
     beforeUpload (file, fileList) {
+      // 显示错误提示(防抖处理)
+      const showErrorMsg = debounce(this.$message.error, 20)
+      // 验证文件大小
       const isLt1M = file.size / 1024 / 1024 < 1
       if (!isLt1M) {
-        this.$message.error('文件大小不能超出1MB')
+        showErrorMsg('文件大小不能超出1MB')
+        return false
+      }
+      // 验证文件上传数量
+      if (fileList.length > 5) {
+        showErrorMsg('一次上传的文件数量不能超出5个')
         return false
       }
       return true

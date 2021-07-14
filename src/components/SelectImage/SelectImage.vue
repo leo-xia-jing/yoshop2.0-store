@@ -74,7 +74,7 @@ export default {
     // 多选模式, 如果false为单选
     multiple: PropTypes.bool.def(false),
     // 最大选择的数量限制, multiple模式下有效
-    maxNum: PropTypes.integer.def(10),
+    maxNum: PropTypes.integer.def(100),
     // 默认选中的文件
     defaultList: PropTypes.array.def([]),
     // 元素的尺寸(宽)
