@@ -123,7 +123,7 @@ export default {
     // 多选模式, 如果false为单选
     multiple: PropTypes.bool.def(false),
     // 最大选择的数量限制, multiple模式下有效
-    maxNum: PropTypes.integer.def(100),
+    maxNum: PropTypes.integer.def(10),
     // 已选择的数量
     selectedNum: PropTypes.integer.def(0)
   },
@@ -138,7 +138,7 @@ export default {
       // 查询参数
       queryParam: {
         // 文件类型: 图片
-        file_type: FileTypeEnum.IMAGE.value,
+        fileType: FileTypeEnum.IMAGE.value,
         // 上传来源: 商户后台
         channel: ChannelEnum.STORE.value,
         // 当前页码
@@ -290,23 +290,18 @@ export default {
       this.isLoading = true
       // 记录上传状态
       this.uploading.push(true)
-      const beforeUploadCount = this.uploading.length
       // 构建上传参数
       const formData = new FormData()
       formData.append('iFile', info.file)
       formData.append('groupId', this.queryParam.groupId)
       // 开始上传
       UploadApi.image(formData)
-        .then(result => {
-          setTimeout(() => {
-            if (beforeUploadCount === this.uploading.length) {
-              this.uploading = []
-              this.handleRefresh(true)
-            }
-          }, 10)
-        })
-        .catch(() => {
-          this.isLoading = false
+        .finally(() => {
+          this.uploading.pop()
+          if (this.uploading.length === 0) {
+            this.isLoading = false
+            this.handleRefresh(true)
+          }
         })
     },
 
