@@ -6,7 +6,7 @@
       <a-row class="row-item-search">
         <a-form class="search-form" :form="searchForm" layout="inline" @submit="handleSearch">
           <a-form-item label="文件名称">
-            <a-input v-decorator="['file_name']" placeholder="请输入文件名称" />
+            <a-input v-decorator="['fileName']" placeholder="请输入文件名称" />
           </a-form-item>
           <a-form-item label="文件分组">
             <a-tree-select
@@ -14,7 +14,7 @@
               allowClear
               :treeData="groupListTreeSelect"
               :dropdownStyle="{ maxHeight: '500px', overflow: 'auto' }"
-              v-decorator="['group_id', { initialValue: -1 }]"
+              v-decorator="['groupId', { initialValue: -1 }]"
             ></a-tree-select>
           </a-form-item>
           <a-form-item label="存储方式">
@@ -130,9 +130,7 @@ export default {
       // 当前表单元素
       searchForm: this.$form.createForm(this),
       // 查询参数
-      queryParam: {
-        fileType: -1
-      },
+      queryParam: { fileType: -1 },
       // 正在加载
       isLoading: false,
       // 表头
