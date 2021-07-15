@@ -61,7 +61,10 @@
                 >{{ item.name }}</a-select-option>
               </a-select>
               <div class="form-item-help">
-                <router-link target="_blank" :to="{ path: '/setting/delivery/create' }">新增模板</router-link>
+                <router-link
+                  target="_blank"
+                  :to="{ path: '/setting/delivery/template/create' }"
+                >新增模板</router-link>
                 <a href="javascript:;" @click="onReloadDeliveryList">刷新</a>
               </div>
             </a-form-item>
