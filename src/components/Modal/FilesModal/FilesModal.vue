@@ -38,7 +38,7 @@
             />
             <!-- 上传按钮 -->
             <div class="file-upload fl-r">
-              <span class="upload-desc">大小不能超过1M</span>
+              <span class="upload-desc">大小不能超过2M</span>
               <a-upload
                 name="iFile"
                 accept="image/*"
@@ -279,9 +279,9 @@ export default {
       // 显示错误提示(防抖处理)
       const showErrorMsg = debounce(this.$message.error, 20)
       // 验证文件大小
-      const isLt1M = file.size / 1024 / 1024 < 1
+      const isLt1M = file.size / 1024 / 1024 < 2
       if (!isLt1M) {
-        showErrorMsg('文件大小不能超出1MB')
+        showErrorMsg('文件大小不能超出2MB')
         return false
       }
       // 验证文件上传数量
