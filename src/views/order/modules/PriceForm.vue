@@ -79,8 +79,12 @@ export default {
     setFieldsValue () {
       const { record, $nextTick, form: { setFieldsValue } } = this
       $nextTick(() => {
+        let diffPrice = Number(record.update_price.value)
+        if (record.update_price.symbol === '-') {
+          diffPrice = -diffPrice
+        }
         setFieldsValue({
-          order_price: _.add(Number(record.order_price), Number(record.update_price.value)),
+          order_price: _.add(Number(record.order_price), diffPrice),
           express_price: Number(record.express_price)
         })
       })
