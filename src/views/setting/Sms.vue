@@ -6,13 +6,22 @@
         <a-form-item label="短信平台" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['default', { rules: [{ required: true }] }]">
             <a-radio value="aliyun">阿里云短信</a-radio>
+            <a-radio value="qcloud">腾讯云短信</a-radio>
           </a-radio-group>
           <div class="form-item-help">
             <small style="margin-right: 6px;">短信服务管理控制台:</small>
+            <br />
+            <small style="margin-right: 6px">阿里云:</small>
             <a
               href="https://dysms.console.aliyun.com/dysms.htm"
               target="_blank"
             >https://dysms.console.aliyun.com/dysms.htm</a>
+            <br />
+            <small style="margin-right: 6px">腾讯云:</small>
+            <a
+              href="https://console.cloud.tencent.com/smsv2"
+              target="_blank"
+            >https://console.cloud.tencent.com/smsv2</a>
           </div>
         </a-form-item>
         <!-- 阿里云配置 -->
@@ -32,7 +41,18 @@
             <a-input v-decorator="[`engine.aliyun.sign`]" />
           </a-form-item>
         </div>
-
+        <!-- 腾讯云配置 -->
+        <div v-show="form.getFieldValue('default') == 'qcloud'">
+          <a-form-item label="SDK AppID" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.AppId`]" />
+          </a-form-item>
+          <a-form-item label="App Key" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.AppKey`]" />
+          </a-form-item>
+          <a-form-item label="短信签名 Sign" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.sign`]" />
+          </a-form-item>
+        </div>
         <!-- 短信场景配置 -->
         <div v-for="(item, index) in record['scene']" :key="index">
           <a-divider orientation="left">{{ item.name }}</a-divider>
@@ -45,7 +65,7 @@
             </a-radio-group>
           </a-form-item>
           <a-form-item label="模板内容" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
-            <span>{{ record.scene[index].content }}</span>
+            <span>{{ formatSmsContent(record.scene[index].content) }}</span>
           </a-form-item>
           <a-form-item label="模板ID/Code" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
             <a-input v-decorator="[`scene.${index}.templateCode`]" />
@@ -139,6 +159,22 @@ export default {
           scene
         })
       })
+    },
+
+    /**
+     * 格式化短信模板
+     * 阿里云使用变量格式，如：${code}、${order_no}
+     * 腾讯云使用数字格式，如：{1}、{2}、{3}
+     */
+    formatSmsContent (content) {
+      if (this.form.getFieldValue('default') === 'qcloud') {
+        let i = 0
+        content = content.replace(/\$\{.+?\}/g, () => {
+            i++
+            return '{' + i + '}'
+        })
+      }
+      return content
     },
 
     /**
