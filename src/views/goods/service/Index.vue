@@ -24,6 +24,10 @@
       :data="loadData"
       :pageSize="15"
     >
+      <!-- 概述 -->
+      <span slot="summary" slot-scope="text">
+        <p class="summary oneline-hide">{{ text }}</p>
+      </span>
       <!-- 是否默认 -->
       <span slot="is_default" slot-scope="text">
         <a-tag :color="text ? 'green' : ''">{{ text ? '是' : '否' }}</a-tag>
@@ -165,3 +169,9 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.summary {
+  max-width: 400px;
+}
+</style>
