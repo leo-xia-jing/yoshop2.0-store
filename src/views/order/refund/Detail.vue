@@ -56,6 +56,12 @@
               <span class="c-p">{{ record.user.nick_name }}</span>
             </a-tooltip>
           </a-descriptions-item>
+          <a-descriptions-item label="订单支付总额">
+            <span class="c-p">
+              <span>￥</span>
+              <span>{{ record.orderData.pay_price }}</span>
+            </span>
+          </a-descriptions-item>
           <a-descriptions-item label="售后类型">
             <a-tag>{{ RefundTypeEnum[record.type].name }}</a-tag>
           </a-descriptions-item>
@@ -135,12 +141,12 @@
             </template>
             <!-- 商品编码 -->
             <span slot="goods_no" slot-scope="text">{{ text ? text : '--' }}</span>
-            <!-- 单价	 -->
+            <!-- 单价 -->
             <template slot="goods_price" slot-scope="text">￥{{ text }}</template>
-            <!-- 购买数量	 -->
+            <!-- 购买数量 -->
             <span slot="total_num" slot-scope="text">x{{ text }}</span>
-            <!-- 商品总价 -->
-            <span slot="total_price" slot-scope="text">￥{{ text }}</span>
+            <!-- 实际付款价 -->
+            <span slot="total_pay_price" slot-scope="text">￥{{ text }}</span>
           </a-table>
         </div>
       </a-card>

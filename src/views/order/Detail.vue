@@ -53,7 +53,7 @@
           <div class="alerts mt-10 mb-15">
             <a-alert
               v-if="record.order_status== OrderStatusEnum.APPLY_CANCEL.value"
-              message="当前买家已付款并申请取消订单，请审核是否同意，如同意则自动退回付款金额（微信支付原路退款）并关闭订单。"
+              message="当前买家已付款并申请取消订单，请审核是否同意，如同意则自动退回付款金额（原路退款）并关闭订单。"
               banner
             />
           </div>

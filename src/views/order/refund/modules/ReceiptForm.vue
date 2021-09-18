@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="560"
+    :width="565"
     :visible="visible"
     :isLoading="isLoading"
     :maskClosable="false"
@@ -9,11 +9,19 @@
     @cancel="handleCancel"
   >
     <a-spin :spinning="isLoading">
+      <a-alert
+        v-if="record.type == RefundTypeEnum.RETURN.value"
+        message="请确认已收到寄回的商品，确认后自动退回付款金额（原路退款）并关闭当前售后单"
+        banner
+      />
       <a-form v-if="visible" :form="form">
         <a-form-item label="售后类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-tag>{{ RefundTypeEnum[record.type].name }}</a-tag>
         </a-form-item>
-        <a-form-item label="退款金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="订单付款的总金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <span>￥{{ record.orderData.pay_price }}元</span>
+        </a-form-item>
+        <a-form-item label="退款的金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number
             :min="0.01"
             :precision="2"
@@ -21,7 +29,9 @@
           />
           <span class="ml-10">元</span>
           <div class="form-item-help">
-            <p class="extra">请输入退款金额，最多{{ record.orderGoods.total_pay_price }}元</p>
+            <p
+              class="extra"
+            >请输入退款金额，最多{{ Math.min(record.orderGoods.total_pay_price, record.orderData.pay_price) }}元，最多不能大于订单实际付款的总金额</p>
           </div>
         </a-form-item>
       </a-form>
@@ -40,7 +50,7 @@ export default {
       // 对话框标题
       title: '确认收货并退款',
       // 标签布局属性
-      labelCol: { span: 7 },
+      labelCol: { span: 8 },
       // 输入框布局属性
       wrapperCol: { span: 13 },
       // modal(对话框)是否可见
