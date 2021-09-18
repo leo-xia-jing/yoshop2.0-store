@@ -283,9 +283,9 @@ export default class MultiSpec {
   handleSkuBatch () {
     const skuBatchForm = this.getFilterObject(this.multiSpecData.skuBatchForm)
     const skuList = this.multiSpecData.skuList
-    if (!skuBatchForm.image_id) {
-      delete skuBatchForm.image
-    }
+    // if (!skuBatchForm.image_id) {
+    //   delete skuBatchForm.image
+    // }
     console.log('skuBatchForm', skuBatchForm)
     for (const index in skuList) {
       skuList[index] = { ...skuList[index], ...skuBatchForm }
@@ -303,7 +303,11 @@ export default class MultiSpec {
     const newObj = {}
     for (const key in object) {
       const value = object[key]
-      if (!isEmpty(value) || value === 0) {
+      // value === 0 可以不过滤image_id为0的情况
+      // if (!isEmpty(value) || value === 0) {
+      //   newObj[key] = value
+      // }
+      if (!isEmpty(value)) {
         newObj[key] = value
       }
     }
