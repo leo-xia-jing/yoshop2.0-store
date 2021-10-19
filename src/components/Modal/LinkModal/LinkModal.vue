@@ -114,6 +114,12 @@ export default {
 
     // 选中事件
     handleClickItem (item) {
+      // 取消选中值
+      if (this.activeKey === item.id) {
+        this.activeKey = ''
+        this.curItem = null
+        return
+      }
       // 记录选中值
       this.activeKey = item.id
       this.curItem = _.cloneDeep(item)
@@ -155,9 +161,9 @@ export default {
       e.preventDefault()
       const { curItem, form: { validateFields } } = this
       validateFields((errors, formData) => {
-        if (!errors && curItem) {
+        if (!errors) {
           // 创建返回结果
-          const result = this.buildResult(curItem, formData)
+          const result = curItem ? this.buildResult(curItem, formData) : null
           // 通知父端组件提交完成了
           this.$emit('handleSubmit', result)
           // 关闭对话框
