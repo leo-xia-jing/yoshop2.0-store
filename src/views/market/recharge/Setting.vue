@@ -21,6 +21,22 @@
             <small>是否允许用户填写自定义的充值金额</small>
           </div>
         </a-form-item>
+        <a-form-item
+          v-show="form.getFieldValue('is_custom') == 1"
+          label="最低充值金额"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+          <a-input-number
+            :min="0.01"
+            :precision="2"
+            v-decorator="['lowest_money', { rules: [{ required: true, message: '请输入最低充值金额' }] }]"
+          />
+          <span class="ml-10">元</span>
+          <div class="form-item-help">
+            <small>低于该设定金额时不允许充值</small>
+          </div>
+        </a-form-item>
         <a-form-item label="自动匹配套餐" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['is_match_plan', { rules: [{ required: true }] }]">
             <a-radio :value="1">开启</a-radio>
@@ -95,7 +111,7 @@ export default {
     setFieldsValue () {
       const { record, $nextTick, form: { setFieldsValue } } = this
       $nextTick(() => {
-        setFieldsValue(pick(record, ['is_entrance', 'is_custom', 'is_match_plan', 'describe']))
+        setFieldsValue(pick(record, ['is_entrance', 'is_custom', 'lowest_money', 'is_match_plan', 'describe']))
       })
     },
 
