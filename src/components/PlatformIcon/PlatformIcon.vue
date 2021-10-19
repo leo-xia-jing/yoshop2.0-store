@@ -11,19 +11,20 @@
 
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import { mpweixin, h5 } from '@/core/icons'
+import { mpweixin, h5, app } from '@/core/icons'
 
 // 客户端图标
 const PlatformIcons = {
   'MP-WEIXIN': mpweixin,
-  'H5': h5
+  'H5': h5,
+  'APP': app
 }
 
 // 客户端名称
 const PlatformName = {
   'MP-WEIXIN': '微信小程序',
   'H5': 'H5网页',
-  'APP': '手机APP',
+  'APP': '手机APP'
 }
 
 export default {
