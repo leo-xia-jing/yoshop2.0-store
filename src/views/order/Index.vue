@@ -92,7 +92,8 @@
                   <tr :key="`order_${item.order_id}_2`">
                     <td colspan="8">
                       <span class="mr-20">{{ item.create_time }}</span>
-                      <span>订单号：{{ item.order_no }}</span>
+                      <span class="mr-20">订单号：{{ item.order_no }}</span>
+                      <platform-icon :name="item.platform" :showTips="true" />
                     </td>
                   </tr>
                   <tr
@@ -208,6 +209,7 @@
 import { Empty } from 'ant-design-vue'
 import { inArray, assignment } from '@/utils/util'
 import * as Api from '@/api/order'
+import PlatformIcon from '@/components/PlatformIcon'
 import { GoodsItem, UserItem } from '@/components/Table'
 import {
   DeliveryStatusEnum,
@@ -277,6 +279,7 @@ const SearchTypeEnum = [
 export default {
   name: 'Index',
   components: {
+    PlatformIcon,
     GoodsItem,
     UserItem,
     DeliveryForm,
