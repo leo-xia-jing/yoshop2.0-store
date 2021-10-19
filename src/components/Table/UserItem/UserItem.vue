@@ -9,8 +9,8 @@
     </div>
     <div class="in-right flex flex-dir-column flex-x-center">
       <p class="user-name oneline-hide">{{ user.nick_name }}</p>
-      <p v-if="PlatformIcons[user.platform]" class="user-source">
-        <a-icon class="icon" :class="[user.platform]" :component="PlatformIcons[user.platform]" />
+      <p class="user-platform">
+        <platform-icon :name="user.platform" :showTips="true" />
       </p>
     </div>
   </div>
@@ -18,25 +18,21 @@
 
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import { mpweixin, h5 } from '@/core/icons'
-
-// 注册来源图标
-const PlatformIcons = {
-  'MP-WEIXIN': mpweixin,
-  'H5': h5
-}
+import PlatformIcon from '@/components/PlatformIcon'
 
 // Table内容元素: 会员信息
 export default {
   name: 'UserItem',
+  components: {
+    PlatformIcon
+  },
   props: {
     // 会员信息
     user: PropTypes.object.def()
   },
   data () {
     return {
-      // 注册来源图标
-      PlatformIcons
+
     }
   },
   methods: {
@@ -70,25 +66,6 @@ export default {
 
     .user-name {
       margin-bottom: 2px;
-    }
-
-    .user-source {
-      font-size: 16px;
-
-      .icon {
-        margin-right: 5px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-
-      .MP-WEIXIN {
-        color: #04be02;
-      }
-      .H5 {
-        color: #e44c27;
-      }
     }
   }
 }
