@@ -178,6 +178,7 @@
                             v-if="item.order_status == OrderStatusEnum.APPLY_CANCEL.value"
                             @click="handleCancel(item)"
                           >审核取消</a>
+                          <a v-action:delete @click="handleDelete(item)">删除</a>
                         </div>
                       </td>
                     </template>
@@ -209,6 +210,7 @@
 import { Empty } from 'ant-design-vue'
 import { inArray, assignment } from '@/utils/util'
 import * as Api from '@/api/order'
+import * as EventApi from '@/api/order/event'
 import PlatformIcon from '@/components/PlatformIcon'
 import { GoodsItem, UserItem } from '@/components/Table'
 import {
@@ -397,6 +399,25 @@ export default {
     onChangePage (current) {
       this.page = current
       this.handleRefresh()
+    },
+
+    // 删除记录
+    handleDelete (item) {
+      const app = this
+      const modal = app.$confirm({
+        title: '您确定要删除该订单记录吗?',
+        content: '删除后不可恢复，请谨慎操作',
+        onOk () {
+          return EventApi.deleted(item.order_id)
+            .then((result) => {
+              app.$message.success(result.message, 1.5)
+              app.handleRefresh()
+            })
+            .finally(result => {
+              modal.destroy()
+            })
+        }
+      })
     },
 
     // 订单发货

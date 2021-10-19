@@ -6,7 +6,8 @@ import { axios } from '@/utils/request'
 const api = {
   delivery: '/order.event/delivery',
   updatePrice: '/order.event/updatePrice',
-  confirmCancel: '/order.event/confirmCancel'
+  confirmCancel: '/order.event/confirmCancel',
+  delete: '/order.event/delete',
 }
 
 /**
@@ -42,5 +43,17 @@ export function confirmCancel (data) {
     url: api.confirmCancel,
     method: 'post',
     data
+  })
+}
+
+/**
+ * 删除订单记录
+ * @param {*} data
+ */
+export function deleted (orderId) {
+  return axios({
+    url: api.delete,
+    method: 'post',
+    data: { orderId }
   })
 }
