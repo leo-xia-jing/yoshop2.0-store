@@ -1,6 +1,6 @@
 <template>
   <a-dropdown v-if="currentUser" placement="bottomRight">
-    <span class="ant-pro-account-avatar">
+    <span class="ant-pro-account-avatar oneline-hide">
       <!-- <a-avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" class="antd-pro-global-header-index-avatar" /> -->
       <a-icon type="user" :style="{ fontSize: '16px', marginRight: '5px' }"></a-icon>
       <span>{{ currentUser.real_name || currentUser.user_name }}</span>
