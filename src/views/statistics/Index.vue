@@ -7,13 +7,13 @@
           <span>数据概况</span>
         </div>
         <div class="screen flex flex-x-center">
-          <a-range-picker v-model="dateValue" format="YYYY-MM-DD" />
+          <a-range-picker v-model="dateValue" format="YYYY-MM-DD" @change="onPickerChange" />
           <!-- 快捷选项 -->
           <div class="shortcut">
             <div class="shortcut-days">
-              <a href="javascript:void(0);" @click="onFastDate(7)">7天</a>
-              <a href="javascript:void(0);" @click="onFastDate(30)">30天</a>
-              <a href="javascript:void(0);" @click="onFastDate(0)">清空</a>
+              <a href="javascript:void(0);" @click="handleFastDate(7)">7天</a>
+              <a href="javascript:void(0);" @click="handleFastDate(30)">30天</a>
+              <a href="javascript:void(0);" @click="handleFastDate(0)">清空</a>
             </div>
           </div>
         </div>
@@ -254,8 +254,14 @@ export default {
   },
   methods: {
 
-    // 监听事件：日期选择快捷导航
-    onFastDate: function (days) {
+    // 监听事件：日期选择器
+    onPickerChange () {
+      // 获取数据概况
+      this.getSurvey()
+    },
+
+    // 事件: 快捷选择日期
+    handleFastDate (days) {
       // 清空日期
       if (days === 0) {
         this.dateValue = []
