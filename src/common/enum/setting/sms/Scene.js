@@ -1,7 +1,7 @@
 import Enum from '../../enum'
 
 /**
- * 枚举类：文件上传来源
+ * 枚举类：短信发送的场景
  * SettingSmsSceneEnum
  */
 export default new Enum([
