@@ -46,9 +46,17 @@
         >创建商品</a-button>
         <div v-if="selectedRowKeys.length" class="button-group">
           <a-button-group class="ml-10">
-            <a-button icon="arrow-up" @click="handleUpdateStatus(selectedRowKeys, true)">上架</a-button>
-            <a-button icon="arrow-down" @click="handleUpdateStatus(selectedRowKeys, false)">下架</a-button>
-            <a-button icon="delete" @click="handleDelete(selectedRowKeys)">删除</a-button>
+            <a-button
+              v-action:status
+              icon="arrow-up"
+              @click="handleUpdateStatus(selectedRowKeys, true)"
+            >上架</a-button>
+            <a-button
+              v-action:status
+              icon="arrow-down"
+              @click="handleUpdateStatus(selectedRowKeys, false)"
+            >下架</a-button>
+            <a-button v-action:delete icon="delete" @click="handleDelete(selectedRowKeys)">删除</a-button>
           </a-button-group>
         </div>
       </div>
@@ -236,6 +244,9 @@ export default {
 
     // 修改商品状态(上下架)
     handleUpdateStatus (goodsIds, state = true) {
+      if (!this.$auth('/goods/index.status')) {
+        return false
+      }
       this.isLoading = true
       GoodsApi.state({ goodsIds, state })
         .then(result => {
