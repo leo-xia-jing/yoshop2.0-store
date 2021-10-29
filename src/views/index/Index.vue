@@ -165,7 +165,7 @@
         </div>
         <a-row :gutter="32">
           <a-col class :span="6" v-for="(item, index) in functions" :key="index">
-            <router-link class="item" :to="item.link">
+            <div class="item" @click="handleLink(item.link)">
               <div class="flex flex-y-center">
                 <div
                   class="icon flex flex-x-center flex-y-center"
@@ -175,7 +175,7 @@
                 </div>
                 <span class="name">{{ item.name }}</span>
               </div>
-            </router-link>
+            </div>
           </a-col>
         </a-row>
       </a-card>
@@ -208,7 +208,7 @@ const functions = [
     link: '/goods/create'
   },
   {
-    name: '页面装修',
+    name: '店铺装修',
     icon: Icons.functions.decorate,
     color: '#f15858',
     link: '/page/index'
@@ -315,6 +315,16 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
+    },
+
+    // 跳转到指定link
+    handleLink (link) {
+      const app = this
+      if (!app.$auth(link)) {
+        app.$message.info('很抱歉，没有该页面的访问权限')
+        return false
+      }
+      app.$router.push(link)
     },
 
     // 渲染走势图
@@ -440,17 +450,14 @@ export default {
 
 // 常用功能
 .functions {
-  a {
-    color: unset;
-
-    &:hover {
-      color: #1890ff;
-    }
-  }
 
   .item {
     display: block;
     padding: 13px 20px;
+    cursor: pointer;
+    &:hover {
+      color: #1890ff;
+    }
   }
 
   .name {
