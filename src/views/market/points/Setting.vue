@@ -33,6 +33,9 @@
         <div v-show="form.getFieldValue('is_shopping_gift') == 1">
           <a-form-item label="积分赠送比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
             <a-input-number
+              :min="0.1"
+              :max="100"
+              :precision="1"
               v-decorator="['gift_ratio', { rules: [{ required: true, message: '请输入积分赠送比例' }] }]"
             />
             <span class="ml-10">%</span>
@@ -61,7 +64,7 @@
             <InputNumberGroup
               addonBefore="1个积分可抵扣"
               addonAfter="元"
-              :inputProps="{ min: 0.01 }"
+              :inputProps="{ min: 0.01, precision: 2 }"
               v-decorator="['discount.discount_ratio', { rules: [{ required: true, message: '积分抵扣比例不能为空' }] }]"
             />
             <div class="form-item-help">
@@ -73,7 +76,7 @@
               <InputNumberGroup
                 addonBefore="订单满"
                 addonAfter="元"
-                :inputProps="{ min: 0.01 }"
+                :inputProps="{ min: 0.01, precision: 2 }"
                 v-decorator="['discount.full_order_price', { rules: [{ required: true, message: '抵扣条件不能为空' }] }]"
               />
             </a-form-item>
@@ -81,7 +84,7 @@
               <InputNumberGroup
                 addonBefore="最高可抵扣金额"
                 addonAfter="%"
-                :inputProps="{ min: 0.01 }"
+                :inputProps="{ min: 0.1, max: 90, precision: 1 }"
                 v-decorator="['discount.max_money_ratio', { rules: [{ required: true, message: '最高可抵扣金额不能为空' }] }]"
               />
               <div class="form-item-help">

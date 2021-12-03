@@ -3,20 +3,28 @@
     <div class="card-title">{{ $route.meta.title }}</div>
     <a-spin :spinning="isLoading">
       <a-form :form="form" @submit="handleSubmit">
-        <a-form-item label="短信平台" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-decorator="['default', { rules: [{ required: true }] }]">
-            <a-radio value="aliyun">阿里云短信</a-radio>
+        <a-form-item class="mb-20" label="短信平台" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group
+            v-decorator="['default', { rules: [{ required: true }] }]"
+            @change="onChangeEngine"
+          >
+            <a-radio
+              v-for="(engine, index) in record.engine"
+              :key="index"
+              :value="index"
+            >{{ engine.name }}</a-radio>
           </a-radio-group>
-          <div class="form-item-help">
-            <small style="margin-right: 6px;">短信服务管理控制台:</small>
+
+          <div v-if="form.getFieldValue('default')" class="form-item-help">
+            <small>短信平台管理地址：</small>
             <a
-              href="https://dysms.console.aliyun.com/dysms.htm"
+              :href="record.engine[form.getFieldValue('default')].website"
               target="_blank"
-            >https://dysms.console.aliyun.com/dysms.htm</a>
+            >{{ record.engine[form.getFieldValue('default')].website }}</a>
           </div>
         </a-form-item>
         <!-- 阿里云配置 -->
-        <div v-show="form.getFieldValue('default') == 'aliyun'">
+        <div v-show="form.getFieldValue('default') === 'aliyun'">
           <a-form-item label="AccessKeyId" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
             <a-input v-decorator="[`engine.aliyun.AccessKeyId`]" />
           </a-form-item>
@@ -32,6 +40,35 @@
             <a-input v-decorator="[`engine.aliyun.sign`]" />
           </a-form-item>
         </div>
+        <!-- 腾讯云配置 -->
+        <div v-show="form.getFieldValue('default') === 'qcloud'">
+          <a-form-item label="SdkAppID" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.SdkAppID`]" />
+          </a-form-item>
+          <a-form-item label="AccessKeyId" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.AccessKeyId`]" />
+          </a-form-item>
+          <a-form-item
+            label="AccessKeySecret"
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            required
+          >
+            <a-input v-decorator="[`engine.qcloud.AccessKeySecret`]" />
+          </a-form-item>
+          <a-form-item label="短信签名 Sign" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qcloud.sign`]" />
+          </a-form-item>
+        </div>
+        <!-- 七牛云配置 -->
+        <div v-show="form.getFieldValue('default') === 'qiniu'">
+          <a-form-item label="AccessKey" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qiniu.AccessKey`]" />
+          </a-form-item>
+          <a-form-item label="SecretKey" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
+            <a-input v-decorator="[`engine.qiniu.SecretKey`]" />
+          </a-form-item>
+        </div>
 
         <!-- 短信场景配置 -->
         <div v-for="(item, index) in record['scene']" :key="index">
@@ -45,7 +82,7 @@
             </a-radio-group>
           </a-form-item>
           <a-form-item label="模板内容" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
-            <span>{{ record.scene[index].content }}</span>
+            <span>{{ record.scene[index].contentPractical }}</span>
           </a-form-item>
           <a-form-item label="模板ID/Code" :labelCol="labelCol" :wrapperCol="wrapperCol" required>
             <a-input v-decorator="[`scene.${index}.templateCode`]" />
@@ -78,7 +115,7 @@
 </template>
 
 <script>
-import pick from 'lodash.pick'
+import { pick, omit } from 'lodash'
 import { isEmpty } from '@/utils/util'
 import * as Api from '@/api/setting/store'
 import SettingSmsSceneEnum from '@/common/enum/setting/sms/Scene'
@@ -123,19 +160,46 @@ export default {
         })
     },
 
+    // 切换短信平台事件
+    onChangeEngine (e) {
+      const app = this
+      const engine = e.target.value
+      for (const index in app.record.scene) {
+        const item = app.record.scene[index]
+        item.contentPractical = app.onVsprintf(item.content, item.variables[engine])
+      }
+    },
+
+    // 解析短信内容变量, 生成完整的模板内容
+    onVsprintf (str, variables) {
+      const reg = new RegExp('%s')
+      for (var i = 0; i < variables.length; i++) {
+        str = str.replace(reg, variables[i])
+      }
+      return str
+    },
+
     /**
      * 设置默认值
      */
     setFieldsValue () {
-      const { record, $nextTick, form } = this
+      const app = this
+      const { record, $nextTick, form } = app
       !isEmpty(form.getFieldsValue()) && $nextTick(() => {
         const scene = {}
         for (const index in record.scene) {
-          scene[index] = pick(record.scene[index], ['isEnable', 'templateCode', 'acceptPhone'])
+          const item = record.scene[index]
+          const contentPractical = app.onVsprintf(item.content, item.variables[record.default])
+          app.$set(item, 'contentPractical', contentPractical)
+          scene[index] = pick(item, ['isEnable', 'templateCode', 'acceptPhone'])
+        }
+        const engine = {}
+        for (const index in record.engine) {
+          engine[index] = omit(record.engine[index], ['name', 'website'])
         }
         form.setFieldsValue({
           default: record.default,
-          engine: record.engine,
+          engine,
           scene
         })
       })

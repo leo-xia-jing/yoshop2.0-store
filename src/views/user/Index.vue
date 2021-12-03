@@ -9,7 +9,7 @@
             <a-input v-decorator="['search']" placeholder="请输入昵称/手机号" />
           </a-form-item>
           <a-form-item label="会员等级">
-            <a-select placeholder="请选择会员等级" v-model="queryParam.grade_id">
+            <a-select v-decorator="['gradeId', { initialValue: 0 }]">
               <a-select-option :value="0">全部</a-select-option>
               <a-select-option
                 v-for="(item, index) in gradeList"
@@ -92,7 +92,7 @@ import * as Api from '@/api/user'
 import * as GradeApi from '@/api/user/grade'
 import { STable } from '@/components'
 import { GradeForm, RechargeForm } from './modules'
-import { mpweixin, h5 } from '@/core/icons'
+import { mpweixin, h5, app } from '@/core/icons'
 
 // 注册来源名称
 const PlatformName = {
@@ -104,7 +104,8 @@ const PlatformName = {
 // 注册来源图标
 const PlatformIcons = {
   'MP-WEIXIN': mpweixin,
-  'H5': h5
+  'H5': h5,
+  'APP': app
 }
 
 export default {

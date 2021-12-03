@@ -217,7 +217,19 @@ export const asyncRouterMap = [
             component: () => import(/* webpackChunkName: "order" */ '@/views/order/refund/Detail'),
             meta: { title: '售后单详情', keepAlive: false, permission: ['/order/refund/detail'] },
             hidden: true
-          }
+          },
+          {
+            path: '/order/tools',
+            component: RouteView,
+            meta: { title: '订单处理', keepAlive: false, permission: ['/order/tools'] },
+            children: [
+              {
+                path: '/order/tools/export',
+                component: () => import(/* webpackChunkName: "order" */ '@/views/order/tools/Export'),
+                meta: { title: '订单导出', keepAlive: false, permission: ['/order/tools/export'] }
+              },
+            ]
+          },
         ]
       },
 
@@ -409,6 +421,11 @@ export const asyncRouterMap = [
         meta: { title: '客户端', keepAlive: true, icon: Icons.mpweixin, iconStyle: { fontSize: '17.2px', color: '#36b313' }, permission: ['/client'] },
         children: [
           {
+            path: '/client/register',
+            component: () => import(/* webpackChunkName: "client" */ '@/views/client/Register'),
+            meta: { title: '注册设置', keepAlive: false, permission: ['/client/register'] }
+          },
+          {
             path: '/client/wxapp',
             component: RouteView,
             redirect: '/client/wxapp/setting',
@@ -416,11 +433,24 @@ export const asyncRouterMap = [
             children: [
               {
                 path: '/client/wxapp/setting',
-                component: () => import(/* webpackChunkName: "mp" */ '@/views/client/wxapp/Setting'),
+                component: () => import(/* webpackChunkName: "client" */ '@/views/client/wxapp/Setting'),
                 meta: { title: '小程序设置', keepAlive: false, permission: ['/client/wxapp/setting'] }
               }
             ]
-          }
+          },
+          {
+            path: '/client/h5',
+            component: RouteView,
+            redirect: '/client/h5/setting',
+            meta: { title: 'H5端', keepAlive: false, permission: ['/client/h5'] },
+            children: [
+              {
+                path: '/client/h5/setting',
+                component: () => import(/* webpackChunkName: "client" */ '@/views/client/h5/Setting'),
+                meta: { title: '站点设置', keepAlive: false, permission: ['/client/h5/setting'] }
+              }
+            ]
+          },
         ]
       },
 
