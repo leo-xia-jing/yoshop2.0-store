@@ -65,6 +65,10 @@ export default {
           scopedSlots: { customRender: 'time' }
         },
         {
+          title: '导出时间',
+          dataIndex: 'create_time'
+        },
+        {
           title: '导出状态',
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' }
