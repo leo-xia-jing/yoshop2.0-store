@@ -107,6 +107,13 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  margin-left: 0;
+}
+.ant-checkbox-wrapper {
+  margin-right: 14px;
+  margin-bottom: 18px;
+}
 /deep/.ant-form-item-control {
   padding-left: 10px;
 

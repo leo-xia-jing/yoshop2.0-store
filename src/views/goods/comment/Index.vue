@@ -67,7 +67,7 @@
       <!-- 评分 -->
       <span slot="score" slot-scope="text">
         <a-tag
-          :color="{10: 'green', 20: 'default', 30: 'red'}[text]"
+          :color="{10: 'green', 20: '', 30: 'red'}[text]"
         >{{ {10: '好评', 20: '中评', 30: '差评'}[text] }}</a-tag>
       </span>
       <!-- 评价内容 -->
