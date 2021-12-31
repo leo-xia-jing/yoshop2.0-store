@@ -73,17 +73,30 @@ function getAccessRouter (routerMap, roles) {
  * @param {*} roles
  */
 function setPrimaryMenuRedirect (routerMap) {
-  routerMap[0]['children'].forEach(item => {
-    // 子菜单的path列表
-    const childrenPaths = item.children != null ? item.children.map(item => item.path) : []
+  const oneList = routerMap[0].children
+  oneList.forEach(oneItem => {
+    // 设置二级菜单的redirect
+    const twoList = oneItem.children != null ? oneItem.children : []
+    twoList.forEach(twoItem => {
+      const treeList = twoItem.children != null ? twoItem.children : []
+      const childrenPaths = treeList.map(item => item.path)
+      if (childrenPaths.length > 0) {
+        if (!twoItem.redirect || childrenPaths.indexOf(twoItem.redirect) === -1) {
+          twoItem.redirect = childrenPaths[0]
+        }
+      }
+    })
+    // 设置一级菜单的redirect
+    const childrenPaths = oneItem.children != null ? oneItem.children.map(item => item.path) : []
     if (childrenPaths.length > 0) {
       // 如果未设置redirect, 则默认取第一个path
       // 如果设置了redirect, 判断是否有权限, 无权限则取第一个path
-      if (!item.redirect || childrenPaths.indexOf(item.redirect) === -1) {
-        item.redirect = childrenPaths[0]
+      if (!oneItem.redirect || childrenPaths.indexOf(oneItem.redirect) === -1) {
+        oneItem.redirect = childrenPaths[0]
       }
     }
   })
+
   // 默认的首页
   return setIndexRedirect(routerMap)
 }
