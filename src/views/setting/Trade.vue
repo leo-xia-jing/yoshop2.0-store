@@ -8,12 +8,12 @@
             <a-input-number
               class="fl-l"
               :min="0"
-              v-decorator="['order.close_days', { rules: [{required: true, message: '不能为空'}] }]"
+              v-decorator="['order.closeHours', { rules: [{required: true, message: '不能为空'}] }]"
             />
-            <span class="input-text_right">天后自动关闭</span>
+            <span class="input-text_right">小时后自动关闭</span>
           </div>
           <div class="form-item-help">
-            <p class="extra">如果在期间订单未付款，系统自动关闭，设置0天不自动关闭</p>
+            <p class="extra">如果在期间订单未付款，系统自动关闭，设置0小时不自动关闭</p>
           </div>
         </a-form-item>
         <a-form-item label="已发货订单" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -130,7 +130,10 @@ export default {
     setFieldsValue () {
       const { record, $nextTick, form } = this
       !isEmpty(form.getFieldsValue()) && $nextTick(() => {
-        form.setFieldsValue(pick(record, ['order', 'freight_rule']))
+         form.setFieldsValue({
+           'freight_rule': record.freight_rule,
+           order: pick(record.order, ['closeHours', 'receive_days', 'refund_days'])
+         })
       })
     },
 
