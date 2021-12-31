@@ -453,7 +453,7 @@
                   <div class="block-item-common">
                     <div class="block-item-common-row">
                       <span class="label">图片</span>
-                      <span class="label">{{ item.imgName }}</span>
+                      <span class="label value">{{ item.imgName }}</span>
                     </div>
                     <div class="block-item-common-row">
                       <span class="label">链接</span>
@@ -530,7 +530,7 @@
                   <div class="block-item-common">
                     <div class="block-item-common-row">
                       <span class="label">图片</span>
-                      <span class="label">{{ item.imgName }}</span>
+                      <span class="label value">{{ item.imgName }}</span>
                     </div>
                     <div class="block-item-common-row">
                       <span class="label">链接</span>
@@ -781,7 +781,7 @@
                   <div class="block-item-common">
                     <div class="block-item-common-row">
                       <span class="label">名称</span>
-                      <span class="label">{{ item.imgName }}</span>
+                      <span class="label value">{{ item.imgName }}</span>
                     </div>
                     <div class="block-item-common-row">
                       <span class="label">链接</span>
