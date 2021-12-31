@@ -4,6 +4,7 @@ import storage from 'store'
 import notification from 'ant-design-vue/es/notification'
 import message from 'ant-design-vue/es/message'
 import { VueAxios } from './axios'
+import { isObject } from './util'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 // 站点配置文件
@@ -34,6 +35,10 @@ service.interceptors.request.use(config => {
 // 接口响应拦截
 service.interceptors.response.use((response) => {
   const result = response.data
+  if (!isObject(result)) {
+    const error = { message: '服务端api返回的数据格式不正确' }
+    return Promise.reject(error)
+  }
   // result.status [ 200正常 500有错误 401未登录 403没有权限访问 ]
   // api报错信息
   if (result.status === 500) {
