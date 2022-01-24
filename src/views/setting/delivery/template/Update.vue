@@ -323,7 +323,7 @@ export default {
   .operation {
     text-align: right;
     a {
-      font-size: 13px;
+      font-size: @font-size-base;
       margin-left: 6px;
     }
   }

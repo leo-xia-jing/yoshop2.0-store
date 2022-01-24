@@ -68,7 +68,7 @@ export default {
   /deep/ .ant-dropdown-menu-item {
     min-width: 130px;
     padding-left: 20px;
-    font-size: 13px;
+     font-size: @font-size-base;
   }
 }
 </style>

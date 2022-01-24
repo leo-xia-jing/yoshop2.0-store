@@ -76,7 +76,7 @@ export default {
     width: 200px;
     height: @size;
     .title {
-      font-size: 13px;
+      font-size: @font-size-base;
       margin-bottom: 5px;
     }
     .subtitle {

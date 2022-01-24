@@ -358,7 +358,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .card-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -407,7 +407,7 @@ export default {
 
   .col-right {
     .name {
-      font-size: 14px;
+      font-size: @font-size-base;
       color: #666;
     }
 

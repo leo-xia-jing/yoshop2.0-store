@@ -1,7 +1,6 @@
 @import '~ant-design-vue/es/style/themes/default.less';
 @import './utils/utils.less';
 
-@test: 13px;
 
 // 滚动条样式
 ::-webkit-scrollbar {
@@ -22,13 +21,29 @@ body,
   height: 100%;
 }
 
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 iframe {
   border: 0;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 p {
   // margin: 0 !important
-  margin: 0
+  margin: 0;
+  margin-bottom: 0 !important;
+}
+
+canvas {
+  display: block;
 }
 
 .colorWeak {
@@ -38,21 +53,6 @@ p {
 .ant-layout.layout-basic {
   height: 100vh;
   min-height: 100vh;
-}
-
-canvas {
-  display: block;
-}
-
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-ul,
-ol {
-  list-style: none;
 }
 
 // 数据列表 样式
@@ -106,8 +106,8 @@ ol {
 
 // 内容页card组件标题
 .card-title {
-  font-size: 16px;
-  margin-bottom: 16px;
+  font-size: 14.5px;
+  margin-bottom: 18px;
   color: rgba(0, 0, 0, 0.75);
 }
 
@@ -142,7 +142,7 @@ ol {
 
   .ant-form-explain,
   .ant-form-extra {
-    font-size: 13px;
+    font-size: 12.5px;
   }
 
   .form-item-help {
@@ -151,7 +151,7 @@ ol {
     line-height: 1.5;
     padding-top: 4px;
     min-height: 22px;
-    margin-top: -2px;
+    // margin-top: -2px;
     transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 
     a {
@@ -161,11 +161,11 @@ ol {
     .extra,
     small {
       color: rgba(0, 0, 0, 0.45);
-      font-size: 13px !important;
+      font-size: 12.5px !important;
     }
 
     .extra {
-      margin-bottom: 5px;
+      margin-bottom: 4px !important;
     }
   }
 }
@@ -180,7 +180,7 @@ ol {
   margin: 30px 0 !important;
 
   .ant-divider-inner-text {
-    font-size: 13px;
+    font-size: @font-size-base;
     color: rgba(0, 0, 0, 0.61);
   }
 }
@@ -298,7 +298,7 @@ ol {
   padding-left: 40px;
 
   .ant-alert-message {
-    font-size: 13px;
+    font-size: @font-size-base;
   }
 
   // 黄色警告
@@ -318,20 +318,17 @@ ol {
     }
 
     .ant-alert-message {
-      font-size: 14px;
+      font-size: @font-size-base;
       margin-bottom: 6px;
-      // margin-bottom: 0;
     }
 
     .ant-alert-description {
       font-size: 12.3px;
     }
   }
+
 }
 
 span.ant-radio+* {
   color: rgba(0, 0, 0, .5)
 }
-
-
-@font-size-base: 13px;

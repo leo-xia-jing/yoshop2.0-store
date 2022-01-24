@@ -8,7 +8,7 @@
 
   // 标题
   &-title {
-    font-size: 14px;
+    font-size: @font-size-base;
     font-weight: 600;
     color: #595961;
     margin-top: 5px;
@@ -23,7 +23,7 @@
   // 副标题
   .sub-title {
     text-align: center;
-    font-size: 14px;
+    font-size: @font-size-base;
     color: #9797a1;
     margin-bottom: 15px;
     line-height: 20px;
@@ -53,15 +53,19 @@
 
   .tips-wrap {
     flex: 1;
-    color: #9797a1;
+    color: #a7a7b1;
   }
 
   // 区块
   .block-box {
     border-radius: 4px;
-    padding: 10px 10px 10px 10px;
+    padding: 12px 11px;
     background: #f0f2f5;
     margin: 0 auto 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &.drag {
       .block-title {
@@ -72,11 +76,14 @@
     .block-title {
       line-height: 30px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: @font-size-base;
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
 
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       .link,
       .tips {
@@ -97,6 +104,11 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
 
       .tips {
         margin-top: 5px;
@@ -127,7 +139,6 @@
 }
 
 // 颜色选择器
-
 .item-colorPicker {
   display: flex;
 
@@ -165,6 +176,8 @@
 
 // 多选框
 .item-checkbox {
+  margin-right: -10px;
+
   .ant-checkbox-wrapper {
     margin: 0 10px 0 0;
     line-height: 28px;
@@ -213,6 +226,17 @@
     &:hover {
       border-color: @primary-color;
     }
+  }
+}
+
+// 文字描述
+.text-describe {
+  padding: 5px;
+  font-size: @font-size-base;
+  line-height: 25px;
+
+  .empty {
+    height: 10px;
   }
 }
 

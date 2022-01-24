@@ -36,7 +36,7 @@ export default {
   margin-bottom: 20px;
   .widget-title {
     position: relative;
-    font-size: 15px;
+    font-size: 14px;
     &::before {
       content: '';
       position: absolute;

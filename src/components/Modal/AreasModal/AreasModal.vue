@@ -313,7 +313,7 @@ export default {
     padding: 0 10px;
   }
   .areas-title {
-    font-size: 14px;
+    font-size: @font-size-base;
     width: 95%;
     .areas-flip {
       margin-right: 17px;
