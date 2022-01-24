@@ -174,6 +174,30 @@
           <!-- 更多设置 -->
           <div class="tab-pane" v-show="tabKey == 3">
             <a-form-item
+              label="主图视频"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              extra="建议视频宽高比19:9，建议时长8-45秒"
+            >
+              <SelectVideo
+                :multiple="false"
+                :defaultList="formData.goods.video ? [formData.goods.video] : []"
+                v-decorator="['video_id']"
+              />
+            </a-form-item>
+            <a-form-item
+              label="视频封面"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              extra="建议尺寸：750像素*750像素"
+            >
+              <SelectImage
+                :multiple="false"
+                :defaultList="formData.goods.videoCover ? [formData.goods.videoCover] : []"
+                v-decorator="['video_cover_id']"
+              />
+            </a-form-item>
+            <a-form-item
               label="商品卖点"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
@@ -297,7 +321,7 @@
 
 <script>
 import * as GoodsApi from '@/api/goods'
-import { SelectImage, Ueditor, InputNumberGroup } from '@/components'
+import { SelectImage, SelectVideo, Ueditor, InputNumberGroup } from '@/components'
 import GoodsModel from '@/common/model/goods/Index'
 import MultiSpec from './modules/MultiSpec'
 import { isEmptyObject } from '@/utils/util'
@@ -305,6 +329,7 @@ import { isEmptyObject } from '@/utils/util'
 export default {
   components: {
     SelectImage,
+    SelectVideo,
     Ueditor,
     InputNumberGroup,
     MultiSpec

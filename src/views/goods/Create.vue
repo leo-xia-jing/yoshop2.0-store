@@ -162,12 +162,30 @@
           <!-- 商品详情 -->
           <div class="tab-pane" v-show="tabKey == 2">
             <a-form-item label="商品详情" :labelCol="labelCol" :wrapperCol="{span: 16}">
-              <Ueditor v-decorator="['content', {rules: [{required: true, message: '商品详情不能为空'}]}]" />
+              <Ueditor
+                v-decorator="['content', { rules: [{ required: true, message: '商品详情不能为空' }] }]"
+              />
             </a-form-item>
           </div>
 
           <!-- 更多设置 -->
           <div class="tab-pane" v-show="tabKey == 3">
+            <a-form-item
+              label="主图视频"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              extra="建议视频宽高比19:9，建议时长8-45秒"
+            >
+              <SelectVideo :multiple="false" v-decorator="['video_id']" />
+            </a-form-item>
+            <a-form-item
+              label="视频封面"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+              extra="建议尺寸：750像素*750像素"
+            >
+              <SelectImage :multiple="false" v-decorator="['video_cover_id']" />
+            </a-form-item>
             <a-form-item
               label="商品卖点"
               :labelCol="labelCol"
@@ -292,13 +310,14 @@
 
 <script>
 import * as GoodsApi from '@/api/goods'
-import { SelectImage, Ueditor, InputNumberGroup } from '@/components'
+import { SelectImage, SelectVideo, Ueditor, InputNumberGroup } from '@/components'
 import GoodsModel from '@/common/model/goods/Index'
 import MultiSpec from './modules/MultiSpec'
 
 export default {
   components: {
     SelectImage,
+    SelectVideo,
     Ueditor,
     InputNumberGroup,
     MultiSpec
