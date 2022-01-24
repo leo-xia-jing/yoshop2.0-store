@@ -55,12 +55,8 @@ export default {
     getCategoryList () {
       this.isLoading = true
       CategoryModel.getListFromScreen()
-        .then(selectList => {
-          this.categoryListTree = selectList
-        })
-        .finally(result => {
-          this.isLoading = false
-        })
+        .then(selectList => this.categoryListTree = selectList)
+        .finally(result => this.isLoading = false)
     },
 
     // 触发change事件

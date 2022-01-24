@@ -399,6 +399,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@import '~ant-design-vue/es/style/themes/default.less';
 // 订单详情页
 .order-content {
   margin-bottom: 70px;

@@ -10,10 +10,12 @@
           <a-input
             class="group-item-input"
             v-model="item.spec_name"
+            :readOnly="isSpecLocked"
             placeholder="请输入规格名称"
             @change="onChangeSpecGroupIpt"
           />
           <a
+            v-if="!isSpecLocked"
             class="group-item-delete"
             href="javascript:;"
             @click="handleDeleteSpecGroup(index)"
@@ -24,17 +26,19 @@
             <a-input
               class="value-item-input"
               v-model="itm.spec_value"
+              :readOnly="isSpecLocked"
               placeholder="请输入规格值"
               @change="onChangeSpecValueIpt"
             />
             <a-icon
+              v-if="!isSpecLocked"
               class="icon-close"
               theme="filled"
               type="close-circle"
               @click="handleDeleteSpecValue(index, idx)"
             />
           </div>
-          <div class="spec-value-add">
+          <div v-if="!isSpecLocked" class="spec-value-add">
             <a
               class="group-item-delete"
               href="javascript:;"
@@ -45,7 +49,7 @@
       </div>
       <!-- 添加规格按钮 -->
       <a-button
-        v-if="multiSpecData.specList.length < 3"
+        v-if="!isSpecLocked && multiSpecData.specList.length < 3"
         class="spec-group-add-btn"
         icon="plus"
         @click="handleAddSpecGroup"
@@ -142,7 +146,9 @@ export default {
     // 默认的规格列表
     defaultSpecList: PropTypes.array.def([]),
     // 默认的SKU列表
-    defaultSkuList: PropTypes.array.def([])
+    defaultSkuList: PropTypes.array.def([]),
+    // 商品规格是否锁定(锁定状态下不允许编辑规格)
+    isSpecLocked: PropTypes.bool.def(false)
   },
   data () {
     return {
@@ -280,11 +286,11 @@ export default {
   .ant-input {
     height: 28px;
     padding: 4px 11px;
-    font-size: 13px;
+    font-size: @font-size-base;
     line-height: 1.5;
 
     &::placeholder {
-      font-size: 13px;
+      font-size: @font-size-base;
     }
   }
 
@@ -357,7 +363,7 @@ export default {
 
 // 添加规格按钮
 .spec-group-add-btn {
-  font-size: 13px;
+  font-size: @font-size-base;
 }
 
 // 批量设置sku
@@ -367,7 +373,7 @@ export default {
   .title {
     line-height: 28px;
     margin-right: 15px;
-    font-size: 14px;
+    font-size: @font-size-base;
   }
   /deep/.ant-input,
   /deep/.ant-input-number {

@@ -65,7 +65,7 @@ export default {
           activePath: item.activePath,
           hidden: item.hidden,
           isHasChildren,
-          isHideChildren: false,
+          isHideChildren: item.isHideChildren || false,
           children
         })
       })
@@ -102,14 +102,20 @@ export default {
       if (menuItem.hidden) {
         return null
       }
-      // 激活子菜单的class
+      // 当前菜单的calss
       const itemClass = ['menu-item_title']
-      if (menuItem.isHasChildren && !menuItem.isHideChildren) {
-        itemClass.push('show-children')
+      // 当前页面path
+      const curPath = this.$route.path
+      // 判断是否展开子菜单
+      if (menuItem.isHasChildren) {
+        // 当前path存在children中, 默认展开菜单
+        this.inChildrenPath(curPath, menuItem.children) && (menuItem.isHideChildren = false)
+        // 展开子菜单
+        !menuItem.isHideChildren && itemClass.push('show-children')
       }
       // 其他页面path激活当前项
       if (menuItem.activePath && menuItem.activePath.length) {
-        inArray(this.$route.path, menuItem.activePath) && itemClass.push('router-link-active')
+        inArray(curPath, menuItem.activePath) && itemClass.push('router-link-active')
       }
       const renderTitle = () => {
         return <span>{menuItem.title}</span>
@@ -128,6 +134,16 @@ export default {
           {this.renderMenuSub(menuItem)}
         </li>
       )
+    },
+
+    /**
+     * 判断当前path是否存在子菜单path中
+     * @param {string} path 当前页面path
+     * @param {array} children 子菜单数据
+     */
+    inChildrenPath (path, children) {
+      const pathArr = children.map(item => item.path)
+      return inArray(path, pathArr)
     },
 
     /**

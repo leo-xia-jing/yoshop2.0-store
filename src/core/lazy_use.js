@@ -50,16 +50,18 @@ import {
   Empty,
   Cascader,
   Collapse,
-  Slider
+  Slider,
+  FormModel
 } from 'ant-design-vue'
 import Viser from 'viser-vue'
 
 import Tree from '@/components/tree'
 
 // ext library
-import VueCropper from 'vue-cropper'
+import VueClipboard from 'vue-clipboard2'
 import Dialog from '@/components/Dialog'
-import MultiTab from '@/components/MultiTab'
+// import VueCropper from 'vue-cropper'
+// import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/utils/helper/permission'
 import './directives/action'
@@ -108,6 +110,7 @@ Vue.use(Descriptions)
 Vue.use(TreeSelect)
 Vue.use(Collapse)
 Vue.use(Slider)
+Vue.use(FormModel)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
@@ -117,12 +120,15 @@ Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 
+VueClipboard.config.autoSetContainer = true
+
 Vue.use(Viser)
 Vue.use(Dialog) // this.$dialog func
-Vue.use(MultiTab)
+// Vue.use(MultiTab)
+// Vue.use(VueCropper)
 Vue.use(PageLoading)
 Vue.use(PermissionHelper)
-Vue.use(VueCropper)
+Vue.use(VueClipboard)
 
 Vue.use(Pagination)
 Vue.use(Empty)

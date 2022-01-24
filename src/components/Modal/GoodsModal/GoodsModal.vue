@@ -56,11 +56,6 @@
       <span slot="status" slot-scope="text">
         <a-tag :color="text == 10 ? 'green' : 'red'">{{ text == 10 ? '上架' : '下架' }}</a-tag>
       </span>
-      <!-- 操作 -->
-      <span slot="action" slot-scope="text, item">
-        <a v-action:edit style="margin-right: 8px;" @click="handleEdit(item)">编辑</a>
-        <a v-action:delete @click="handleDelete(item)">删除</a>
-      </span>
     </s-table>
   </a-modal>
 </template>
@@ -164,7 +159,7 @@ export default {
       this.visible = true
       this.$nextTick(() => {
         // 刷新列表数据
-        this.handleRefresh(true)
+        // this.handleRefresh(true)
         // 设置默认数据
         this.setDefaultValue()
       })

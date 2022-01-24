@@ -105,6 +105,10 @@ export default {
       Object.assign(this.localPagination, {
         showSizeChanger: val
       })
+    },
+    // 同步正在加载中的状态
+    loading (val) {
+      this.localLoading = val
     }
   },
   created () {

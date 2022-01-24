@@ -7,6 +7,7 @@ const api = {
   list: '/goods/list',
   listByIds: '/goods/listByIds',
   detail: '/goods/detail',
+  basic: '/goods/basic',
   add: '/goods/add',
   edit: '/goods/edit',
   delete: '/goods/delete',
@@ -36,13 +37,24 @@ export function listByIds (goodsIds, params) {
 }
 
 /**
- * 详情信息
+ * 商品详情(详细信息)
  */
 export function detail (params) {
   return axios({
     url: api.detail,
     method: 'get',
     params
+  })
+}
+
+/**
+ * 商品详情(基础信息)
+ */
+export function basic (goodsId, params) {
+  return axios({
+    url: api.basic,
+    method: 'get',
+    params: { goodsId, ...params }
   })
 }
 

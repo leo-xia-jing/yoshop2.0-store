@@ -28,6 +28,7 @@
     </a-table>
     <GoodsModal
       ref="GoodsModal"
+      :multiple="multiple"
       :maxNum="maxNum"
       :defaultList="selectedItems"
       @handleSubmit="handleSelectGoodsSubmit"
@@ -62,7 +63,7 @@ const columns = [
   }
 ]
 
-// 图片选择器组件
+// 商品选择器组件
 export default {
   name: 'SelectGoods',
   components: {
@@ -74,6 +75,8 @@ export default {
     event: 'change'
   },
   props: {
+    // 多选模式, 如果false为单选
+    multiple: PropTypes.bool.def(true),
     // 最大选择的数量限制, multiple模式下有效
     maxNum: PropTypes.integer.def(100),
     // 默认选中的商品
@@ -107,8 +110,16 @@ export default {
 
     // 更新数据
     onUpdate (selectedItems) {
-      this.selectedItems = selectedItems
-      this.selectedGoodsIds = selectedItems.map(item => item.goods_id)
+      if (this.multiple || !selectedItems.length) {
+        // 多选模式
+        this.selectedItems = selectedItems
+        this.selectedGoodsIds = selectedItems.map(item => item.goods_id)
+      } else {
+        // 单选模式
+        const single = selectedItems[selectedItems.length - 1]
+        this.selectedItems = [single]
+        this.selectedGoodsIds = [single.goods_id]
+      }
       this.onChange()
     },
 
@@ -132,8 +143,9 @@ export default {
 
     // 触发change事件
     onChange () {
-      const { selectedItems, selectedGoodsIds } = this
-      return this.$emit('change', selectedGoodsIds, selectedItems)
+      const { multiple, selectedGoodsIds } = this
+      const sGoodsIds = multiple ? selectedGoodsIds : (selectedGoodsIds.length ? selectedGoodsIds[0] : undefined)
+      return this.$emit('change', sGoodsIds)
     }
 
   }

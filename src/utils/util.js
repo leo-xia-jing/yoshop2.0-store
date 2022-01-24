@@ -180,3 +180,38 @@ export function assignment (obj, assignment) {
     obj[key] = assignment[key]
   })
 }
+
+/**
+ * 对象转URL
+ * @param {object} obj
+ */
+export const urlEncode = (obj = {}) => {
+  const result = []
+  for (const key in obj) {
+    const item = obj[key]
+    if (!item) {
+      continue
+    }
+    if (isArray(item)) {
+      item.forEach(val => {
+        result.push(key + '=' + val)
+      })
+    } else {
+      result.push(key + '=' + item)
+    }
+  }
+  return result.join('&')
+}
+
+/**
+ * 生成url (带参数)
+ * @param {string} path 链接
+ * @param {object} params query参数
+ */
+export function buildUrL (path, params) {
+  const queryStr = urlEncode(params)
+  if (!isEmpty(queryStr)) {
+    return path + '?' + queryStr
+  }
+  return path
+}

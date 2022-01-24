@@ -4,6 +4,9 @@
 
 @nav-header-height: @layout-header-height;
 
+// 把默认的背景色改掉
+@layout-sider-background: #1F2025;
+
 .@{sider-menu-prefix-cls} {
 
   &-logo {
@@ -27,7 +30,8 @@
     }
 
     h1 {
-      color      : @white;
+      // color      : @white;
+      color: #F9E4B6 !important;
       font-size  : 15px;
       font-weight: normal;
       margin     : 0;
@@ -44,6 +48,7 @@
     z-index   : 8;
     min-height: 100vh;
     box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    background: @layout-sider-background;
 
     &.fix-sider-bar {
       position  : fixed;

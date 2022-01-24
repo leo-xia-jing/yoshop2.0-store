@@ -379,7 +379,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .card-title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   margin-bottom: 15px;
 }
@@ -438,7 +438,7 @@ export default {
   .name {
     font-weight: bold;
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 13.6px;
   }
 
   .value {
@@ -450,7 +450,6 @@ export default {
 
 // 常用功能
 .functions {
-
   .item {
     display: block;
     padding: 13px 20px;
@@ -461,7 +460,7 @@ export default {
   }
 
   .name {
-    font-size: 14px;
+    font-size: @font-size-base;
     margin-left: 10px;
   }
 
@@ -470,7 +469,7 @@ export default {
     height: 28px;
     // background   : #139dff !important;
     color: #fff;
-    font-size: 14px;
+    font-size: @font-size-base;
     border-radius: 5px;
   }
 }
@@ -504,7 +503,7 @@ export default {
 
   .col-right {
     .name {
-      font-size: 14px;
+      font-size: @font-size-base;
       color: #666;
     }
 
