@@ -32,6 +32,8 @@ export const defaultConfig = {
     'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
     'fontsize', '|',
     'indent', 'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+    'unlink',
+    //  'link', 
     // 'simpleupload',
     // 'insertvideo'
   ]]

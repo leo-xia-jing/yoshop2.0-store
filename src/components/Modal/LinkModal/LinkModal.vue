@@ -63,6 +63,7 @@
 <script>
 import _ from 'lodash'
 import { linkList } from '@/common/model/Links'
+import { buildUrL } from '@/utils/util'
 
 export default {
   name: 'LinkModal',
@@ -99,9 +100,7 @@ export default {
       return linkList.map(item => item.key)
     }
   },
-  created () {
-
-  },
+  created () { },
   methods: {
 
     // 显示对话框
@@ -187,6 +186,10 @@ export default {
         item.value = formData.values[index]
         _.set(link.param, item.key, item.value)
       }
+      // 将link对象拼接为url
+      if (link.type === 'PAGE') {
+        link.param.url = buildUrL(link.param.path, link.param.query)
+      }
       // 克隆一个新对象返回
       return _.cloneDeep(link)
     }
@@ -209,7 +212,7 @@ export default {
 
 /deep/.ant-collapse-header {
   padding: 14px 16px;
-  font-size: 13px;
+  font-size: @font-size-base;
   font-weight: 700;
   color: #595961;
 }
