@@ -141,9 +141,9 @@
             </template>
             <!-- 商品编码 -->
             <span slot="goods_no" slot-scope="text">{{ text ? text : '--' }}</span>
-            <!-- 单价 -->
+            <!-- 单价	 -->
             <template slot="goods_price" slot-scope="text">￥{{ text }}</template>
-            <!-- 购买数量 -->
+            <!-- 购买数量	 -->
             <span slot="total_num" slot-scope="text">x{{ text }}</span>
             <!-- 实际付款价 -->
             <span slot="total_pay_price" slot-scope="text">￥{{ text }}</span>
@@ -151,7 +151,7 @@
         </div>
       </a-card>
 
-      <!-- 退货地址 -->
+      <!-- 商家退货地址 -->
       <a-card
         v-if="record.audit_status == AuditStatusEnum.REVIEWED.value"
         class="mt-20"
@@ -170,6 +170,29 @@
           <a-descriptions-item label="详细地址">{{ record.address.detail }}</a-descriptions-item>
         </a-descriptions>
       </a-card>
+
+      <!-- 用户发货信息 -->
+      <a-card
+        v-if="(
+          record.type == RefundTypeEnum.RETURN.value
+            && record.audit_status == AuditStatusEnum.REVIEWED.value
+            && record.is_user_send
+        )"
+        class="mt-20"
+        :bordered="false"
+      >
+        <a-descriptions title="退货物流信息">
+          <a-descriptions-item label="物流公司">{{ record.express.express_name }}</a-descriptions-item>
+          <a-descriptions-item label="物流单号">{{ record.express_no }}</a-descriptions-item>
+          <a-descriptions-item label="发货状态">
+            <a-tag
+              :color="record.is_user_send ? 'green' : ''"
+            >{{ record.is_user_send ? '已发货' : '待发货' }}</a-tag>
+          </a-descriptions-item>
+          <a-descriptions-item label="发货时间">{{ record.send_time }}</a-descriptions-item>
+        </a-descriptions>
+      </a-card>
+
     </div>
     <AuditForm ref="AuditForm" @handleSubmit="handleRefresh" />
     <ReceiptForm ref="ReceiptForm" @handleSubmit="handleRefresh" />
@@ -342,7 +365,6 @@ export default {
 
   // 预览图列表
   .image-list {
-    margin-bottom: -10px;
     // 文件元素
     .file-item {
       position: relative;
