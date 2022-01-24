@@ -38,10 +38,12 @@
             />
             <!-- 上传按钮 -->
             <div class="file-upload fl-r">
-              <span class="upload-desc">大小不能超过2M</span>
+              <span
+                class="upload-desc"
+              >{{ fileType === FileTypeEnum.VIDEO.value ? '视频' : '图片' }}大小不能超过{{ uploadSizeLimit }}M</span>
               <a-upload
                 name="iFile"
-                accept="image/*"
+                :accept="accept"
                 :beforeUpload="beforeUpload"
                 :customRequest="onUpload"
                 :multiple="true"
@@ -61,7 +63,10 @@
                 :key="index"
                 @click="onSelectItem(index)"
               >
-                <div class="img-cover" :style="{backgroundImage: `url('${item.preview_url}')`}"></div>
+                <div
+                  class="img-cover"
+                  :style="{ backgroundImage: `url('${item.preview_url}')`, width: fileType === FileTypeEnum.VIDEO.value ? '55px' : '95px' }"
+                ></div>
                 <p class="file-name oneline-hide">{{ item.file_name }}</p>
                 <div class="select-mask">
                   <a-icon class="selected-icon" type="check" />
@@ -105,6 +110,7 @@
 
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
+import store from '@/store'
 import { debounce } from '@/utils/util'
 import * as FileApi from '@/api/files'
 import * as GroupApi from '@/api/files/group'
@@ -126,7 +132,9 @@ export default {
     // 最大选择的数量限制, multiple模式下有效
     maxNum: PropTypes.integer.def(100),
     // 已选择的数量
-    selectedNum: PropTypes.integer.def(0)
+    selectedNum: PropTypes.integer.def(0),
+    // 文件类型 (10图片 30视频)
+    fileType: PropTypes.integer.def(FileTypeEnum.IMAGE.value),
   },
   data () {
     return {
@@ -134,8 +142,14 @@ export default {
       title: '图片库',
       // modal(对话框)是否可见
       visible: false,
+      // 枚举类
+      FileTypeEnum,
       // 后端上传api
       uploadUrl: UploadApi.image,
+      // 上传文件大小限制
+      uploadSizeLimit: 2,
+      // 文件上传的格式限制
+      accept: '',
       // 查询参数
       queryParam: {
         // 文件类型: 图片
@@ -169,16 +183,34 @@ export default {
   },
   methods: {
 
-    /**
-     * 显示对话框
-     */
+    // 显示对话框
     show () {
       // 显示窗口
       this.visible = true
+      // 初始化文件类型
+      this.initFileType()
       // 获取分组列表
       this.getGroupList()
       // 获取文件列表
       this.getFileList()
+    },
+
+    // 初始化文件类型
+    initFileType () {
+      const publicConfig = store.getters.publicConfig
+      if (this.fileType === FileTypeEnum.IMAGE.value) {
+        this.title = '图片库'
+        this.accept = 'image/jpeg,image/png,image/gif,image/webp'
+        this.uploadUrl = UploadApi.image
+        this.uploadSizeLimit = publicConfig.uploadImageSize || 2
+      }
+      if (this.fileType === FileTypeEnum.VIDEO.value) {
+        this.title = '视频库'
+        this.accept = '.mp4'
+        this.uploadUrl = UploadApi.video
+        this.uploadSizeLimit = publicConfig.uploadVideoSize || 10
+      }
+      this.queryParam.fileType = this.fileType
     },
 
     // 获取文件分组列表
@@ -279,9 +311,9 @@ export default {
       // 显示错误提示(防抖处理)
       const showErrorMsg = debounce(this.$message.error, 20)
       // 验证文件大小
-      const isLt1M = file.size / 1024 / 1024 < 2
-      if (!isLt1M) {
-        showErrorMsg('文件大小不能超出2MB')
+      const fileSizeMb = file.size / 1024 / 1024
+      if (fileSizeMb > this.uploadSizeLimit) {
+        showErrorMsg(`文件大小不能超出${this.uploadFileSizeLimit}MB`)
         return false
       }
       // 验证文件上传数量
@@ -292,9 +324,7 @@ export default {
       return true
     },
 
-    /**
-     * 事件: 自定义上传事件
-     */
+    // 事件: 自定义上传
     onUpload (info) {
       this.isLoading = true
       // 记录上传状态
@@ -304,7 +334,7 @@ export default {
       formData.append('iFile', info.file)
       formData.append('groupId', this.queryParam.groupId)
       // 开始上传
-      UploadApi.image(formData)
+      this.uploadUrl(formData)
         .finally(() => {
           this.uploading.pop()
           if (this.uploading.length === 0) {
@@ -320,9 +350,7 @@ export default {
       this.handleRefresh()
     },
 
-    /**
-     * 关闭对话框事件
-     */
+    // 关闭对话框事件
     handleCancel () {
       this.visible = false
       this.selectedIndexs = []
@@ -340,9 +368,7 @@ export default {
       this.getFileList()
     },
 
-    /**
-     * 删除文件
-     */
+    // 删除文件
     handleDelete (item) {
       const that = this
       const fileIds = this.getSelectedItemIds()
@@ -441,7 +467,7 @@ export default {
     .group-add {
       display: block;
       margin-top: 20px;
-      font-size: 13px;
+      font-size: @font-size-base;
       padding: 0 30px;
     }
   }
@@ -534,7 +560,7 @@ export default {
           margin-right: 10px;
         }
         .btn-mini {
-          font-size: 13px;
+          font-size: @font-size-base;
           padding: 0 15px;
           height: 28px;
         }

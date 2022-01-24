@@ -4,6 +4,7 @@ import ContentHeader from '@/components/ContentHeader'
 import { STable } from '@/components/Table'
 
 import SelectImage from '@/components/SelectImage'
+import SelectVideo from '@/components/SelectVideo'
 import SelectGoods from '@/components/SelectGoods'
 import SelectRegion from '@/components/SelectRegion'
 import Getpoint from '@/components/Getpoint'
@@ -16,6 +17,7 @@ export {
   Dialog,
 
   SelectImage,
+  SelectVideo,
   SelectGoods,
   SelectRegion,
   Getpoint,

@@ -1,5 +1,5 @@
 <template>
-  <div class="image-list clearfix" :class="{ multiple }">
+  <div class="video-list clearfix" :class="{ multiple }">
     <!-- 文件列表 -->
     <!-- draggable是拖拽组件 -->
     <draggable
@@ -9,7 +9,7 @@
       @end="drag=false"
       @update="onUpdate"
     >
-      <transition-group class="draggable-item" type="transition" :name="'flip-list'">
+      <transition-group type="transition" :name="'flip-list'">
         <div
           v-for="(item, index) in selectedItems"
           :key="item.file_id"
@@ -17,7 +17,7 @@
           :style="{ width: `${width}px`, height: `${width}px` }"
         >
           <!-- 预览图 -->
-          <a :href="item.preview_url" target="_blank">
+          <a :href="item.external_url" target="_blank">
             <div class="img-cover" :style="{ backgroundImage: `url('${item.preview_url}')` }"></div>
           </a>
           <!-- 删除文件 -->
@@ -30,15 +30,15 @@
         </div>
       </transition-group>
     </draggable>
-    <!-- 图片选择器 -->
+    <!-- 视频选择器 -->
     <!-- 如果单选, selectedItems无内容时 显示 -->
     <!-- 如果多选, selectedItems数量小于 maxNum 显示 -->
     <div
       v-show="(!multiple && selectedItems.length <= 0) || (multiple && selectedItems.length < maxNum)"
       class="selector"
       :style="{width: `${width}px`, height: `${width}px`}"
-      title="点击选择图片"
-      @click="handleSelectImage"
+      title="点击选择视频"
+      @click="handleSelectVideo"
     >
       <a-icon class="icon-plus" :style="{ fontSize: `${width * 0.4}px` }" type="plus" />
     </div>
@@ -48,7 +48,8 @@
       :multiple="multiple"
       :maxNum="maxNum"
       :selectedNum="selectedItems.length"
-      @handleSubmit="handleSelectImageSubmit"
+      :fileType="FileTypeEnum.VIDEO.value"
+      @handleSubmit="handleSelectVideoSubmit"
     />
   </div>
 </template>
@@ -58,10 +59,11 @@ import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import draggable from 'vuedraggable'
 import cloneDeep from 'lodash.clonedeep'
 import { FilesModal } from '@/components/Modal'
+import FileTypeEnum from '@/common/enum/file/FileType'
 
-// 图片选择器组件
+// 视频选择器组件
 export default {
-  name: 'SelectImage',
+  name: 'SelectVideo',
   components: {
     FilesModal,
     draggable
@@ -82,7 +84,9 @@ export default {
   },
   data () {
     return {
-      // 选择的图片列表
+      // 枚举类
+      FileTypeEnum,
+      // 选择的视频列表
       selectedItems: [],
       // 禁止传参 (防止selectedItems为空时defaultList重新赋值)
       allowProps: true
@@ -112,14 +116,14 @@ export default {
     },
 
     // 打开文件选择器
-    handleSelectImage () {
+    handleSelectVideo () {
       this.$refs.FilesModal.show()
     },
 
     // 文件库modal确认回调
-    handleSelectImageSubmit (result) {
+    handleSelectVideoSubmit (result) {
       if (result.length > 0) {
-        // 记录选中的图片列表
+        // 记录选中的视频列表
         const { multiple, selectedItems } = this
         this.selectedItems = multiple ? selectedItems.concat(result) : result
         this.onChange()
@@ -159,7 +163,8 @@ export default {
   transition: transform 0s;
 }
 
-.image-list {
+.video-list {
+  margin-bottom: 6px;
   // 多选模式下margin
   &.multiple {
     .file-item,
@@ -182,7 +187,8 @@ export default {
   background: #fff;
   .img-cover {
     display: block;
-    width: 100%;
+    margin: 0 auto;
+    width: 45px;
     height: 100%;
     background: no-repeat center center / 100%;
   }

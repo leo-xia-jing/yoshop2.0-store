@@ -4,7 +4,8 @@ import { axios } from '@/utils/request'
  * api接口列表
  */
 const api = {
-  image: '/upload/image'
+  image: '/upload/image',
+  video: '/upload/video'
 }
 
 /**
@@ -14,6 +15,18 @@ const api = {
 export function image (data) {
   return axios({
     url: api.image,
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 上传视频
+ * @param {*} data
+ */
+export function video (data) {
+  return axios({
+    url: api.video,
     method: 'post',
     data
   })
