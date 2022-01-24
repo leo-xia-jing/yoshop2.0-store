@@ -126,7 +126,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '~ant-design-vue/es/style/themes/default.less';
 // 商品信息
 .data-preview {
   .data-item {

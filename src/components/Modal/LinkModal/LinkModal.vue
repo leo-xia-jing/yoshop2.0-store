@@ -196,7 +196,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '~ant-design-vue/es/style/themes/default.less';
 .ant-modal-root {
   background: #ccc;
   /deep/.ant-modal-body {
