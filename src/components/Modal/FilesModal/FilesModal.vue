@@ -313,12 +313,12 @@ export default {
       // 验证文件大小
       const fileSizeMb = file.size / 1024 / 1024
       if (fileSizeMb > this.uploadSizeLimit) {
-        showErrorMsg(`文件大小不能超出${this.uploadFileSizeLimit}MB`)
+        showErrorMsg(`上传的文件大小不能超出${this.uploadSizeLimit}MB`)
         return false
       }
       // 验证文件上传数量
-      if (fileList.length > 5) {
-        showErrorMsg('一次上传的文件数量不能超出5个')
+      if (fileList.length > 10) {
+        showErrorMsg('一次上传的文件数量不能超出10个')
         return false
       }
       return true
