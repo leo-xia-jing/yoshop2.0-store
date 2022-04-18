@@ -118,28 +118,20 @@ export default {
       }
     }
   },
-  created () {
-
-  },
+  created () { },
   methods: {
 
-    /**
-     * 新增记录
-     */
+    // 新增记录
     handleAdd () {
       this.$refs.AddForm.add()
     },
 
-    /**
-     * 编辑记录
-     */
+    // 编辑记录
     handleEdit (item) {
       this.$refs.EditForm.edit(item)
     },
 
-    /**
-     * 删除记录
-     */
+    // 删除记录
     handleDelete (item) {
       const app = this
       const modal = this.$confirm({
@@ -147,13 +139,11 @@ export default {
         content: '删除后不可恢复',
         onOk () {
           return Api.deleted({ addressId: item.address_id })
-            .then((result) => {
+            .then(result => {
               app.$message.success(result.message, 1.5)
               app.handleRefresh()
             })
-            .finally(result => {
-              modal.destroy()
-            })
+            .finally(result => modal.destroy())
         }
       })
     },
@@ -166,9 +156,7 @@ export default {
       this.$refs.table.refresh(bool)
     },
 
-    /**
-     * 检索查询
-     */
+    // 检索查询
     onSearch () {
       this.handleRefresh(true)
     }

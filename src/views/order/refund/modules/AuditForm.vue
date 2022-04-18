@@ -35,7 +35,7 @@
               v-for="(item, index) in addressList"
               :key="index"
               :value="item.address_id"
-            >{{ item.name }}</a-select-option>
+            >{{ item.full_address }}</a-select-option>
           </a-select>
           <div class="form-item-help">
             <router-link target="_blank" :to="{ path: '/store/address/index' }">地址管理</router-link>
@@ -113,12 +113,8 @@ export default {
     getAddressList () {
       this.isLoading = true
       AddressApi.all({ type: AddressTypeEnum.RETURN.value })
-        .then(result => {
-          this.addressList = result.data.list
-        })
-        .finally(() => {
-          this.isLoading = false
-        })
+        .then(result => this.addressList = result.data.list)
+        .finally(() => this.isLoading = false)
     },
 
     /**

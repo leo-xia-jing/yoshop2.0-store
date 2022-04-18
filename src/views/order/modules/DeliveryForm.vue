@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="640"
+    :width="580"
     :visible="visible"
     :isLoading="isLoading"
     :maskClosable="false"
@@ -29,7 +29,7 @@
           label="物流单号"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          extra="请填写发货的物流或快递单号"
+          extra="请手动录入物流单号或快递单号"
         >
           <a-input
             v-decorator="['express_no', { rules: [{ required: true, message: '请输入物流单号' }] }]"
@@ -71,9 +71,7 @@ export default {
   },
   methods: {
 
-    /**
-     * 显示对话框
-     */
+    // 显示对话框
     show (record) {
       // 显示窗口
       this.visible = true
@@ -85,17 +83,11 @@ export default {
     getExpressList () {
       this.isLoading = true
       ExpressApi.all()
-        .then(result => {
-          this.expressList = result.data.list
-        })
-        .finally(() => {
-          this.isLoading = false
-        })
+        .then(result => this.expressList = result.data.list)
+        .finally(() => this.isLoading = false)
     },
 
-    /**
-     * 确认按钮
-     */
+    // 确认按钮
     handleSubmit (e) {
       e.preventDefault()
       // 表单验证
@@ -106,17 +98,13 @@ export default {
       })
     },
 
-    /**
-     * 关闭对话框事件
-     */
+    // 关闭对话框事件
     handleCancel () {
       this.visible = false
       this.form.resetFields()
     },
 
-    /**
-    * 提交到后端api
-    */
+    // 提交到后端api
     onFormSubmit (values) {
       this.isLoading = true
       Api.delivery({ orderId: this.record.order_id, form: values })
@@ -128,9 +116,7 @@ export default {
           // 通知父端组件提交完成了
           this.$emit('handleSubmit', values)
         })
-        .finally(() => {
-          this.isLoading = false
-        })
+        .finally(() => this.isLoading = false)
     }
 
   }
