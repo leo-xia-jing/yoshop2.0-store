@@ -2,20 +2,20 @@
   <div class="goods-info clearfix">
     <!-- 商品图片 -->
     <div class="in-left">
-      <img :src="data.image" :alt="data.imageAlt" />
+      <img :src="dataObj.image" :alt="dataObj.imageAlt" />
     </div>
     <div class="in-right">
       <!-- 商品名称 -->
-      <p class="title twoline-hide">{{ data.title }}</p>
+      <p class="title twoline-hide" :style="{ width: `${dataObj.titleWidth}px` }">{{ dataObj.title }}</p>
       <!-- 副标题 -->
       <p
-        v-if="isEmpty(data.goodsProps)"
+        v-if="isEmpty(dataObj.goodsProps)"
         class="subtitle"
         :class="{ 'c-p': subTitleColor }"
-      >{{ data.subtitle }}</p>
+      >{{ dataObj.subtitle }}</p>
       <!-- 商品规格 -->
       <div v-else class="goods-props clearfix">
-        <div class="goods-props-item" v-for="(props, idx) in data.goodsProps" :key="idx">
+        <div class="goods-props-item" v-for="(props, idx) in dataObj.goodsProps" :key="idx">
           <span>{{ props.value.name }}</span>
         </div>
       </div>
@@ -32,15 +32,21 @@ export default {
   name: 'GoodsItem',
   props: {
     // 商品信息
-    data: PropTypes.object.def({
-      image: '',
-      imageAlt: '',
-      title: '',
-      subtitle: '',
-      goodsProps: []
-    }),
+    data: PropTypes.object.def({}),
     // 副标题颜色
     subTitleColor: PropTypes.bool.def(false)
+  },
+  computed: {
+    dataObj () {
+      return Object.assign({
+        image: '',
+        imageAlt: '',
+        title: '',
+        subtitle: '',
+        goodsProps: [],
+        titleWidth: 200
+      }, this.$props.data)
+    }
   },
   data () {
     return {
@@ -73,7 +79,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     float: left;
-    width: 200px;
+    // width: 200px;
     height: @size;
     .title {
       font-size: @font-size-base;
@@ -85,7 +91,6 @@ export default {
     }
   }
   // 商品规格
-
   .goods-props {
     color: #8a8a8a;
     font-size: 12px;
