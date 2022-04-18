@@ -341,7 +341,7 @@
             :style="{ opacity: item.style.opacity / 100 }"
           >
             <div class="service-icon">
-              <img :src="item.params.image" alt />
+              <img class="image" :src="item.params.image" alt />
             </div>
           </div>
 

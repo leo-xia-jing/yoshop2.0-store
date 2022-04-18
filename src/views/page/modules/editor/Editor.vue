@@ -336,20 +336,20 @@
               <div class="block-item">
                 <span class="label">底边距</span>
                 <div class="item-slider">
-                  <a-slider v-model="curItem.style.bottom" :min="0" :max="100" />
+                  <a-slider v-model="curItem.style.bottom" :min="0" :max="50" />
                   <span class="unit-text">
                     <span>{{ curItem.style.bottom }}</span>
-                    <span>%</span>
+                    <span>像素</span>
                   </span>
                 </div>
               </div>
               <div class="block-item">
                 <span class="label">右边距</span>
                 <div class="item-slider">
-                  <a-slider v-model="curItem.style.right" :min="0" :max="100" />
+                  <a-slider v-model="curItem.style.right" :min="0" :max="50" />
                   <span class="unit-text">
                     <span>{{ curItem.style.right }}</span>
-                    <span>%</span>
+                    <span>像素</span>
                   </span>
                 </div>
               </div>
