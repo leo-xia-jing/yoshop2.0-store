@@ -22,9 +22,6 @@
           <a-form-item class="search-btn">
             <a-button type="primary" icon="search" html-type="submit">搜索</a-button>
           </a-form-item>
-          <!-- <a-form-item class="search-btn">
-            <a-button @click="handleReset">重置</a-button>
-          </a-form-item>-->
         </a-form>
       </a-row>
       <!-- 操作板块 -->
@@ -90,7 +87,7 @@
       </span>
       <!-- 操作项 -->
       <div class="actions" slot="action" slot-scope="text, item">
-        <a v-if="$auth('/goods/update')" @click="handleEdit(item)">编辑</a>
+        <router-link :to="{ path: '/goods/update', query: { goodsId: item.goods_id } }">编辑</router-link>
         <a v-action:delete @click="handleDelete([item.goods_id])">删除</a>
       </div>
     </s-table>
@@ -283,13 +280,6 @@ export default {
      */
     handleCreate () {
       this.$router.push('/goods/create')
-    },
-
-    /**
-     * 编辑记录
-     */
-    handleEdit (item) {
-      this.$router.push({ path: '/goods/update', query: { goodsId: item.goods_id } })
     },
 
     /**
