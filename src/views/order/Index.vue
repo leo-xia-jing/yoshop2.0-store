@@ -164,7 +164,7 @@
                             :to="{ path: '/order/detail', query: { orderId: item.order_id } }"
                           >详情</router-link>
                           <a
-                            v-action:cancel
+                            v-action:deliver
                             v-if="(
                               item.pay_status == PayStatusEnum.SUCCESS.value
                                 && item.delivery_type == DeliveryTypeEnum.EXPRESS.value
