@@ -36,12 +36,46 @@
                   v-if="form.getFieldValue('style') == PageCategoryStyleEnum.TWO_LEVEL.value"
                   class="extra"
                 >分类图尺寸：宽150像素 高150像素</p>
+                <p
+                  v-if="form.getFieldValue('style') == PageCategoryStyleEnum.COMMODITY.value"
+                  class="extra"
+                >分类图尺寸：宽150像素 高150像素</p>
               </div>
             </a-form-item>
             <a-form-item label="分享标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
               <a-input v-decorator="['shareTitle']" />
+              <div class="form-item-help">
+                <p class="extra">分类页面分享时的标题内容</p>
+              </div>
             </a-form-item>
-            <a-form-item :wrapper-col="{ span: wrapperCol.span, offset: labelCol.span }">
+            <a-form-item
+              v-show="form.getFieldValue('style') == PageCategoryStyleEnum.COMMODITY.value"
+              label="购物车按钮"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-radio-group v-decorator="['showAddCart', { rules: [{ required: true }] }]">
+                <a-radio :value="true">显示</a-radio>
+                <a-radio :value="false">隐藏</a-radio>
+              </a-radio-group>
+              <div class="form-item-help">
+                <p class="extra">是否显示加入购物车图标按钮</p>
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-show="form.getFieldValue('style') == PageCategoryStyleEnum.COMMODITY.value"
+              label="按钮样式"
+              :labelCol="labelCol"
+              :wrapperCol="wrapperCol"
+            >
+              <a-radio-group v-decorator="['cartStyle', { rules: [{ required: true }] }]">
+                <a-radio v-for="(val, index) in 3" :value="index + 1" :key="index">样式{{ index + 1 }}</a-radio>
+              </a-radio-group>
+              <div class="form-item-help">
+                <p class="extra">加入购物车图标按钮的样式</p>
+              </div>
+            </a-form-item>
+            <a-form-item :wrapperCol="{ span: wrapperCol.span, offset: labelCol.span }">
               <a-button type="primary" html-type="submit">提交</a-button>
             </a-form-item>
           </a-form>
@@ -65,9 +99,9 @@ export default {
       // 当前设置项的key
       key: SettingEnum.PAGE_CATEGORY_TEMPLATE.value,
       // 标签布局属性
-      labelCol: { span: 4 },
+      labelCol: { span: 5 },
       // 输入框布局属性
-      wrapperCol: { span: 20 },
+      wrapperCol: { span: 19 },
       // loading状态
       isLoading: false,
       // 枚举类
@@ -100,20 +134,16 @@ export default {
         })
     },
 
-    /**
-     * 设置默认值
-     */
+    // 设置默认值
     setFieldsValue () {
       const { record, form: { setFieldsValue } } = this
       // 表单内容
       this.$nextTick(() => {
-        setFieldsValue(pick(record, ['style', 'share_title']))
+        setFieldsValue(pick(record, ['style', 'shareTitle', 'showAddCart', 'cartStyle']))
       })
     },
 
-    /**
-     * 确认按钮
-     */
+    // 确认按钮
     handleSubmit (e) {
       e.preventDefault()
       // 表单验证
@@ -124,9 +154,7 @@ export default {
       })
     },
 
-    /**
-    * 提交到后端api
-    */
+    // 提交到后端api
     onFormSubmit (values) {
       this.isLoading = true
       Api.update(this.key, { form: values })
@@ -165,7 +193,7 @@ export default {
   }
 
   .form-box {
-    width: 600px;
+    width: 650px;
   }
 }
 </style>
