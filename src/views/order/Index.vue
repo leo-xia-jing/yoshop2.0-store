@@ -6,7 +6,7 @@
         <!-- 搜索板块 -->
         <a-row class="row-item-search">
           <a-form class="search-form" :form="searchForm" layout="inline" @submit="handleSearch">
-            <a-form-item label="订单查询">
+            <a-form-item label="关键词">
               <a-input style="width: 342px" placeholder="请输入关键词" v-decorator="['searchValue']">
                 <a-select
                   slot="addonBefore"
@@ -275,7 +275,9 @@ const columns = [
 const SearchTypeEnum = [
   { name: '订单号', value: 10 },
   { name: '会员昵称', value: 20 },
-  { name: '会员ID', value: 30 }
+  { name: '会员ID', value: 30 },
+  { name: '收货人姓名', value: 40 },
+  { name: '收货人电话', value: 50 }
 ]
 
 export default {
