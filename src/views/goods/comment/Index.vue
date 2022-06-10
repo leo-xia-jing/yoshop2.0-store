@@ -57,17 +57,14 @@
           }"
         />
       </span>
-      <!-- 买家 -->
+      <!-- 会员信息 -->
       <span slot="user" slot-scope="text">
-        <p>{{ text.nick_name }}</p>
-        <p>
-          <span style="font-size: 12px;color: #7b7b7b;">(ID: 11649)</span>
-        </p>
+        <UserItem :user="text" />
       </span>
       <!-- 评分 -->
       <span slot="score" slot-scope="text">
         <a-tag
-          :color="{10: 'green', 20: '', 30: 'red'}[text]"
+          :color="{ 10: 'green', 20: '', 30: 'red' }[text]"
         >{{ {10: '好评', 20: '中评', 30: '差评'}[text] }}</a-tag>
       </span>
       <!-- 评价内容 -->
@@ -94,8 +91,8 @@
 
 <script>
 import * as CommentApi from '@/api/goods/comment'
-import { ContentHeader } from '@/components'
-import { STable, GoodsItem } from '@/components/Table'
+// import { ContentHeader } from '@/components'
+import { STable, GoodsItem, UserItem } from '@/components/Table'
 import EditForm from './modules/EditForm'
 
 // 表格表头
@@ -153,9 +150,10 @@ const columns = [
 export default {
   name: 'Index',
   components: {
-    ContentHeader,
+    // ContentHeader,
     STable,
     GoodsItem,
+    UserItem,
     EditForm
   },
   data () {
