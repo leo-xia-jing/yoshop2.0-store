@@ -8,6 +8,7 @@
             <a-input-number
               class="fl-l"
               :min="0"
+              :precision="0"
               v-decorator="['order.closeHours', { rules: [{required: true, message: '不能为空'}] }]"
             />
             <span class="input-text_right">小时后自动关闭</span>
@@ -21,6 +22,7 @@
             <a-input-number
               class="fl-l"
               :min="0"
+              :precision="0"
               v-decorator="['order.receive_days', { rules: [{required: true, message: '不能为空'}] }]"
             />
             <span class="input-text_right">天后自动确认收货</span>
@@ -34,6 +36,7 @@
             <a-input-number
               class="fl-l"
               :min="0"
+              :precision="0"
               v-decorator="['order.refund_days', { rules: [{required: true, message: '不能为空'}] }]"
             />
             <span class="input-text_right">天内允许申请售后</span>
@@ -130,10 +133,10 @@ export default {
     setFieldsValue () {
       const { record, $nextTick, form } = this
       !isEmpty(form.getFieldsValue()) && $nextTick(() => {
-         form.setFieldsValue({
-           'freight_rule': record.freight_rule,
-           order: pick(record.order, ['closeHours', 'receive_days', 'refund_days'])
-         })
+        form.setFieldsValue({
+          'freight_rule': record.freight_rule,
+          order: pick(record.order, ['closeHours', 'receive_days', 'refund_days'])
+        })
       })
     },
 
