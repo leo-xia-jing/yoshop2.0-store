@@ -18,15 +18,22 @@ import shop from '@/assets/icons/shop.svg?inline'
 import user from '@/assets/icons/user.svg?inline'
 import market from '@/assets/icons/market.svg?inline'
 import statistics from '@/assets/icons/statistics.svg?inline'
-// import mpweixin from '@/assets/icons/mpweixin.svg?inline'
-// import h5 from '@/assets/icons/h5.svg?inline'
+import apps from '@/assets/icons/apps.svg?inline'
 
 // 通用图标
-import mpweixin from '@/assets/icons/mpweixin.svg?inline'
+import arrowRight from '@/assets/icons/arrow-right.svg?inline'
+import mpWeixin from '@/assets/icons/mp-weixin.svg?inline'
+import h5Weixin from '@/assets/icons/h5-weixin.svg?inline'
 import h5 from '@/assets/icons/h5.svg?inline'
 import app from '@/assets/icons/app.svg?inline'
 
+// 支付方式
+import payAlipay from '@/assets/icons/payment/alipay.svg?inline'
+import payBalance from '@/assets/icons/payment/balance.svg?inline'
+import payWechat from '@/assets/icons/payment/wechat.svg?inline'
+
 export {
-  home, manage, goods, order, content, setting, shop, user, market, statistics,
-  mpweixin, h5, app
+  home, manage, goods, order, content, setting, shop, user, market, statistics, apps,
+  arrowRight, h5, mpWeixin, h5Weixin, app,
+  payAlipay, payBalance, payWechat
 }

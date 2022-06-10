@@ -11,11 +11,11 @@
 
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
-import { mpweixin, h5, app } from '@/core/icons'
+import { mpWeixin, h5, app } from '@/core/icons'
 
 // 客户端图标
 const PlatformIcons = {
-  'MP-WEIXIN': mpweixin,
+  'MP-WEIXIN': mpWeixin,
   'H5': h5,
   'APP': app
 }

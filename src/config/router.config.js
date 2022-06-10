@@ -418,7 +418,7 @@ export const asyncRouterMap = [
         path: '/client',
         name: 'client',
         component: RouteView,
-        meta: { title: '客户端', keepAlive: true, icon: Icons.mpweixin, iconStyle: { fontSize: '17.2px', color: '#36b313' }, permission: ['/client'] },
+        meta: { title: '客户端', keepAlive: true, icon: Icons.mpWeixin, iconStyle: { fontSize: '17.2px', color: '#36b313' }, permission: ['/client'] },
         children: [
           {
             path: '/client/register',
