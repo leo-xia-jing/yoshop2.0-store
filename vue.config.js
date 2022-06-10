@@ -1,33 +1,33 @@
 const path = require('path')
 const webpack = require('webpack')
-const GitRevisionPlugin = require('git-revision-webpack-plugin')
-const GitRevision = new GitRevisionPlugin()
-const buildDate = JSON.stringify(new Date().toLocaleString())
+// const GitRevisionPlugin = require('git-revision-webpack-plugin')
+// const GitRevision = new GitRevisionPlugin()
+// const buildDate = JSON.stringify(new Date().toLocaleString())
 const createThemeColorReplacerPlugin = require('./config/plugin.config')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const isProd = process.env.NODE_ENV === 'production'
+// const isProd = process.env.NODE_ENV === 'production'
 
-const assetsCDN = {
-  // webpack build externals
-  externals: {
-    vue: 'Vue',
-    'vue-router': 'VueRouter',
-    vuex: 'Vuex',
-    axios: 'axios'
-  },
-  css: [],
-  // https://unpkg.com/browse/vue@2.6.10/
-  js: [
-    '//lib.baomitu.com/vue/2.6.10/vue.min.js',
-    '//lib.baomitu.com/vue-router/3.1.3/vue-router.min.js',
-    '//lib.baomitu.com/vuex/3.1.1/vuex.min.js',
-    '//lib.baomitu.com/axios/0.19.0/axios.min.js'
-  ]
-}
+// const assetsCDN = {
+//   // webpack build externals
+//   externals: {
+//     vue: 'Vue',
+//     'vue-router': 'VueRouter',
+//     vuex: 'Vuex',
+//     axios: 'axios'
+//   },
+//   css: [],
+//   // https://unpkg.com/browse/vue@2.6.10/
+//   js: [
+//     '//lib.baomitu.com/vue/2.6.10/vue.min.js',
+//     '//lib.baomitu.com/vue-router/3.1.3/vue-router.min.js',
+//     '//lib.baomitu.com/vuex/3.1.1/vuex.min.js',
+//     '//lib.baomitu.com/axios/0.19.0/axios.min.js'
+//   ]
+// }
 
 // vue.config.js
 const vueConfig = {
@@ -38,15 +38,15 @@ const vueConfig = {
     // webpack plugins
     plugins: [
       // Ignore all locale files of moment.js
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
       // new webpack.DefinePlugin({
       //   APP_VERSION: `"${require('./package.json').version}"`,
       //   GIT_HASH: JSON.stringify(GitRevision.version()),
       //   BUILD_DATE: buildDate
       // })
-    ],
+    ]
     // if prod, add externals
-    externals: isProd ? assetsCDN.externals : {}
+    // externals: isProd ? assetsCDN.externals : {}
   },
 
   chainWebpack: (config) => {
@@ -71,12 +71,12 @@ const vueConfig = {
 
     // if prod is on
     // assets require on cdn
-    if (isProd) {
-      config.plugin('html').tap(args => {
-        args[0].cdn = assetsCDN
-        return args
-      })
-    }
+    // if (isProd) {
+    //   config.plugin('html').tap(args => {
+    //     args[0].cdn = assetsCDN
+    //     return args
+    //   })
+    // }
   },
 
   css: {
