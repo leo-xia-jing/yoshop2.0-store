@@ -68,12 +68,7 @@
       </span>
       <!-- 注册来源 -->
       <span slot="platform" class="platform" slot-scope="text">
-        <p v-if="PlatformIcons[text]">
-          <a-tooltip>
-            <template slot="title">{{ PlatformName[text] }}</template>
-            <a-icon class="icon" :class="[text]" :component="PlatformIcons[text]" />
-          </a-tooltip>
-        </p>
+        <platform-icon :name="text" :showTips="true" :iconSize="17" />
       </span>
       <!-- 操作 -->
       <span class="actions" slot="action" slot-scope="item">
@@ -92,35 +87,18 @@ import * as Api from '@/api/user'
 import * as GradeApi from '@/api/user/grade'
 import { STable } from '@/components'
 import { GradeForm, RechargeForm } from './modules'
-import { mpweixin, h5, app } from '@/core/icons'
-
-// 注册来源名称
-const PlatformName = {
-  'MP-WEIXIN': '微信小程序',
-  'H5': 'H5',
-  'APP': 'APP'
-}
-
-// 注册来源图标
-const PlatformIcons = {
-  'MP-WEIXIN': mpweixin,
-  'H5': h5,
-  'APP': app
-}
+import PlatformIcon from '@/components/PlatformIcon'
 
 export default {
   name: 'Index',
   components: {
     STable,
     GradeForm,
-    RechargeForm
+    RechargeForm,
+    PlatformIcon
   },
   data () {
     return {
-      // 注册来源名称
-      PlatformName,
-      // 注册来源图标
-      PlatformIcons,
       // 当前表单元素
       searchForm: this.$form.createForm(this),
       // 查询参数
@@ -176,9 +154,7 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: param => {
         return Api.list({ ...param, ...this.queryParam })
-          .then(response => {
-            return response.data.list
-          })
+          .then(response => response.data.list)
       },
       // 会员等级列表
       gradeList: []
@@ -221,9 +197,7 @@ export default {
               app.$message.success(result.message, 1.5)
               app.handleRefresh()
             })
-            .finally(result => {
-              modal.destroy()
-            })
+            .finally(result => modal.destroy())
         }
       })
     },
@@ -254,17 +228,5 @@ export default {
 <style lang="less" scoped>
 .ant-card-body {
   padding: 22px 29px 25px;
-}
-.platform {
-  .icon {
-    font-size: 17px;
-  }
-
-  .MP-WEIXIN {
-    color: #04be02;
-  }
-  .H5 {
-    color: #e44c27;
-  }
 }
 </style>
