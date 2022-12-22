@@ -49,7 +49,7 @@
         </a-form-item>
         <a-form-item label="最低消费金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number
-            :min="0.01"
+            :min="1"
             :precision="2"
             v-decorator="['min_price', { rules: [{ required: true, message: '请输入最低消费金额' }] }]"
           />
