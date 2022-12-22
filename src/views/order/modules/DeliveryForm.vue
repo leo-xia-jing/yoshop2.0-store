@@ -4,6 +4,7 @@
     :width="580"
     :visible="visible"
     :isLoading="isLoading"
+    :confirmLoading="isLoading"
     :maskClosable="false"
     @ok="handleSubmit"
     @cancel="handleCancel"
