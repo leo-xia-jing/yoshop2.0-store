@@ -32,6 +32,9 @@ service.interceptors.request.use(config => {
   return config
 })
 
+// 是否显示未登录提示
+let notLoggedMessage = false
+
 // 接口响应拦截
 service.interceptors.response.use((response) => {
   const result = response.data
@@ -47,16 +50,18 @@ service.interceptors.response.use((response) => {
   }
   // 鉴权失败: 未登录
   if (result.status === 401) {
-    store.dispatch('Logout').then(() => {
-      notification.error({
-        message: '错误',
-        description: result.message,
-        duration: 3
+    if (!notLoggedMessage) {
+      notLoggedMessage = true
+      store.dispatch('Logout').then(() => {
+        notification.error({
+          key: 'notLoggedMessage',
+          message: '错误',
+          description: result.message,
+          duration: 3
+        })
+        setTimeout(() => window.location.reload(), 1500)
       })
-      setTimeout(() => {
-        window.location.reload()
-      }, 1200)
-    })
+    }
     return Promise.reject(result)
   }
   return result
