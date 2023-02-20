@@ -42,6 +42,7 @@
       :columns="columns"
       :data="loadData"
       :pageSize="15"
+      :scroll="{ x: 1450 }"
     >
       <!-- 文章封面图 -->
       <span slot="image_url" slot-scope="text">

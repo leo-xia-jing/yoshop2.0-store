@@ -74,6 +74,7 @@
       :data="loadData"
       :rowSelection="rowSelection"
       :pageSize="15"
+      :scroll="{ x: 1450 }"
     >
       <!-- 文件预览 -->
       <span slot="preview_url" slot-scope="text, item">

@@ -66,6 +66,7 @@
       :data="loadData"
       :rowSelection="rowSelection"
       :pageSize="15"
+      :scroll="{ x: 1450 }"
     >
       <!-- 商品图片 -->
       <span slot="goods_image" slot-scope="text">

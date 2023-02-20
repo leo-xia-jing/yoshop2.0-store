@@ -45,6 +45,7 @@
       :columns="columns"
       :data="loadData"
       :pageSize="15"
+      :scroll="{ x: 1450 }"
     >
       <!-- 商品信息 -->
       <span slot="orderGoods" slot-scope="goods">
