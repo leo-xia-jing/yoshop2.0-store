@@ -46,7 +46,7 @@ import { GoodsModal } from '@/components/Modal'
 // 仅需要的字段
 const itemColumns = ['goods_id', 'goods_name', 'goods_image', 'goods_price_min', 'line_price_min', 'selling_point', 'goods_sales']
 
-// 图片选择器组件
+// 商品选择器组件
 export default {
   name: 'SelectGoods',
   components: {

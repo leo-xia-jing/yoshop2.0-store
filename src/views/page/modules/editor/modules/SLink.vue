@@ -15,7 +15,7 @@
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import { LinkModal } from '@/components/Modal'
 
-// 图片选择器组件
+// 链接选择器组件
 export default {
   name: 'SelectLink',
   components: {

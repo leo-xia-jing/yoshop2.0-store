@@ -8,7 +8,7 @@
         <div class="uodate-repalce" @click="handleSelectImage">替换</div>
       </div>
     </a-tooltip>
-    <!-- 图片选择器 -->
+    <!-- 文件选择器 -->
     <FilesModal ref="FilesModal" :multiple="false" @handleSubmit="handleSelectImageSubmit" />
   </div>
 </template>
