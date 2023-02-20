@@ -60,7 +60,6 @@ import Tree from '@/components/tree'
 // ext library
 import VueClipboard from 'vue-clipboard2'
 import Dialog from '@/components/Dialog'
-// import VueCropper from 'vue-cropper'
 // import MultiTab from '@/components/MultiTab'
 import PageLoading from '@/components/PageLoading'
 import PermissionHelper from '@/utils/helper/permission'
@@ -125,7 +124,6 @@ VueClipboard.config.autoSetContainer = true
 Vue.use(Viser)
 Vue.use(Dialog) // this.$dialog func
 // Vue.use(MultiTab)
-// Vue.use(VueCropper)
 Vue.use(PageLoading)
 Vue.use(PermissionHelper)
 Vue.use(VueClipboard)
