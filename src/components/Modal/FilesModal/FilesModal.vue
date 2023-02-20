@@ -81,8 +81,24 @@
                 <span class="footer-desc">已选择{{ selectedIndexs.length }}项</span>
                 <a-config-provider :auto-insert-space-in-button="false">
                   <a-button-group>
-                    <a-button class="btn-mini" size="small" @click="handleDelete()">删除</a-button>
-                    <a-button class="btn-mini" size="small" @click="handleBatchMove()">移动</a-button>
+                    <a-button
+                      v-if="inArray('delete', actions)"
+                      class="btn-mini"
+                      size="small"
+                      @click="handleDelete()"
+                    >删除</a-button>
+                    <a-button
+                      v-if="inArray('move', actions)"
+                      class="btn-mini"
+                      size="small"
+                      @click="handleBatchMove()"
+                    >移动</a-button>
+                    <a-button
+                      v-if="inArray('copyIds', actions)"
+                      class="btn-mini"
+                      size="small"
+                      @click="handleCopyIds()"
+                    >复制ID</a-button>
                   </a-button-group>
                 </a-config-provider>
               </div>
@@ -111,7 +127,7 @@
 <script>
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import store from '@/store'
-import { debounce } from '@/utils/util'
+import { debounce, inArray, assignment } from '@/utils/util'
 import * as FileApi from '@/api/files'
 import * as GroupApi from '@/api/files/group'
 import * as UploadApi from '@/api/upload'
@@ -135,6 +151,8 @@ export default {
     selectedNum: PropTypes.integer.def(0),
     // 文件类型 (10图片 30视频)
     fileType: PropTypes.integer.def(FileTypeEnum.IMAGE.value),
+    // 文件操作
+    actions: PropTypes.array.def(['delete', 'move', 'copyIds']),
   },
   data () {
     return {
@@ -180,6 +198,9 @@ export default {
     }
   },
   created () {
+  },
+  beforeCreate () {
+    assignment(this, { inArray })
   },
   methods: {
 
@@ -393,6 +414,14 @@ export default {
     handleBatchMove () {
       const fileIds = this.getSelectedItemIds()
       this.$refs.MoveGroupForm.show(fileIds)
+    },
+
+    // 复制选中的文件ID集
+    handleCopyIds () {
+      const itemIds = this.getSelectedItemIds()
+      this.$copyText(itemIds.join(',')).then(res => {
+        this.$message.success('复制成功', 1.5)
+      })
     },
 
     // 获取选中的文件id集
