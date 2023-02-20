@@ -265,6 +265,8 @@ export default class MultiSpec {
       groupKey: specGroupItem.key,
       spec_value: ''
     })
+    // 刷新规格值的key
+    this.onRefreshSpecValueKey(groupIndex)
   }
 
   // 删除规格组
@@ -275,8 +277,20 @@ export default class MultiSpec {
 
   // 删除规格值
   handleDeleteSpecValue (groupIndex, valueIndex) {
+    // 将规格值移出
     this.multiSpecData.specList[groupIndex].valueList.splice(valueIndex, 1)
+    // 刷新规格值的key
+    this.onRefreshSpecValueKey(groupIndex)
     this.onUpdate(false)
+  }
+
+  // 刷新规格值的key
+  onRefreshSpecValueKey (groupIndex) {
+    const specGroupItem = this.multiSpecData.specList[groupIndex]
+    const specValueList = specGroupItem.valueList
+    specValueList.forEach((item, index) => {
+      specValueList[index].key = index
+    })
   }
 
   // 批量设置sku事件
