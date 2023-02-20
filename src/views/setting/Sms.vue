@@ -8,11 +8,10 @@
             v-decorator="['default', { rules: [{ required: true }] }]"
             @change="onChangeEngine"
           >
-            <a-radio
-              v-for="(engine, index) in record.engine"
-              :key="index"
-              :value="index"
-            >{{ engine.name }}</a-radio>
+            <a-radio v-for="(engine, index) in record.engine" :key="index" :value="index">
+              <span>{{ engine.name }}</span>
+              <a-tag v-if="index === 'aliyun'" class="ml-5" color="green">推荐</a-tag>
+            </a-radio>
           </a-radio-group>
 
           <div v-if="form.getFieldValue('default')" class="form-item-help">
@@ -98,12 +97,12 @@
             required
           >
             <a-input v-decorator="[`scene.${index}.acceptPhone`]" />
-            <div class="form-item-help">
+            <!-- <div class="form-item-help">
               <small>
                 注：如需填写多个手机号，请用英文逗号
                 <a-tag>,</a-tag>隔开
               </small>
-            </div>
+            </div>-->
           </a-form-item>
         </div>
         <a-form-item :wrapper-col="{ span: wrapperCol.span, offset: labelCol.span }">
