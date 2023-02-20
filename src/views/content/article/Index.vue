@@ -92,6 +92,7 @@ const columns = [
   {
     title: '文章标题',
     dataIndex: 'title',
+    width: '320px',
     scopedSlots: { customRender: 'stitle' }
   },
   {
@@ -110,16 +111,19 @@ const columns = [
   },
   {
     title: '创建时间',
+    width: '180px',
     dataIndex: 'create_time'
   },
   {
     title: '更新时间',
+    width: '180px',
     dataIndex: 'update_time'
   },
   {
     title: '操作',
     dataIndex: 'action',
-    width: '180px',
+    width: '150px',
+    fixed: 'right',
     scopedSlots: { customRender: 'action' }
   }
 ]

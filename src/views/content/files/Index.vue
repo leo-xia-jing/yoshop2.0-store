@@ -147,6 +147,7 @@ export default {
         },
         {
           title: '文件名称',
+          width: '302px',
           dataIndex: 'file_name'
         },
         {
@@ -169,12 +170,14 @@ export default {
         },
         {
           title: '上传时间',
+          width: '180px',
           dataIndex: 'create_time'
         },
         {
           title: '操作',
           dataIndex: 'action',
-          width: '180px',
+          width: '150px',
+          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],

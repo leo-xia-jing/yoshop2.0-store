@@ -105,6 +105,7 @@ const columns = [
   {
     title: '商品信息',
     dataIndex: 'orderGoods',
+    width: '320px',
     scopedSlots: { customRender: 'orderGoods' }
   },
   {
@@ -138,12 +139,14 @@ const columns = [
   },
   {
     title: '评价时间',
+    width: '180px',
     dataIndex: 'create_time'
   },
   {
     title: '操作',
     dataIndex: 'action',
-    width: '180px',
+    width: '150px',
+    fixed: 'right',
     scopedSlots: { customRender: 'action' }
   }
 ]
