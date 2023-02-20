@@ -85,7 +85,9 @@
 </template>
 
 <script>
-import { inArray, assignment } from '@/utils/util'
+import storage from 'store'
+import moment from 'moment'
+import { assignment, inArray, isEmpty } from '@/utils/util'
 import * as Api from '@/api/order/export'
 import { DeliveryTypeEnum, OrderSourceEnum, PayTypeEnum, OrderStatusEnum } from '@/common/enum/order'
 import { ExportList } from './modules'
@@ -119,37 +121,40 @@ const columnData = [
   { label: '收货时间', value: 'receipt_time' },
   { label: '订单状态', value: 'order_status' },
   { label: '是否已评价', value: 'is_comment' },
-  { label: '订单来源', value: 'order_source' },
+  { label: '订单来源', value: 'order_source' }
 ]
 
 // 默认选中的字段
 const columnValue = [
-  'order_no'
-  , 'goods_detail'
-  , 'total_price'
-  , 'coupon_money'
-  , 'points_money'
-  , 'update_price'
-  , 'express_price'
-  , 'pay_price'
-  , 'pay_type'
-  , 'create_time'
-  , 'user_info'
-  , 'buyer_remark'
-  , 'delivery_type'
-  , 'receipt_name'
-  , 'receipt_phone'
-  , 'receipt_address'
-  , 'express_company'
-  , 'express_no'
-  , 'pay_status'
-  , 'pay_time'
-  , 'delivery_status'
-  , 'delivery_time'
-  , 'receipt_status'
-  , 'receipt_time'
-  , 'order_status'
-  , 'order_source']
+  'order_no',
+  'goods_detail',
+  'total_price',
+  'coupon_money',
+  'points_money',
+  'update_price',
+  'express_price',
+  'pay_price',
+  'pay_type',
+  'create_time',
+  'user_info',
+  'buyer_remark',
+  'delivery_type',
+  'receipt_name',
+  'receipt_phone',
+  'receipt_address',
+  'express_company',
+  'express_no',
+  'pay_status',
+  'pay_time',
+  'delivery_status',
+  'delivery_time',
+  'receipt_status',
+  'receipt_time',
+  'order_status',
+  'order_source'
+]
+
+const LOCAL_DATA_KEY = 'order_export_form'
 
 export default {
   name: 'Export',
@@ -169,8 +174,12 @@ export default {
       wrapperCol: { span: 16 },
       // 订单字段数据
       columnData,
-      columnValue,
+      columnValue
     }
+  },
+  created () {
+    // 设置默认值
+    this.setFieldsValue()
   },
   beforeCreate () {
     // 批量给当前实例赋值
@@ -179,21 +188,40 @@ export default {
       DeliveryTypeEnum,
       OrderSourceEnum,
       OrderStatusEnum,
-      PayTypeEnum,
+      PayTypeEnum
     })
-
   },
 
   methods: {
+
+    // 设置默认值
+    setFieldsValue () {
+      // 从本地获取缓存数据
+      const data = storage.get(LOCAL_DATA_KEY)
+      if (!isEmpty(data)) {
+        data.betweenTime = [moment(data.betweenTime[0]), moment(data.betweenTime[1])]
+        // 设置默认表单内容
+        const { myForm: { setFieldsValue } } = this
+        this.$nextTick(() => setFieldsValue(data))
+      }
+    },
 
     // 表单提交
     handleSubmit (e) {
       e.preventDefault()
       this.myForm.validateFields((error, values) => {
         if (!error) {
+          // 将表单数据保存到本地
+          this.onSave2Local(values)
+          // 提交到后端api
           this.onFormSubmit(values)
         }
       })
+    },
+
+    // 将表单数据保存到本地 (15天)
+    onSave2Local (data) {
+      storage.set(LOCAL_DATA_KEY, data, 15 * 24 * 60 * 60 * 1000)
     },
 
     // 提交到后端api
@@ -217,7 +245,8 @@ export default {
     // 重置搜索表单
     handleReset () {
       this.myForm.resetFields()
-    },
+      storage.remove(LOCAL_DATA_KEY)
+    }
 
   }
 
