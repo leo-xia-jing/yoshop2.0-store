@@ -69,6 +69,10 @@ export default {
       // 表头
       columns: [
         {
+          title: '服务ID',
+          dataIndex: 'service_id'
+        },
+        {
           title: '服务名称',
           dataIndex: 'name',
           width: '300px'
