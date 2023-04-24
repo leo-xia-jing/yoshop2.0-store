@@ -33,7 +33,7 @@
 
 <script>
 import * as Api from '@/api/store'
-import { SettingDrawer, SiderMenuWrapper, updateTheme } from '@/layouts/ProLayout'
+import { SiderMenuWrapper, updateTheme } from '@/layouts/ProLayout'
 
 import { i18nRender } from '@/locales'
 import { mapState } from 'vuex'
@@ -47,7 +47,6 @@ import LogoSvg from '../assets/logo.svg?inline'
 export default {
   name: 'BasicLayout',
   components: {
-    SettingDrawer,
     SiderMenuWrapper,
     RightContent,
     GlobalFooter
