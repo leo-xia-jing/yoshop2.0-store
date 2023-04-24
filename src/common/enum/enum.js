@@ -72,7 +72,7 @@ class Enum {
     if (!prop) {
       throw new Error('No enum constant' + key)
     }
-    return prop.key
+    return prop.value
   }
 
   // 返回源数组
