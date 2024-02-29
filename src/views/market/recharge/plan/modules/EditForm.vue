@@ -34,7 +34,7 @@
           extra="充值成功后赠送的金额，不能大于充值金额"
         >
           <a-input-number
-            :min="0.01"
+            :min="0"
             v-decorator="['gift_money', { rules: [{ required: true, message: '请输入赠送的金额' }] }]"
           />
           <span class="ml-10">元</span>
