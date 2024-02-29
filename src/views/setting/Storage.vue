@@ -5,11 +5,13 @@
       <a-form :form="form" @submit="handleSubmit">
         <a-form-item label="默认上传方式" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group v-decorator="['default', { rules: [{ required: true }] }]">
-            <a-radio
-              v-for="(item, index) in StorageEnum.data"
-              :key="index"
-              :value="item.value"
-            >{{ item.name }} {{ item.value == StorageEnum.LOCAL.value ? '(不推荐)' : '' }}</a-radio>
+            <template v-for="(item, index) in StorageEnum.data">
+              <a-radio
+                v-if="!item.hide"
+                :value="item.value"
+                :key="index"
+              >{{ item.name }} {{ item.value == StorageEnum.LOCAL.value ? '(不推荐)' : '' }}</a-radio>
+            </template>
           </a-radio-group>
         </a-form-item>
         <!-- 七牛云配置 -->

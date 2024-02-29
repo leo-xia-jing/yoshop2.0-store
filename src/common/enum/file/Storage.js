@@ -9,5 +9,5 @@ export default new Enum([
     { key: 'QINIU', name: '七牛云', value: 'qiniu' },
     { key: 'ALIYUN', name: '阿里云', value: 'aliyun' },
     { key: 'QCLOUD', name: '腾讯云', value: 'qcloud' },
-    { key: 'EXTERNAL', name: '外部链接', value: 'external' }
+    { key: 'EXTERNAL', name: '外部链接', value: 'external', hide: true }
 ])
