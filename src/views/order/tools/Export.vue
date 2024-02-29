@@ -130,6 +130,8 @@ const columnData = filterModules([
   { label: '订单状态', value: 'order_status' },
   { label: '是否已评价', value: 'is_comment' },
   { label: '订单来源', value: 'order_source' },
+  { label: '第三方支付订单号', value: 'out_trade_no' },
+  { label: '支付流水号', value: 'trade_no' },
 ])
 
 // 默认选中的字段
