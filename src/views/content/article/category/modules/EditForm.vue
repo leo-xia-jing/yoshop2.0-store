@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="编辑商品分类"
+    title="编辑文章分类"
     :width="720"
     :visible="visible"
     :confirmLoading="confirmLoading"
