@@ -9,14 +9,16 @@
     @cancel="handleCancel"
   >
     <a-spin :spinning="confirmLoading">
-      <a-tree
-        v-if="groupTreeData.length"
-        :selectable="true"
-        :blockNode="true"
-        :treeData="groupTreeData"
-        :autoExpandParent="true"
-        @select="onSelect"
-      />
+      <div class="group-tree">
+        <a-tree
+          v-if="groupTreeData.length"
+          :selectable="true"
+          :blockNode="true"
+          :treeData="groupTreeData"
+          :autoExpandParent="true"
+          @select="onSelect"
+        />
+      </div>
     </a-spin>
   </a-modal>
 </template>
@@ -75,13 +77,11 @@ export default {
 
     // 获取分组列表
     getList () {
-      if (this.groupTreeData.length <= 0) {
-        this.groupTreeData = [{
-          title: '未分组',
-          key: 0,
-          value: 0
-        }].concat(this.groupList)
-      }
+      this.groupTreeData = [{
+        title: '未分组',
+        key: 0,
+        value: 0
+      }].concat(this.groupList)
     },
 
     // 记录选中项
@@ -126,3 +126,19 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+// 分组列表
+.group-tree {
+  // width: 150px;
+  height: 440px;
+  overflow-y: auto;
+
+  /deep/.ant-tree {
+    display: inline-block;
+    min-width: 100%;
+    max-height: 380px;
+    width: auto;
+  }
+}
+</style>
