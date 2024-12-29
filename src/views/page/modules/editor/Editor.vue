@@ -683,46 +683,6 @@
                 </div>
               </div>
               <div class="block-item">
-                <span class="label">购物车背景颜色</span>
-                <div class="item-colorPicker">
-                  <span
-                    class="rest-color"
-                    @click="onEditorResetColor(curItem.style, 'btnCartColor', '#27c29a')"
-                  >重置</span>
-                  <colorPicker v-model="curItem.style.btnCartColor" defaultColor="#27c29a" />
-                </div>
-              </div>
-              <div class="block-item">
-                <span class="label">购物车文字颜色</span>
-                <div class="item-colorPicker">
-                  <span
-                    class="rest-color"
-                    @click="onEditorResetColor(curItem.style, 'btnFontColor', '#ffffff')"
-                  >重置</span>
-                  <colorPicker v-model="curItem.style.btnFontColor" defaultColor="#ffffff" />
-                </div>
-              </div>
-              <div class="block-item">
-                <span class="label">购物车背景颜色</span>
-                <div class="item-colorPicker">
-                  <span
-                    class="rest-color"
-                    @click="onEditorResetColor(curItem.style, 'btnCartColor', '#27c29a')"
-                  >重置</span>
-                  <colorPicker v-model="curItem.style.btnCartColor" defaultColor="#27c29a" />
-                </div>
-              </div>
-              <div class="block-item">
-                <span class="label">购物车文字颜色</span>
-                <div class="item-colorPicker">
-                  <span
-                    class="rest-color"
-                    @click="onEditorResetColor(curItem.style, 'btnFontColor', '#ffffff')"
-                  >重置</span>
-                  <colorPicker v-model="curItem.style.btnFontColor" defaultColor="#ffffff" />
-                </div>
-              </div>
-              <div class="block-item">
                 <span class="label">商品卖点颜色</span>
                 <div class="item-colorPicker">
                   <span
