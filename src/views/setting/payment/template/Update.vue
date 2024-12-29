@@ -82,7 +82,10 @@
             :rules="[{ required: true, message: '请选择微信商户号类型' }]"
           >
             <a-radio-group v-model="record.config.wechat.mchType" @change="clearValidate()">
-              <a-radio value="normal">普通商户</a-radio>
+              <a-radio value="normal">
+                <span>普通商户</span>
+                <a-tag class="ml-5" color="green">推荐</a-tag>
+              </a-radio>
               <a-radio value="provider">子商户 (服务商模式)</a-radio>
             </a-radio-group>
           </a-form-model-item>
@@ -128,8 +131,58 @@
               </div>
             </a-form-model-item>
 
+            <div v-if="record.config.wechat.version == 'v3'">
+              <a-form-model-item
+                label="验签方式"
+                prop="config.wechat.version"
+                :rules="[{ required: true, message: '请选择微信支付接口版本' }]"
+              >
+                <a-radio-group
+                  v-model="record.config.wechat.normal.signatureMethod"
+                  @change="clearValidate()"
+                >
+                  <a-radio value="publicKey">
+                    <span>微信支付公钥</span>
+                    <a-tag class="ml-5" color="green">推荐</a-tag>
+                  </a-radio>
+                  <a-radio value="platformCert">平台证书</a-radio>
+                </a-radio-group>
+                <div class="form-item-help">
+                  <small>微信官方已不再支持平台证书方式，强烈建议升级到微信支付公钥</small>
+                </div>
+              </a-form-model-item>
+
+              <div v-if="record.config.wechat.normal.signatureMethod == 'publicKey'">
+                <a-form-model-item
+                  label="微信支付公钥ID"
+                  prop="config.wechat.normal.publicKeyId"
+                  :rules="[{ required: true, message: '请填写微信支付公钥ID' }]"
+                >
+                  <a-input v-model="record.config.wechat.normal.publicKeyId" autocomplete="off" />
+                  <div class="form-item-help">
+                    <small>"微信支付商户平台" - "账户中心" - "API安全" - "微信支付公钥"；例如：PUB_KEY_ID_0116777777772024080100123400000567</small>
+                  </div>
+                </a-form-model-item>
+
+                <a-form-model-item
+                  label="微信支付公钥 (KEY)"
+                  prop="config.wechat.normal.publicKey"
+                  :rules="[{ required: true, message: '需要上传该文件' }]"
+                >
+                  <InputFile
+                    accept=".pem"
+                    v-model="record.config.wechat.normal.publicKey"
+                    @change="onChangeInputFile($event, arguments, 'publicKey')"
+                  />
+                  <div class="form-item-help">
+                    <small>请上传 "pub_key.pem" 文件</small>
+                  </div>
+                </a-form-model-item>
+              </div>
+            </div>
+
             <a-form-model-item
-              label="证书文件 (CERT)"
+              label="商户API证书 (CERT)"
               prop="config.wechat.normal.apiclientCert"
               :rules="[{ required: true, message: '需要上传该文件' }]"
             >
@@ -144,7 +197,7 @@
             </a-form-model-item>
 
             <a-form-model-item
-              label="证书文件 (KEY)"
+              label="商户API证书 (KEY)"
               prop="config.wechat.normal.apiclientKey"
               :rules="[{ required: true, message: '需要上传该文件' }]"
             >
@@ -196,7 +249,7 @@
                 autocomplete="off"
               />
               <div class="form-item-help">
-                <small>"微信支付商户平台"" - "账户中心" - "API安全" - "设置API密钥"</small>
+                <small>"微信支付合作伙伴平台" - "账户中心" - "账户设置" - "API安全" - "设置API密钥"</small>
               </div>
             </a-form-model-item>
 
@@ -222,8 +275,61 @@
               </div>
             </a-form-model-item>
 
+            <div v-if="record.config.wechat.version == 'v3'">
+              <a-form-model-item
+                label="验签方式"
+                prop="config.wechat.version"
+                :rules="[{ required: true, message: '请选择微信支付接口版本' }]"
+              >
+                <a-radio-group
+                  v-model="record.config.wechat.provider.spSignatureMethod"
+                  @change="clearValidate()"
+                >
+                  <a-radio value="publicKey">
+                    <span>微信支付公钥</span>
+                    <a-tag class="ml-5" color="green">推荐</a-tag>
+                  </a-radio>
+                  <a-radio value="platformCert">平台证书</a-radio>
+                </a-radio-group>
+                <div class="form-item-help">
+                  <small>微信官方已不再支持平台证书方式，强烈建议升级到微信支付公钥</small>
+                </div>
+              </a-form-model-item>
+
+              <div v-if="record.config.wechat.provider.spSignatureMethod == 'publicKey'">
+                <a-form-model-item
+                  label="服务商微信支付公钥ID"
+                  prop="config.wechat.provider.spPublicKeyId"
+                  :rules="[{ required: true, message: '请填写微信支付公钥ID' }]"
+                >
+                  <a-input
+                    v-model="record.config.wechat.provider.spPublicKeyId"
+                    autocomplete="off"
+                  />
+                  <div class="form-item-help">
+                    <small>"微信支付合作伙伴平台" - "账户中心" - "账户设置" - "API安全" - "微信支付公钥"；例如：PUB_KEY_ID_0116777777772024080100123400000567</small>
+                  </div>
+                </a-form-model-item>
+
+                <a-form-model-item
+                  label="服务商微信支付公钥 (KEY)"
+                  prop="config.wechat.provider.spPublicKey"
+                  :rules="[{ required: true, message: '需要上传该文件' }]"
+                >
+                  <InputFile
+                    accept=".pem"
+                    v-model="record.config.wechat.provider.spPublicKey"
+                    @change="onChangeInputFile($event, arguments, 'spPublicKey')"
+                  />
+                  <div class="form-item-help">
+                    <small>请上传 "pub_key.pem" 文件</small>
+                  </div>
+                </a-form-model-item>
+              </div>
+            </div>
+
             <a-form-model-item
-              label="服务商证书文件 (CERT)"
+              label="服务商API证书 (CERT)"
               prop="config.wechat.provider.spApiclientCert"
               :rules="[{ required: true, message: '需要上传该文件' }]"
             >
@@ -238,7 +344,7 @@
             </a-form-model-item>
 
             <a-form-model-item
-              label="服务商证书文件 (KEY)"
+              label="服务商API证书 (KEY)"
               prop="config.wechat.provider.spApiclientKey"
               :rules="[{ required: true, message: '需要上传该文件' }]"
             >
@@ -406,6 +512,9 @@ const defaultData = {
         appId: '',
         mchId: '',
         apiKey: '',
+        signatureMethod: 'publicKey',     // 验签方式（platformCert平台证书 publicKey微信支付公钥）
+        publicKeyId: '',
+        publicKey: '',
         apiclientCert: '',
         apiclientKey: '',
       },
@@ -415,6 +524,9 @@ const defaultData = {
         spApiKey: '',
         subAppId: '',
         subMchId: '',
+        spSignatureMethod: 'publicKey',     // 验签方式（platformCert平台证书 publicKey微信支付公钥）
+        spPublicKeyId: '',
+        spPublicKey: '',
         spApiclientCert: '',
         spApiclientKey: ''
       }
@@ -442,7 +554,7 @@ export default {
       isLoading: false,
       isBtnLoading: false,
       // 标签布局属性
-      labelCol: { span: 3 },
+      labelCol: { span: 4 },
       // 输入框布局属性
       wrapperCol: { span: 10 },
       // 枚举类
