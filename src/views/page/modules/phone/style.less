@@ -854,16 +854,17 @@ dl {
 
     // diy-优惠券组
     .diy-coupon {
+      overflow: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       .coupon-wrapper {
         display: flex;
         width: max-content;
         height: 65px;
         padding: 0 12px;
-
-        &::-webkit-scrollbar {
-          display: none;
-        }
       }
 
       .coupon-item {
@@ -900,7 +901,6 @@ dl {
           justify-content: center;
           align-items: center;
           position: relative;
-          // float: left;
           width: 70%;
           height: 100%;
           background-color: #E5004F;
@@ -922,7 +922,6 @@ dl {
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          // float: right;
           width: 30%;
           height: 100%;
           background-color: #4e4e4e;

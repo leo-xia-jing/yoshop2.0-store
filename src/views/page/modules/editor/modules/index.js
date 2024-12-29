@@ -5,5 +5,6 @@ import SGoodsCate from './SGoodsCate'
 import SLink from './SLink'
 import SLink2 from './SLink2'
 import SHotZone from './SHotZone'
+import SCoupon from './SCoupon'
 
-export { SImage, SArticleCate, SGoods, SGoodsCate, SLink, SLink2, SHotZone }
+export { SImage, SArticleCate, SGoods, SGoodsCate, SLink, SLink2, SHotZone, SCoupon }

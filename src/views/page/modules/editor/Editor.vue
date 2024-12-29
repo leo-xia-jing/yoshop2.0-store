@@ -1040,6 +1040,21 @@
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
             <div class="block-box">
+              <div class="block-title">
+                <span>数据来源</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.source">
+                  <a-radio-button value="auto">自动获取</a-radio-button>
+                  <a-radio-button value="choice">手动选择</a-radio-button>
+                </a-radio-group>
+              </div>
+            </div>
+            <!-- 手动选择 -->
+            <div v-if="curItem.params.source === 'choice'" class="block-box">
+              <div class="block-title">选择优惠券 ({{ curItem.data.length }})</div>
+              <SCoupon v-model="curItem.data" :maxNum="15" />
+            </div>
+            <!-- 自动获取 -->
+            <div v-if="curItem.params.source === 'auto'" class="block-box">
               <div class="block-title">优惠券内容</div>
               <div class="block-item">
                 <span class="label">显示数量</span>
@@ -1079,7 +1094,7 @@
             <div class="block-box">
               <div class="block-title">优惠券样式</div>
               <div class="block-item">
-                <span class="label">左右边距</span>
+                <span class="label">左右间距</span>
                 <div class="item-slider">
                   <a-slider v-model="curItem.style.marginRight" :min="0" :max="40" />
                   <span class="unit-text">
@@ -1089,13 +1104,23 @@
                 </div>
               </div>
               <div class="block-item">
-                <span class="label">优惠券颜色</span>
+                <span class="label">优惠券背景颜色</span>
                 <div class="item-colorPicker">
                   <span
                     class="rest-color"
                     @click="onEditorResetColor(curItem.style, 'couponBgColor', '#ffa708')"
                   >重置</span>
                   <colorPicker v-model="curItem.style.couponBgColor" defaultColor="#ffa708" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">优惠券文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'couponTextColor', '#ffffff')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.couponTextColor" defaultColor="#ffffff" />
                 </div>
               </div>
               <div class="block-item">
@@ -1106,6 +1131,16 @@
                     @click="onEditorResetColor(curItem.style, 'receiveBgColor', '#717070')"
                   >重置</span>
                   <colorPicker v-model="curItem.style.receiveBgColor" defaultColor="#717070" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">领取文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'receiveTextColor', '#ffffff')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.receiveTextColor" defaultColor="#ffffff" />
                 </div>
               </div>
             </div>
@@ -1431,7 +1466,7 @@ import vcolorpicker from 'vcolorpicker'
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import draggable from 'vuedraggable'
 import { Ueditor, SelectCategory } from '@/components'
-import { SImage, SArticleCate, SGoods, SLink, SHotZone } from './modules'
+import { SImage, SArticleCate, SGoods, SLink, SHotZone, SCoupon } from './modules'
 
 Vue.use(vcolorpicker)
 
@@ -1454,7 +1489,8 @@ export default {
     SGoods,
     SelectCategory,
     SLink,
-    SHotZone
+    SHotZone,
+    SCoupon
   },
   data () {
     return {}

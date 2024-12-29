@@ -450,21 +450,32 @@
             <div class="coupon-wrapper">
               <div
                 class="coupon-item"
-                v-for="(coupon, idx) in item.data"
+                v-for="(coupon, idx) in (item.params.source == 'choice' ? (item.data.length ? item.data : item.defaultData) : item.defaultData)"
                 :key="idx"
                 :style="{ marginRight: `${item.style.marginRight}px` }"
               >
                 <i class="before" :style="{ background: item.style.background }"></i>
-                <div class="left-content" :style="{ background: item.style.couponBgColor }">
+                <div
+                  class="left-content"
+                  :style="{ background: item.style.couponBgColor, color: item.style.couponTextColor }"
+                >
                   <div class="content-top">
-                    <span class="unit">￥</span>
-                    <span class="price">{{ coupon.reduce_price }}</span>
+                    <template v-if="coupon.coupon_type == 10">
+                      <span class="unit">￥</span>
+                      <span class="price">{{ coupon.reduce_price }}</span>
+                    </template>
+                    <template v-if="coupon.coupon_type == 20">
+                      <span class="price">{{ coupon.discount }}折</span>
+                    </template>
                   </div>
                   <div class="content-bottom">
                     <span>满{{ coupon.min_price }}元可用</span>
                   </div>
                 </div>
-                <div class="right-receive" :style="{ background: item.style.receiveBgColor }">
+                <div
+                  class="right-receive"
+                  :style="{ background: item.style.receiveBgColor, color: item.style.receiveTextColor }"
+                >
                   <span>立即</span>
                   <span>领取</span>
                 </div>
