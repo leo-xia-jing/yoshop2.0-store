@@ -9,44 +9,52 @@
             <a-radio :value="0">关闭</a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item label="单笔订单满" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number
-            :min="0"
-            :precision="2"
-            v-decorator="['money', { rules: [{ required: true, message: '请输入包邮的订单额度' }] }]"
-          />
-          <span class="ml-10">元包邮</span>
-          <div class="form-item-help">
-            <small>如设置0为全场包邮</small>
-          </div>
-        </a-form-item>
-        <a-form-item label="不参与包邮的商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <SelectGoods :defaultList="excludedGoodsList" v-decorator="['excludedGoodsIds']" />
-        </a-form-item>
-        <a-form-item label="不参与包邮的地区" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-button @click="handleAreasModal">选择地区</a-button>
-          <p class="content">
-            <span v-for="(province, pidx) in excludedRegions.selectedText" :key="pidx">
-              <span>{{ province.name }}</span>
-              <template v-if="province.citys.length">
-                <span>[</span>
-                <span
-                  class="city-name"
-                  v-for="(city, cidx) in province.citys"
-                  :key="cidx"
-                >{{ city.name }}{{ province.citys.length > cidx + 1 ? '、': '' }}</span>
-                <span>]</span>
-              </template>
-              <span class="mr-5"></span>
-            </span>
-          </p>
-        </a-form-item>
-        <a-form-item label="满额包邮说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea
-            :autoSize="{ minRows: 4 }"
-            v-decorator="['describe', { rules: [{ required: true, message: '请输入满额包邮说明' }] }]"
-          />
-        </a-form-item>
+        <div v-show="form.getFieldValue('is_open')">
+          <a-form-item label="活动标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-input v-decorator="['title', { rules: [{ required: true, message: '请输入活动标题' }] }]" />
+            <div class="form-item-help">
+              <small>用于展示在用户端，例：满100元，全国包邮</small>
+            </div>
+          </a-form-item>
+          <a-form-item label="单笔订单满" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-input-number
+              :min="0"
+              :precision="2"
+              v-decorator="['money', { rules: [{ required: true, message: '请输入包邮的订单额度' }] }]"
+            />
+            <span class="ml-10">元包邮</span>
+            <div class="form-item-help">
+              <small>如设置0为全场包邮</small>
+            </div>
+          </a-form-item>
+          <a-form-item label="不参与包邮的商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <SelectGoods :defaultList="excludedGoodsList" v-decorator="['excludedGoodsIds']" />
+          </a-form-item>
+          <a-form-item label="不参与包邮的地区" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-button @click="handleAreasModal">选择地区</a-button>
+            <p class="content">
+              <span v-for="(province, pidx) in excludedRegions.selectedText" :key="pidx">
+                <span>{{ province.name }}</span>
+                <template v-if="province.citys.length">
+                  <span>[</span>
+                  <span
+                    class="city-name"
+                    v-for="(city, cidx) in province.citys"
+                    :key="cidx"
+                  >{{ city.name }}{{ province.citys.length > cidx + 1 ? '、': '' }}</span>
+                  <span>]</span>
+                </template>
+                <span class="mr-5"></span>
+              </span>
+            </p>
+          </a-form-item>
+          <a-form-item label="满额包邮说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
+            <a-textarea
+              :autoSize="{ minRows: 4 }"
+              v-decorator="['describe', { rules: [{ required: true, message: '请输入满额包邮说明' }] }]"
+            />
+          </a-form-item>
+        </div>
         <a-form-item :wrapperCol="{ span: wrapperCol.span, offset: labelCol.span }">
           <a-button type="primary" html-type="submit">提交</a-button>
         </a-form-item>
@@ -133,7 +141,7 @@ export default {
       const { record, $nextTick, form: { setFieldsValue } } = this
       $nextTick(() => {
         this.excludedRegions = record.excludedRegions
-        setFieldsValue(pick(record, ['is_open', 'money', 'describe']))
+        setFieldsValue(pick(record, ['is_open', 'title', 'money', 'describe']))
       })
     },
 

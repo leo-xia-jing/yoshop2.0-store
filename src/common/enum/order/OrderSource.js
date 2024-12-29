@@ -5,5 +5,5 @@ import Enum from '../enum'
  * OrderSourceEnum
  */
 export default new Enum([
-  { key: 'MASTER', name: '普通订单', value: 10 }
+  { key: 'MAIN', name: '普通订单', value: 10 }
 ])
