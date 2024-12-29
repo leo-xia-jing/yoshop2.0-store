@@ -732,6 +732,13 @@
                   <colorPicker v-model="curItem.style.sellingColor" defaultColor="#e3771f" />
                 </div>
               </div>
+              <div class="block-item">
+                <span class="label">商品名称</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.style.goodsNameRows">
+                  <a-radio-button value="one">单行</a-radio-button>
+                  <a-radio-button value="two">双行</a-radio-button>
+                </a-radio-group>
+              </div>
               <template v-if="inArray('cartBtn', curItem.style.show)">
                 <div class="block-item">
                   <span class="label">购物车按钮样式</span>

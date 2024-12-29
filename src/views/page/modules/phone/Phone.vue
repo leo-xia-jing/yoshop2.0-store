@@ -267,7 +267,8 @@
                       <div class="goods-info">
                         <div
                           v-if="inArray('goodsName', item.style.show)"
-                          class="goods-name twoline-hide"
+                          class="goods-name"
+                          :class="[ item.style.goodsNameRows == 'two' ? 'twoline-hide' : 'oneline-hide', `row-${item.style.goodsNameRows}` ]"
                         >{{ dataItm.goods_name }}</div>
                         <div v-if="inArray('sellingPoint', item.style.show)" class="goods-selling">
                           <span
@@ -321,7 +322,8 @@
                   <div class="goods-info">
                     <div
                       v-if="inArray('goodsName', item.style.show)"
-                      class="goods-name twoline-hide"
+                      class="goods-name"
+                      :class="[ item.style.goodsNameRows == 'two' ? 'twoline-hide' : 'oneline-hide', `row-${item.style.goodsNameRows}` ]"
                     >{{ dataItm.goods_name }}</div>
                     <div v-if="inArray('sellingPoint', item.style.show)" class="goods-selling">
                       <span
@@ -355,11 +357,11 @@
                         v-show="inArray('cartBtn', item.style.show) && item.style.column < 3"
                         class="action"
                       >
-                        <div
-                          class="btn-cart"
-                          :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
-                        >
-                          <a-icon class="cart-icon" :component="PageIcon.plus" />
+                        <div class="btn-cart" :style="{ color: item.style.btnCartColor }">
+                          <a-icon
+                            class="cart-icon"
+                            :component="PageIcon[`jiagou${item.style.btnCartStyle}`]"
+                          />
                         </div>
                       </div>
                     </div>
