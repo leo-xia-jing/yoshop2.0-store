@@ -1,7 +1,7 @@
 <template>
   <a-modal
     :title="title"
-    :width="680"
+    :width="width"
     :visible="visible"
     :isLoading="isLoading"
     :confirmLoading="isLoading"
@@ -17,7 +17,12 @@
         :label-col="labelCol"
         :wrapperCol="wrapperCol"
       >
-        <a-tabs v-model="tabKey">
+        <!-- 实物订单 -->
+        <a-tabs
+          v-if="record.order_type == OrderTypeEnum.PHYSICAL.value"
+          class="physical"
+          v-model="tabKey"
+        >
           <a-tab-pane :key="1" tab="未发货的商品">
             <a-table
               rowKey="order_goods_id"
@@ -80,7 +85,7 @@
             </div>
 
             <div
-              v-if="record.pay_method === PaymentMethodEnum.WECHAT.value && record.platform === ClientEnum.MP_WEIXIN.value"
+              v-if="isEnableShipping && record.pay_method === PaymentMethodEnum.WECHAT.value && record.platform === ClientEnum.MP_WEIXIN.value"
             >
               <a-form-model-item label="同步微信平台" prop="syncMpWeixinShipping" required>
                 <a-radio-group v-model="formData.syncMpWeixinShipping">
@@ -88,7 +93,7 @@
                   <a-radio :value="0">不同步</a-radio>
                 </a-radio-group>
                 <div class="form-item-help">
-                  <p class="extra">同步至微信小程序平台的《发货信息录入》</p>
+                  <p class="extra">同步至微信小程序平台的《发货信息管理》</p>
                   <p class="extra">仅全部发货或最后一次发货时同步</p>
                 </div>
               </a-form-model-item>
@@ -131,9 +136,10 @@
 import { assignment } from '@/utils/util'
 import * as Api from '@/api/order/delivery'
 import * as ExpressApi from '@/api/setting/express'
+import WxappSettingModel from '@/common/model/client/wxapp/setting'
 import ClientEnum from '@/common/enum/Client'
 import { PaymentMethodEnum } from '@/common/enum/payment'
-import { DeliveryStatusEnum } from '@/common/enum/order'
+import { DeliveryStatusEnum, OrderTypeEnum } from '@/common/enum/order'
 import { GoodsItem } from '@/components/Table'
 
 const columns1 = [
@@ -197,6 +203,8 @@ export default {
       visible: false,
       // modal(对话框)确定按钮 loading
       isLoading: false,
+      // 对话框宽度
+      width: 680,
       // 商品表格字段
       columns1,
       columns2,
@@ -220,11 +228,13 @@ export default {
         expressId: undefined,
         // 物流单号
         expressNo: '',
-        // 同步至微信小程序《发货信息录入》
+        // 同步至微信小程序《发货信息管理》
         syncMpWeixinShipping: 1,
       },
       // 选择的商品
       selectedRowKeys: [],
+      // 是否开启发货信息管理
+      isEnableShipping: false
     }
   },
   computed: {
@@ -266,10 +276,7 @@ export default {
   },
   beforeCreate () {
     // 批量给当前实例赋值
-    assignment(this, {
-      ClientEnum,
-      PaymentMethodEnum
-    })
+    assignment(this, { ClientEnum, PaymentMethodEnum, OrderTypeEnum })
   },
   created () {
     // 获取物流公司列表
@@ -278,19 +285,23 @@ export default {
   methods: {
 
     // 显示对话框
-    show (record) {
+    async show (record) {
       // 当前记录
       this.record = record
-      if (record.order_type == 10) {
+      // 是否开启发货信息管理
+      this.isEnableShipping = await WxappSettingModel.isEnableShipping()
+      // 显示窗口
+      this.visible = true
+      this.tabKey = 1
+      // 判断订单类型
+      if (record.order_type == OrderTypeEnum.PHYSICAL.value) {
         this.showModalByPhysical()
       }
     },
 
     // 对话框：实物订单
     showModalByPhysical () {
-      // 显示窗口
-      this.visible = true
-      // 未发货的model记录
+      this.width = 680
       this.initPackGoodsData()
     },
 
@@ -318,20 +329,22 @@ export default {
     // 确认按钮
     handleSubmit (e) {
       e.preventDefault()
-      this.tabKey = 1
-      // 验证是否选择了商品
-      if (!this.selectedRowKeys.length) {
-        this.$message.error('您还没有选择要发货的商品')
-        return false
+      const app = this
+      app.tabKey = 1
+      // 实物订单
+      if (app.record.order_type == OrderTypeEnum.PHYSICAL.value) {
+        // 验证是否选择了商品
+        if (!app.selectedRowKeys.length) {
+          app.$message.error('您还没有选择要发货的商品')
+          return false
+        }
+        // 生成分包商品数据
+        app.formData.packGoodsData = app.packGoodsData.filter(item => app.selectedRowKeys.includes(item.orderGoodsId))
       }
-      // 生成分包商品数据
-      this.formData.packGoodsData = this.packGoodsData.filter(item => {
-        return this.selectedRowKeys.includes(item.orderGoodsId)
-      })
       // 表单验证
-      this.$refs.ruleForm.validate(valid => {
+      app.$refs.ruleForm.validate(valid => {
         // 提交到后端api
-        valid && this.onFormSubmit()
+        valid && app.onFormSubmit()
       })
     },
 

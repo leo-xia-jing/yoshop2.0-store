@@ -29,6 +29,15 @@
             <small>登录微信小程序平台，开发 - 开发管理 - 开发设置，记录AppSecret (小程序密钥)</small>
           </p>
         </a-form-item>
+        <a-form-item label="发货信息管理" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-radio-group v-decorator="['enableShipping', { rules: [{ required: true }] }]">
+            <a-radio :value="true">开启</a-radio>
+            <a-radio :value="false">关闭</a-radio>
+          </a-radio-group>
+          <p class="form-item-help">
+            <small>登录微信小程序平台，在功能菜单中查找是否存在《发货信息管理》，如果存在则需开启</small>
+          </p>
+        </a-form-item>
 
         <a-divider orientation="left">授权域名设置</a-divider>
         <a-form-item
@@ -130,7 +139,7 @@ export default {
     setFieldsValue () {
       const { record, $nextTick, form } = this
       !isEmpty(form.getFieldsValue()) && $nextTick(() => {
-        form.setFieldsValue(pick(record, ['enabled', 'app_id', 'app_secret']))
+        form.setFieldsValue(pick(record, ['enabled', 'app_id', 'app_secret', 'enableShipping']))
       })
     },
 
