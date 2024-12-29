@@ -238,89 +238,140 @@
           <div
             v-else-if="item.type == 'goods'"
             class="diy-goods"
-            :style="{ background: item.style.background }"
+            :style="{
+              background: item.style.background, 
+              padding: `${item.style.paddingY}px ${item.style.paddingX}px`, 
+              overflow: item.style.display === 'slide' ? 'hidden' : 'unset' 
+            }"
           >
-            <ul
-              class="goods-list clearfix"
-              :class="[`display__${item.style.display}`, `column__${item.style.column}`  ]"
+            <div
+              class="goods-list"
+              :class="[`display-${item.style.display}`, `column-${item.style.column}`  ]"
             >
-              <li
+              <div
                 class="goods-item"
                 v-for="(dataItm, dataIdx) in (item.params.source == 'choice' ? item.data : item.defaultData)"
                 :key="`${index}_${dataIdx}`"
+                :class="[`display-${item.style.cardType}`]"
+                :style="{ marginBottom: `${item.style.itemMargin}px`, borderRadius: `${item.style.borderRadius}px` }"
               >
                 <!-- 单列商品 -->
                 <template v-if="item.style.column == 1">
                   <div class="flex">
                     <!-- 商品图片 -->
                     <div class="goods-item_left">
-                      <img :src="dataItm.goods_image" />
+                      <img class="image" :src="dataItm.goods_image" />
                     </div>
                     <div class="goods-item_right">
-                      <!-- 商品名称 -->
-                      <div
-                        v-if="item.style.show.includes('goodsName')"
-                        class="goods-item_title twoline-hide"
-                      >
-                        <span>{{ dataItm.goods_name }}</span>
-                      </div>
-                      <div class="goods-item_desc">
-                        <!-- 商品卖点 -->
+                      <div class="goods-info">
                         <div
-                          v-if="item.style.show.includes('sellingPoint')"
-                          class="desc-selling_point oneline-hide"
-                        >
-                          <span>{{ dataItm.selling_point }}</span>
-                        </div>
-                        <!-- 商品销量 -->
+                          v-if="inArray('goodsName', item.style.show)"
+                          class="goods-name twoline-hide"
+                        >{{ dataItm.goods_name }}</div>
                         <div
-                          v-if="item.style.show.includes('goodsSales')"
-                          class="desc-goods_sales oneline-hide"
+                          v-if="inArray('sellingPoint', item.style.show)"
+                          class="goods-selling oneline-hide"
                         >
-                          <span>已售{{ dataItm.goods_sales }}件</span>
-                        </div>
-                        <!-- 商品价格 -->
-                        <div class="desc_footer">
-                          <span v-if="item.style.show.includes('goodsPrice')" class="price_x">
-                            <span class="small-unit">¥</span>
-                            <span>{{ dataItm.goods_price_min }}</span>
-                          </span>
                           <span
-                            class="price_y"
-                            v-if="item.style.show.includes('linePrice') && dataItm.line_price_min > 0"
-                          >¥{{ dataItm.line_price_min }}</span>
+                            class="selling"
+                            :style="{ color: item.style.sellingColor }"
+                          >{{ dataItm.selling_point }}</span>
+                        </div>
+                        <div
+                          v-if="inArray('goodsSales', item.style.show)"
+                          class="goods-sales oneline-hide"
+                        >
+                          <span class="sales">已售{{ dataItm.goods_sales }}</span>
+                          <!-- <span class="line">|</span>
+                          <span>惊艳度100%</span>-->
+                        </div>
+                        <div class="footer">
+                          <div
+                            v-if="inArray('goodsPrice', item.style.show)"
+                            class="goods-price oneline-hide"
+                            :style="{ color: item.style.priceColor }"
+                          >
+                            <span class="unit">￥</span>
+                            <span class="value">{{ dataItm.goods_price_min }}</span>
+                            <!-- <span class="unit2">到手价</span> -->
+                            <span v-if="inArray('linePrice', item.style.show)" class="line-price">
+                              <span class="unit">￥</span>
+                              <span class="value">{{ dataItm.line_price_min }}</span>
+                            </span>
+                          </div>
+                          <div
+                            v-show="inArray('cartBtn', item.style.show) && item.style.column < 3"
+                            class="action"
+                          >
+                            <div
+                              class="btn-cart"
+                              :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
+                            >
+                              <a-icon class="cart-icon" type="plus" />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </template>
-                <!-- 两列三列 -->
+                <!-- 两列/三列 -->
                 <template v-else>
                   <div class="goods-image">
-                    <img :src="dataItm.goods_image" />
+                    <img class="image" :src="dataItm.goods_image" />
                   </div>
-                  <div class="detail">
-                    <p
-                      v-if="item.style.show.includes('goodsName')"
+                  <div class="goods-info">
+                    <div
+                      v-if="inArray('goodsName', item.style.show)"
                       class="goods-name twoline-hide"
-                    >{{ dataItm.goods_name }}</p>
-                    <p class="detail-price">
-                      <span v-if="item.style.show.includes('goodsPrice')" class="goods-price">
-                        <span class="small-unit">¥</span>
-                        <span>{{ dataItm.goods_price_min }}</span>
-                      </span>
+                    >{{ dataItm.goods_name }}</div>
+                    <div
+                      v-if="inArray('sellingPoint', item.style.show)"
+                      class="goods-selling oneline-hide"
+                    >
                       <span
-                        v-if="item.style.show.includes('linePrice') && dataItm.line_price_min > 0"
-                        class="line-price"
+                        class="selling"
+                        :style="{ color: item.style.sellingColor }"
+                      >{{ dataItm.selling_point }}</span>
+                    </div>
+                    <div
+                      v-if="inArray('goodsSales', item.style.show)"
+                      class="goods-sales oneline-hide"
+                    >
+                      <span class="sales">已售{{ dataItm.goods_sales }}</span>
+                      <!-- <span class="line">|</span>
+                      <span>惊艳度100%</span>-->
+                    </div>
+                    <div class="footer">
+                      <div
+                        v-if="inArray('goodsPrice', item.style.show)"
+                        class="goods-price oneline-hide"
+                        :style="{ color: item.style.priceColor }"
                       >
-                        <span class="small-unit">¥</span>
-                        <span>{{ dataItm.line_price_min }}</span>
-                      </span>
-                    </p>
+                        <span class="unit">￥</span>
+                        <span class="value">{{ dataItm.goods_price_min }}</span>
+                        <!-- <span class="unit2">到手价</span> -->
+                        <span v-if="inArray('linePrice', item.style.show)" class="line-price">
+                          <span class="unit">￥</span>
+                          <span class="value">{{ dataItm.line_price_min }}</span>
+                        </span>
+                      </div>
+                      <div
+                        v-show="inArray('cartBtn', item.style.show) && item.style.column < 3"
+                        class="action"
+                      >
+                        <div
+                          class="btn-cart"
+                          :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
+                        >
+                          <a-icon class="cart-icon" type="plus" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </template>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
           <!-- 辅助空白 -->

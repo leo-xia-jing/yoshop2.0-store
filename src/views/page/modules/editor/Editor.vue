@@ -617,7 +617,7 @@
             </div>
             <!-- 自动获取 -->
             <div v-if="curItem.params.source === 'auto'" class="block-box">
-              <div class="block-title">商品内容</div>
+              <div class="block-title">商品数据</div>
               <div class="block-item">
                 <span class="label">商品分类</span>
                 <SelectCategory v-model="curItem.params.auto.category" />
@@ -643,7 +643,7 @@
           </a-tab-pane>
           <a-tab-pane key="2" tab="样式设置">
             <div class="block-box">
-              <div class="block-title">内容样式</div>
+              <div class="block-title">商品样式</div>
               <div class="block-item">
                 <span class="label">显示类型</span>
                 <a-radio-group buttonStyle="solid" v-model="curItem.style.display">
@@ -666,22 +666,113 @@
                     <a-checkbox value="goodsName">商品名称</a-checkbox>
                     <a-checkbox value="goodsPrice">商品价格</a-checkbox>
                     <a-checkbox value="linePrice">划线价格</a-checkbox>
-                    <a-checkbox v-show="curItem.style.column === 1" value="sellingPoint">商品卖点</a-checkbox>
-                    <a-checkbox v-show="curItem.style.column === 1" value="goodsSales">商品销量</a-checkbox>
+                    <a-checkbox value="sellingPoint">商品卖点</a-checkbox>
+                    <a-checkbox value="goodsSales">商品销量</a-checkbox>
+                    <a-checkbox v-show="curItem.style.column < 3" value="cartBtn">加购按钮</a-checkbox>
                   </a-checkbox-group>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">商品价格颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'priceColor', '#ff1051')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.priceColor" defaultColor="#ff1051" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">购物车背景颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'btnCartColor', '#27c29a')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.btnCartColor" defaultColor="#27c29a" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">购物车文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'btnFontColor', '#ffffff')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.btnFontColor" defaultColor="#ffffff" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">商品卖点颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'sellingColor', '#e3771f')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.sellingColor" defaultColor="#e3771f" />
+                </div>
+              </div>
+            </div>
+            <div class="block-box">
+              <div class="block-title">卡片样式</div>
+              <div class="block-item">
+                <span class="label">内容样式</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.style.cardType">
+                  <a-radio-button value="flat">扁平</a-radio-button>
+                  <a-radio-button value="card">卡片</a-radio-button>
+                </a-radio-group>
+              </div>
+              <div class="block-item">
+                <span class="label">圆角尺寸</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.style.borderRadius" :min="0" :max="20" />
+                  <span class="unit-text">
+                    <span>{{ curItem.style.borderRadius }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">商品间距</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.style.itemMargin" :min="0" :max="30" />
+                  <span class="unit-text">
+                    <span>{{ curItem.style.itemMargin }}</span>
+                    <span>像素</span>
+                  </span>
                 </div>
               </div>
             </div>
             <div class="block-box">
               <div class="block-title">组件样式</div>
               <div class="block-item">
+                <span class="label">上下边距</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.style.paddingY" :min="0" :max="30" />
+                  <span class="unit-text">
+                    <span>{{ curItem.style.paddingY }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">左右边距</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.style.paddingX" :min="0" :max="20" />
+                  <span class="unit-text">
+                    <span>{{ curItem.style.paddingX }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
                 <span class="label">背景颜色</span>
                 <div class="item-colorPicker">
                   <span
                     class="rest-color"
-                    @click="onEditorResetColor(curItem.style, 'background', '#fff')"
+                    @click="onEditorResetColor(curItem.style, 'background', '#ffffff')"
                   >重置</span>
-                  <colorPicker v-model="curItem.style.background" defaultColor="#fff" />
+                  <colorPicker v-model="curItem.style.background" defaultColor="#ffffff" />
                 </div>
               </div>
             </div>
