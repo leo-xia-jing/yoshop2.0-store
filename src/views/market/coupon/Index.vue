@@ -36,14 +36,13 @@
       </template>
       <!-- 最低消费金额 -->
       <template slot="min_price" slot-scope="text">
-        <p class="c-p">{{ text }}</p>
+        <p class="c-p">¥{{ text }}</p>
       </template>
       <!-- 优惠方式 -->
       <template slot="discount" slot-scope="item">
         <template v-if="item.coupon_type == 10">
           <span>立减</span>
-          <span class="c-p mlr-2">{{ item.reduce_price }}</span>
-          <span>元</span>
+          <span class="c-p mlr-2">¥{{ item.reduce_price }}</span>
         </template>
         <template v-if="item.coupon_type == 20">
           <span>打</span>

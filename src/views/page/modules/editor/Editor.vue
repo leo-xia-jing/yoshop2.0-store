@@ -11,14 +11,14 @@
         <a-tab-pane key="1" tab="页面设置">
           <div class="block-box">
             <div class="block-title">基本信息</div>
-            <div class="block-item">
+            <div class="block-item has-tips">
               <span class="label">页面名称</span>
               <div class="flex-box">
                 <a-input v-model="data.page.params.name" />
                 <div class="tips">页面名称仅用于后台管理</div>
               </div>
             </div>
-            <div class="block-item">
+            <div class="block-item has-tips">
               <span class="label">分享标题</span>
               <div class="flex-box">
                 <a-input v-model="data.page.params.shareTitle" />
@@ -30,7 +30,7 @@
         <a-tab-pane key="2" tab="标题栏设置">
           <div class="block-box">
             <div class="block-title">标题栏设置</div>
-            <div class="block-item">
+            <div class="block-item has-tips">
               <span class="label">标题名称</span>
               <div class="flex-box">
                 <a-input v-model="data.page.params.title" />
@@ -374,14 +374,14 @@
           <a-tab-pane key="1" tab="内容设置">
             <div class="block-box">
               <div class="block-title">功能设置</div>
-              <div class="block-item">
+              <div class="block-item has-tips">
                 <span class="label">视频地址</span>
                 <div class="flex-box">
                   <a-input v-model="curItem.params.videoUrl" />
                   <div class="tips">仅支持.mp4格式的视频源地址</div>
                 </div>
               </div>
-              <div class="block-item">
+              <div class="block-item has-tips">
                 <span class="label">视频封面</span>
                 <div class="flex-box">
                   <SImage v-model="curItem.params.poster" :width="160" :height="90" />
@@ -574,7 +574,7 @@
               </div>
               <div class="block-item">
                 <span class="label">切换时间</span>
-                <div class="item-slider" style="width: 190px;">
+                <div class="item-slider">
                   <a-slider v-model="curItem.style.interval" :step="1" :min="1" :max="20" />
                   <span class="unit-text">
                     <span>{{ curItem.style.interval }}</span>

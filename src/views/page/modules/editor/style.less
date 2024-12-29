@@ -36,7 +36,7 @@
   .tips-wrap,
   .link {
     display: block;
-    line-height: 32px;
+    // line-height: 32px;
     white-space: nowrap;
     font-size: 12px;
   }
@@ -105,12 +105,18 @@
     .block-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 15px;
 
       &:last-child {
         margin-bottom: 0;
       }
 
+      &.has-tips {
+        .label {
+          margin-top: -22px;
+        }
+      }
 
       .tips {
         margin-top: 5px;
@@ -123,8 +129,9 @@
 
         &-row {
           display: flex;
+          align-items: center;
           margin-bottom: 6px;
-          line-height: 32px;
+          // line-height: 32px;
 
           &:last-child {
             margin-bottom: 0;

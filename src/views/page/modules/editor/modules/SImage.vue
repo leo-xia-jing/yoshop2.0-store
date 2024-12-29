@@ -100,6 +100,7 @@ export default {
     border-radius: 4px;
     background-image: url('~@/assets/img/default-image.png');
     background-size: cover;
+    overflow: hidden;
 
     .update-box-black {
       background: #000;

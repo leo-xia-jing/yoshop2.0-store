@@ -159,7 +159,7 @@
               <!-- 小图模式 -->
               <template v-if="dataItm.show_type == 10">
                 <div class="article-item__left flex-box">
-                  <div class="article-item__title twolist-hidden">
+                  <div class="article-item__title twoline-hide">
                     <span class="article-title">{{ dataItm.title }}</span>
                   </div>
                   <div class="article-item__footer">
@@ -260,7 +260,7 @@
                       <!-- 商品名称 -->
                       <div
                         v-if="item.style.show.includes('goodsName')"
-                        class="goods-item_title twolist-hidden"
+                        class="goods-item_title twoline-hide"
                       >
                         <span>{{ dataItm.goods_name }}</span>
                       </div>
@@ -302,7 +302,7 @@
                   <div class="detail">
                     <p
                       v-if="item.style.show.includes('goodsName')"
-                      class="goods-name twolist-hidden"
+                      class="goods-name twoline-hide"
                     >{{ dataItm.goods_name }}</p>
                     <p class="detail-price">
                       <span v-if="item.style.show.includes('goodsPrice')" class="goods-price">

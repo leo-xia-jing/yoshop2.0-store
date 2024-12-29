@@ -48,7 +48,7 @@ const itemColumns = ['goods_id', 'goods_name', 'goods_image', 'goods_price_min',
 
 // 商品选择器组件
 export default {
-  name: 'SelectGoods',
+  name: 'SGoods',
   components: {
     GoodsModal,
     draggable

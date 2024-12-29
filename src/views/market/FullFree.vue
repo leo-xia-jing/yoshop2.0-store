@@ -127,12 +127,8 @@ export default {
       if (excludedGoodsIds.length > 0) {
         this.isLoading = true
         await GoodsApi.listByIds(excludedGoodsIds)
-          .then(result => {
-            this.excludedGoodsList = result.data.list
-          })
-          .finally(result => {
-            this.isLoading = false
-          })
+          .then(result => this.excludedGoodsList = result.data.list)
+          .finally(result => this.isLoading = false)
       }
     },
 
