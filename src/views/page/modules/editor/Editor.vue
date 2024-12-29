@@ -296,7 +296,7 @@
         </a-tabs>
       </div>
 
-      <!-- 文章 -->
+      <!-- 文章组 -->
       <div v-if="curItem.type == 'article'" class="editor-content">
         <div class="block-box">
           <div class="block-title">文章内容</div>
@@ -378,7 +378,7 @@
         </a-tabs>
       </div>
 
-      <!-- 视频 -->
+      <!-- 视频组 -->
       <div v-if="curItem.type == 'video'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
@@ -445,7 +445,7 @@
         </a-tabs>
       </div>
 
-      <!-- 图片 -->
+      <!-- 图片组 -->
       <div v-if="curItem.type == 'image'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
@@ -780,7 +780,7 @@
         </a-tabs>
       </div>
 
-      <!-- 导航 -->
+      <!-- 导航组 -->
       <div v-if="curItem.type == 'navBar'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
@@ -864,7 +864,7 @@
         </a-tabs>
       </div>
 
-      <!-- 橱窗 -->
+      <!-- 图片橱窗 -->
       <div v-if="curItem.type == 'window'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
@@ -949,7 +949,7 @@
         </a-tabs>
       </div>
 
-      <!-- 图片 -->
+      <!-- 热区组 -->
       <div v-if="curItem.type == 'hotZone'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">
@@ -1225,7 +1225,7 @@
         </a-tabs>
       </div>
 
-      <!-- 网站备案 -->
+      <!-- 备案号 -->
       <div v-if="curItem.type == 'ICPLicense'" class="editor-content">
         <a-tabs>
           <a-tab-pane key="1" tab="内容设置">

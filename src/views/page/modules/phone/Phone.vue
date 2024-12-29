@@ -29,9 +29,10 @@
           :class="{ selected: index === selectedIndex, undrag: inArray(item.type, undragList) }"
           :style="renderItemStyle(item)"
         >
-          <!-- 图片轮播 -->
+          <!-- 轮播图 -->
           <div v-if="item.type == 'banner'" class="diy-banner">
             <img
+              class="image"
               v-for="(dataItem, dataIdx) in item.data"
               :key="`${index}_${dataIdx}_img`"
               v-show="dataIdx <= 1"
@@ -59,7 +60,7 @@
               :key="`${index}_${dataIdx}`"
               :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px 0` }"
             >
-              <img :src="dataItm.imgUrl" />
+              <img class="image" :src="dataItm.imgUrl" />
             </div>
           </div>
 
@@ -81,7 +82,7 @@
                 :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px` }"
               >
                 <div class="item-image">
-                  <img :src="window.imgUrl" />
+                  <img class="image" :src="window.imgUrl" />
                 </div>
               </li>
             </ul>
@@ -90,7 +91,7 @@
                 class="display-left"
                 :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px` }"
               >
-                <img :src="item.data[0].imgUrl" />
+                <img class="image" :src="item.data[0].imgUrl" />
               </div>
               <div class="display-right">
                 <div
@@ -98,7 +99,7 @@
                   class="display-right1"
                   :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px` }"
                 >
-                  <img :src="item.data[1].imgUrl" />
+                  <img class="image" :src="item.data[1].imgUrl" />
                 </div>
                 <div class="display-right2">
                   <div
@@ -106,21 +107,21 @@
                     class="left"
                     :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px` }"
                   >
-                    <img :src="item.data[2].imgUrl" />
+                    <img class="image" :src="item.data[2].imgUrl" />
                   </div>
                   <div
                     v-if="item.data.length >= 4"
                     class="right"
                     :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px` }"
                   >
-                    <img :src="item.data[3].imgUrl" />
+                    <img class="image" :src="item.data[3].imgUrl" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 图片组 -->
+          <!-- 热区组 -->
           <div
             v-else-if="item.type == 'hotZone'"
             class="diy-hotZone"
@@ -130,7 +131,7 @@
               class="item-image"
               :style="{ padding: `${item.style.paddingTop}px ${item.style.paddingLeft}px 0` }"
             >
-              <img :src="item.data.imgUrl" />
+              <img class="image" :src="item.data.imgUrl" />
             </div>
           </div>
 
@@ -167,7 +168,7 @@
                   </div>
                 </div>
                 <div class="article-item__image">
-                  <img :src="dataItm.image" alt />
+                  <img class="image" :src="dataItm.image" alt />
                 </div>
               </template>
               <!-- 大图模式 -->
@@ -176,7 +177,7 @@
                   <span class="article-title">{{ dataItm.title }}</span>
                 </div>
                 <div class="article-item__image">
-                  <img :src="dataItm.image" />
+                  <img class="image" :src="dataItm.image" />
                 </div>
                 <div class="article-item__footer">
                   <span class="article-views">{{ dataItm.views_num }}次浏览</span>
@@ -186,7 +187,11 @@
           </div>
 
           <!-- 搜索栏 -->
-          <div v-else-if="item.type == 'search'" class="diy-search">
+          <div
+            v-else-if="item.type == 'search'"
+            class="diy-search"
+            :class="{ sticky: item.params.sticky }"
+          >
             <div class="inner" :class="item.style.searchStyle">
               <div class="search-input" :style="{ textAlign: item.style.textAlign }">
                 <a-icon class="search-icon" :component="PageIcon.search" />
@@ -227,7 +232,7 @@
                 :key="`${index}_${dataIdx}`"
               >
                 <div class="item-image">
-                  <img :src="dataItm.imgUrl" />
+                  <img class="image" :src="dataItm.imgUrl" />
                 </div>
                 <p class="item-text oneline-hide">{{ dataItm.text }}</p>
               </li>
@@ -238,11 +243,7 @@
           <div
             v-else-if="item.type == 'goods'"
             class="diy-goods"
-            :style="{
-              background: item.style.background, 
-              padding: `${item.style.paddingY}px ${item.style.paddingX}px`, 
-              overflow: item.style.display === 'slide' ? 'hidden' : 'unset' 
-            }"
+            :style="{ background: item.style.background, padding: `${item.style.paddingY}px ${item.style.paddingX}px` }"
           >
             <div
               class="goods-list"
@@ -259,21 +260,18 @@
                 <template v-if="item.style.column == 1">
                   <div class="flex">
                     <!-- 商品图片 -->
-                    <div class="goods-item_left">
+                    <div class="goods-item-left">
                       <img class="image" :src="dataItm.goods_image" />
                     </div>
-                    <div class="goods-item_right">
+                    <div class="goods-item-right">
                       <div class="goods-info">
                         <div
                           v-if="inArray('goodsName', item.style.show)"
                           class="goods-name twoline-hide"
                         >{{ dataItm.goods_name }}</div>
-                        <div
-                          v-if="inArray('sellingPoint', item.style.show)"
-                          class="goods-selling oneline-hide"
-                        >
+                        <div v-if="inArray('sellingPoint', item.style.show)" class="goods-selling">
                           <span
-                            class="selling"
+                            class="selling oneline-hide"
                             :style="{ color: item.style.sellingColor }"
                           >{{ dataItm.selling_point }}</span>
                         </div>
@@ -307,7 +305,7 @@
                               class="btn-cart"
                               :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
                             >
-                              <a-icon class="cart-icon" type="plus" />
+                              <a-icon class="cart-icon" :component="PageIcon.plus" />
                             </div>
                           </div>
                         </div>
@@ -325,12 +323,9 @@
                       v-if="inArray('goodsName', item.style.show)"
                       class="goods-name twoline-hide"
                     >{{ dataItm.goods_name }}</div>
-                    <div
-                      v-if="inArray('sellingPoint', item.style.show)"
-                      class="goods-selling oneline-hide"
-                    >
+                    <div v-if="inArray('sellingPoint', item.style.show)" class="goods-selling">
                       <span
-                        class="selling"
+                        class="selling oneline-hide"
                         :style="{ color: item.style.sellingColor }"
                       >{{ dataItm.selling_point }}</span>
                     </div>
@@ -364,7 +359,7 @@
                           class="btn-cart"
                           :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
                         >
-                          <a-icon class="cart-icon" type="plus" />
+                          <a-icon class="cart-icon" :component="PageIcon.plus" />
                         </div>
                       </div>
                     </div>
@@ -490,7 +485,7 @@
             :style="{ padding: `${item.style.paddingTop}px 0`, background: item.style.background }"
           >
             <div class="special-left">
-              <img :src="item.params.image" alt />
+              <img class="image" :src="item.params.image" alt />
             </div>
             <div class="special-content" :class="[`display_${item.params.display}`]">
               <ul class="special-content-list">
