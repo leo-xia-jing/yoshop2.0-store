@@ -70,6 +70,16 @@
                 <span class="label">提示文字</span>
                 <a-input v-model="curItem.params.placeholder" />
               </div>
+              <div class="block-item">
+                <span class="label">吸顶规则</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.sticky">
+                  <a-radio-button :value="false">不吸顶</a-radio-button>
+                  <a-radio-button :value="true">到顶部时吸顶</a-radio-button>
+                </a-radio-group>
+              </div>
+              <div class="block-item tips">
+                <div class="tips">滚动至页面顶部时固定</div>
+              </div>
             </div>
           </a-tab-pane>
           <a-tab-pane key="2" tab="样式设置">
