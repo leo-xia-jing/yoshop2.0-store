@@ -6,5 +6,6 @@ import Enum from '../enum'
  */
 export default new Enum([
   { key: 'ALL', name: '全部商品', value: 10 },
-  { key: 'SOME_GOODS', name: '指定商品', value: 20 }
+  { key: 'SOME', name: '指定商品', value: 20 },
+  { key: 'EXCLUDE', name: '排除商品', value: 30 }
 ])

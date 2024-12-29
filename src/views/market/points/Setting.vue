@@ -2,8 +2,8 @@
   <a-card :bordered="false">
     <div class="card-title">{{ $route.meta.title }}</div>
     <a-spin :spinning="isLoading">
-      <a-form :form="form" @submit="handleSubmit">
-        <a-form-item label="积分名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+      <a-form :form="form" @submit="handleSubmit" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="积分名称">
           <a-input
             v-decorator="['points_name', { rules: [{ required: true, message: '请输入积分名称' }] }]"
           />
@@ -11,7 +11,7 @@
             <small>注：商家使用自定义的积分名称来做品牌运营。如京东把积分称为“京豆”，淘宝把积分称为“淘金币”</small>
           </div>
         </a-form-item>
-        <a-form-item label="积分说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="积分说明">
           <a-textarea
             :autoSize="{ minRows: 4 }"
             v-decorator="['describe', { rules: [{ required: true, message: '请输入积分说明' }] }]"
@@ -19,7 +19,7 @@
         </a-form-item>
 
         <a-divider orientation="left">积分赠送</a-divider>
-        <a-form-item label="购物送积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="购物送积分">
           <a-radio-group
             v-decorator="['is_shopping_gift', { initialValue: 1, rules: [{ required: true }] }]"
           >
@@ -31,7 +31,7 @@
           </div>
         </a-form-item>
         <div v-show="form.getFieldValue('is_shopping_gift') == 1">
-          <a-form-item label="积分赠送比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-form-item label="积分赠送比例">
             <a-input-number
               :min="0.1"
               :max="100"
@@ -47,7 +47,7 @@
         </div>
 
         <a-divider orientation="left">积分抵扣</a-divider>
-        <a-form-item label="下单使用积分抵扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="下单使用积分抵扣">
           <a-radio-group
             v-decorator="['is_shopping_discount', { initialValue: 1, rules: [{ required: true }] }]"
           >
@@ -60,7 +60,7 @@
         </a-form-item>
 
         <div v-show="form.getFieldValue('is_shopping_discount') == 1">
-          <a-form-item label="积分抵扣比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-form-item label="积分抵扣比例">
             <InputNumberGroup
               addonBefore="1个积分可抵扣"
               addonAfter="元"
@@ -71,7 +71,7 @@
               <small>例如：设置1个积分可抵扣0.1元，则10积分可抵扣1元，100积分可抵扣10元</small>
             </div>
           </a-form-item>
-          <a-form-item label="最高可抵扣金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-form-item label="最高可抵扣金额">
             <a-form-item>
               <InputNumberGroup
                 addonBefore="订单满"

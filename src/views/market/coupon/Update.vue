@@ -2,19 +2,22 @@
   <a-card :bordered="false">
     <div class="card-title">{{ $route.meta.title }}</div>
     <a-spin :spinning="isLoading">
-      <a-form :form="form" @submit="handleSubmit">
-        <a-form-item label="优惠券名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+      <a-form :form="form" @submit="handleSubmit" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="优惠券名称">
           <a-input
             placeholder="请输入优惠券名称"
             v-decorator="['name', { rules: [{ required: true, min: 2, message: '请输入至少2个字符' }] }]"
           />
         </a-form-item>
-        <a-form-item label="优惠券类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="优惠券类型">
           <a-radio-group
             v-decorator="['coupon_type', { initialValue: 10, rules: [{ required: true }] }]"
           >
-            <a-radio :value="10">满减券</a-radio>
-            <a-radio :value="20">折扣券</a-radio>
+            <a-radio
+              v-for="(item, index) in CouponTypeEnum.data"
+              :value="item.value"
+              :key="index"
+            >{{ item.name }}</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item
@@ -47,7 +50,7 @@
             <small>折扣率范围 0-9.9，8代表打8折，0代表不折扣</small>
           </p>
         </a-form-item>
-        <a-form-item label="最低消费金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="最低消费金额">
           <a-input-number
             :min="1"
             :precision="2"
@@ -55,7 +58,7 @@
           />
           <span class="ml-5">元</span>
         </a-form-item>
-        <a-form-item label="到期类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="到期类型">
           <a-radio-group
             v-decorator="['expire_type', { initialValue: 10, rules: [{ required: true }] }]"
           >
@@ -77,21 +80,24 @@
             />
           </a-form-item>
         </a-form-item>
-        <a-form-item label="券适用范围" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="券适用范围">
           <a-radio-group
-            v-decorator="['apply_range', { initialValue: 10, rules: [{ required: true }] }]"
+            v-decorator="['apply_range', { initialValue: ApplyRangeEnum.ALL.value, rules: [{ required: true }] }]"
           >
-            <a-radio :value="10">全场通用</a-radio>
-            <a-radio :value="20">指定商品</a-radio>
+            <a-radio
+              v-for="(item, index) in ApplyRangeEnum.data"
+              :value="item.value"
+              :key="index"
+            >{{ item.name }}</a-radio>
           </a-radio-group>
-          <a-form-item v-if="form.getFieldValue('apply_range') == 20">
+          <a-form-item v-if="form.getFieldValue('apply_range') != ApplyRangeEnum.ALL.value">
             <SelectGoods
-              :defaultList="containGoodsList"
-              v-decorator="['apply_range_config.applyGoodsIds', { rules: [{ required: true, message: '请选择指定的商品' }] }]"
+              :defaultList="goodsList"
+              v-decorator="['apply_range_config.goodsIds', { rules: [{ required: true, message: '请选择适用的商品' }] }]"
             />
           </a-form-item>
         </a-form-item>
-        <a-form-item label="发放总数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="发放总数量">
           <a-input-number
             :min="-1"
             :precision="0"
@@ -102,7 +108,7 @@
             <small>发放的优惠券总数量，-1为不限制</small>
           </p>
         </a-form-item>
-        <a-form-item label="显示状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="显示状态">
           <a-radio-group v-decorator="['status', { initialValue: 1, rules: [{ required: true }] }]">
             <a-radio :value="1">显示</a-radio>
             <a-radio :value="0">隐藏</a-radio>
@@ -111,10 +117,10 @@
             <small>如果设为隐藏将不会展示在用户端页面</small>
           </p>
         </a-form-item>
-        <a-form-item label="优惠券描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="优惠券描述">
           <a-textarea :autoSize="{ minRows: 4 }" v-decorator="['describe']" />
         </a-form-item>
-        <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol" extra="数字越小越靠前">
+        <a-form-item label="排序" extra="数字越小越靠前">
           <a-input-number
             :min="0"
             v-decorator="['sort', { initialValue: 100, rules: [{ required: true, message: '请输入排序值' }] }]"
@@ -163,8 +169,8 @@ export default {
       couponId: null,
       // 当前记录
       record: {},
-      // 适用范围：指定的商品
-      containGoodsList: []
+      // 商品列表
+      goodsList: []
     }
   },
   async created () {
@@ -194,16 +200,12 @@ export default {
     // 获取指定的商品列表
     async getContainGoodsList () {
       const { record } = this
-      const goodsIds = get(record, 'apply_range_config.applyGoodsIds')
+      const goodsIds = get(record, 'apply_range_config.goodsIds')
       if (goodsIds !== undefined && goodsIds.length) {
         this.isLoading = true
         await GoodsApi.listByIds(goodsIds)
-          .then(result => {
-            this.containGoodsList = result.data.list
-          })
-          .finally(result => {
-            this.isLoading = false
-          })
+          .then(result => this.goodsList = result.data.list)
+          .finally(result => this.isLoading = false)
       }
     },
 
@@ -250,13 +252,9 @@ export default {
           // 显示提示信息
           this.$message.success(result.message, 1.5)
           // 跳转到列表页
-          setTimeout(() => {
-            this.$router.push('./index')
-          }, 1500)
+          setTimeout(() => this.$router.push('./index'), 1500)
         })
-        .catch(() => {
-          this.isBtnLoading = false
-        })
+        .catch(() => this.isBtnLoading = false)
         .finally(() => this.isLoading = false)
     }
 
@@ -267,6 +265,13 @@ export default {
 .ant-form-item {
   .ant-form-item {
     margin-bottom: 0;
+  }
+}
+
+/deep/.ant-form-item-control {
+  padding-left: 10px;
+  .ant-form-item-control {
+    padding-left: 0;
   }
 }
 </style>
