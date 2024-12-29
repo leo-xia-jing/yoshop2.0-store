@@ -249,14 +249,18 @@
                 :key="index + 1"
               >
                 <a-descriptions>
+                  <a-descriptions-item label="发货状态">
+                    <a-tag color="green">已发货</a-tag>
+                  </a-descriptions-item>
                   <a-descriptions-item
                     label="物流公司"
                   >{{ item.delivery_method == 20 ? '无需物流' : item.express.express_name }}</a-descriptions-item>
                   <a-descriptions-item label="物流单号">{{ item.express_no ? item.express_no : '--' }}</a-descriptions-item>
-                  <a-descriptions-item label="发货状态">
-                    <a-tag color="green">已发货</a-tag>
+                  <a-descriptions-item label="物流跟踪">
+                    <a href="javascript:;" @click="handleShowExpress(index)">点击查看</a>
                   </a-descriptions-item>
                 </a-descriptions>
+                <!-- 发货商品列表 -->
                 <div class="deliver-goods-list clearfix">
                   <div class="goods-item" v-for="(goods, idx) in item.goods" :key="idx">
                     <a-tooltip>
@@ -296,6 +300,7 @@
     <PrinterForm ref="PrinterForm" @handleSubmit="handleRefresh" />
     <PriceForm ref="PriceForm" @handleSubmit="handleRefresh" />
     <RemarkForm ref="RemarkForm" @handleSubmit="handleRefresh" />
+    <ExpressForm ref="ExpressForm" />
   </div>
 </template>
 
@@ -303,7 +308,7 @@
 import { inArray } from '@/utils/util'
 import * as Api from '@/api/order'
 import { GoodsItem, UserItem } from '@/components/Table'
-import { DeliveryForm, CancelForm, PrinterForm, PriceForm, RemarkForm } from './modules'
+import { DeliveryForm, CancelForm, PrinterForm, PriceForm, RemarkForm, ExpressForm } from './modules'
 import {
   OrderTypeEnum,
   DeliveryStatusEnum,
@@ -357,7 +362,8 @@ export default {
     CancelForm,
     PrinterForm,
     PriceForm,
-    RemarkForm
+    RemarkForm,
+    ExpressForm
   },
   data () {
     return {
@@ -481,6 +487,12 @@ export default {
     handleMerchantRemark () {
       const { record } = this
       this.$refs.RemarkForm.show(record)
+    },
+
+    // 查看物流跟踪信息
+    handleShowExpress (index) {
+      const { record } = this
+      this.$refs.ExpressForm.show(record.delivery[index], index)
     },
 
   }

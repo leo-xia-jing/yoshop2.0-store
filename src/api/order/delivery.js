@@ -5,7 +5,8 @@ const api = {
   list: '/order.delivery/list',
   detail: '/order.delivery/detail',
   delivery: '/order.delivery/delivery',
-  batch: '/order.delivery/batch'
+  batch: '/order.delivery/batch',
+  traces: '/order.delivery/traces'
 }
 
 // 列表记录
@@ -35,5 +36,14 @@ export function delivery (data) {
     url: api.delivery,
     method: 'post',
     data
+  })
+}
+
+// 查询指定发货单的物流跟踪信息
+export function traces (deliveryId) {
+  return axios({
+    url: api.traces,
+    method: 'get',
+    params: { deliveryId }
   })
 }
