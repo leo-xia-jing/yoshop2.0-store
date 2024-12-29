@@ -5,7 +5,7 @@
       <div class="image-box" :style="{ width: `${width}px`, height: `${height}px` }">
         <img :src="imgUrl" alt />
         <div class="update-box-black"></div>
-        <div class="uodate-repalce" @click="handleSelectImage">替换</div>
+        <div class="uodate-repalce" @click="handleSelectImage">选择</div>
       </div>
     </a-tooltip>
     <!-- 文件选择器 -->
@@ -98,6 +98,8 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 4px;
+    background-image: url('~@/assets/img/default-image.png');
+    background-size: cover;
 
     .update-box-black {
       background: #000;

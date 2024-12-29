@@ -245,7 +245,8 @@ export default {
     },
 
     // 确认搜索
-    handleSearch () {
+    handleSearch (e) {
+      e.preventDefault()
       this.searchForm.validateFields((error, values) => {
         if (!error) {
           this.queryParam = { ...this.queryParam, ...values }

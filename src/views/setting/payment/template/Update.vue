@@ -385,6 +385,7 @@
 
 <script>
 import { cloneDeep } from 'lodash'
+import { assignFormData } from '@/utils/util'
 import InputFile from '@/components/InputFile'
 import * as Api from '@/api/setting/payment/template'
 import { PaymentMethodEnum } from '@/common/enum/setting/payment'
@@ -483,7 +484,7 @@ export default {
       Api.detail(this.templateId)
         .then(result => {
           // 当前记录
-          this.record = { ...defaultData, ...result.data.detail }
+          this.record = assignFormData(result.data.detail, defaultData)
         })
         .finally(() => this.isLoading = false)
     },

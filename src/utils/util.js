@@ -1,3 +1,6 @@
+
+import _ from 'lodash'
+
 export function timeFix () {
   const time = new Date()
   const hour = time.getHours()
@@ -213,4 +216,15 @@ export function buildUrL (path, query) {
     return path + '?' + queryStr
   }
   return path
+}
+
+/**
+ * 合并表单数据 (用于form-model)
+ * @param {object} detail 表单数据 (后端返回)
+ * @param {object} defaultData 默认数据
+ * @returns {object}
+ */
+export function assignFormData (detail, defaultData) {
+  const filterData = _.pick(detail, _.keys(defaultData))
+  return Object.assign({}, defaultData, filterData)
 }

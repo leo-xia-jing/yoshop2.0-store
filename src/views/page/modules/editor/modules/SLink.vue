@@ -1,11 +1,11 @@
 <template>
-  <div class="select-link">
+  <div class="select-link" :style="{ fontSize: fontSize + 'px' }">
     <template v-if="!sLink">
       <a class="choice" @click="handleSelectLink()">选择链接</a>
     </template>
-    <div class="flex flex-x-between" v-else>
+    <div class="flex" v-else>
       <span class="link-title">{{ sLink.title }}</span>
-      <a class="choice" @click="handleSelectLink()">修改</a>
+      <a class="choice ml-10" @click="handleSelectLink()">修改</a>
     </div>
     <LinkModal ref="LinkModal" @handleSubmit="handleSubmit" />
   </div>
@@ -27,7 +27,9 @@ export default {
   },
   props: {
     // 选中的链接
-    value: PropTypes.object.def({})
+    value: PropTypes.object.def({}),
+    // 文字大小
+    fontSize: PropTypes.integer.def(12),
   },
   data () {
     return {
@@ -79,12 +81,11 @@ export default {
 .select-link {
   flex: 1;
   min-width: 150px;
+  // font-size: 12px;
 }
 .choice,
 .link-title {
   display: block;
-  line-height: 32px;
   white-space: nowrap;
-  font-size: 12px;
 }
 </style>

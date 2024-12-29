@@ -2,7 +2,7 @@
   <div class="select-link">
     <a-tooltip>
       <template slot="title">设置跳转的链接</template>
-      <a class="choice" @click="handleSelectLink()">链接</a>
+      <a class="choice" :style="{ color: color }" @click="handleSelectLink()">{{ text }}</a>
     </a-tooltip>
     <LinkModal ref="LinkModal" @handleSubmit="handleSubmit" />
   </div>
@@ -24,7 +24,11 @@ export default {
   },
   props: {
     // 选中的链接
-    value: PropTypes.object.def({})
+    value: PropTypes.object.def({}),
+    // 链接文字
+    text: PropTypes.string.def('链接'),
+    // 链接颜色
+    color: '#fff',
   },
   data () {
     return {

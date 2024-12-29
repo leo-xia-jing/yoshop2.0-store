@@ -263,7 +263,7 @@ const other = {
       id: '0b0147a',
       title: '自定义路径',
       type: LINK_TYPE_CUSTOM,
-      alert: '仅支持跳转内部页面路径，例如: pages/index/index',
+      alert: '仅支持跳转内部页面路径，例如：pages/index/index',
       param: {
         path: '',
         queryStr: {}
