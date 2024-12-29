@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { PaymentMethodEnum } from '@/common/enum/setting/payment'
+import { PaymentMethodEnum } from '@/common/enum/payment'
 import * as Api from '@/api/setting/payment/template'
 import { STable } from '@/components'
 

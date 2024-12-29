@@ -388,7 +388,7 @@ import { cloneDeep } from 'lodash'
 import { assignFormData } from '@/utils/util'
 import InputFile from '@/components/InputFile'
 import * as Api from '@/api/setting/payment/template'
-import { PaymentMethodEnum } from '@/common/enum/setting/payment'
+import { PaymentMethodEnum } from '@/common/enum/payment'
 
 // 默认表单数据
 const defaultData = {

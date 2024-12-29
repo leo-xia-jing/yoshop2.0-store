@@ -88,7 +88,7 @@
 import { payAlipay, payBalance, payWechat } from '@/core/icons'
 import * as Api from '@/api/setting/payment'
 import * as TemplateApi from '@/api/setting/payment/template'
-import { PaymentMethodEnum } from '@/common/enum/setting/payment'
+import { PaymentMethodEnum } from '@/common/enum/payment'
 
 // 支付方式图标
 const PayMethodIcons = {
