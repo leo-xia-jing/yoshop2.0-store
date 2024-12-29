@@ -62,6 +62,11 @@ const data = [
         type: 'special',
         icon: Icon.special
       },
+      {
+        name: '标题文本',
+        type: 'title',
+        icon: Icon.title
+      }
     ]
   },
   {

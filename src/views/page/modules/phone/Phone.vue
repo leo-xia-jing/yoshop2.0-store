@@ -461,6 +461,39 @@
             </p>
           </div>
 
+          <!-- 标题文本 -->
+          <div
+            v-else-if="item.type == 'title'"
+            class="diy-title"
+            :style="{ padding: `${item.style.paddingY}px 15px`, background: item.style.background }"
+          >
+            <div class="title-content">
+              <!-- 标题文字 -->
+              <div class="title">
+                <span
+                  :style="{ color: item.style.titleTextColor, fontSize: `${item.params.titleFontSize}px`, fontWeight: item.params.titleFontWeight }"
+                >{{ item.params.title }}</span>
+              </div>
+              <!-- 查看更多 -->
+              <div
+                v-if="item.params.more.enable"
+                class="more-content"
+                :style="{ color: item.style.moreTextColor }"
+              >
+                <span class="more-text">{{ item.params.more.text }}</span>
+                <span v-if="item.params.more.enableIcon" class="more-icon">
+                  <a-icon :component="Icon.arrowRight" />
+                </span>
+              </div>
+            </div>
+            <!-- 描述文字 -->
+            <div class="desc-content">
+              <span
+                :style="{ color: item.style.descTextColor, fontSize: `${item.params.descFontSize}px`, fontWeight: item.params.descFontWeight }"
+              >{{ item.params.desc }}</span>
+            </div>
+          </div>
+
           <!-- 操作工具栏 -->
           <div class="action-tools">
             <div class="tools-content">

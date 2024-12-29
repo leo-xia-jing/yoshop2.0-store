@@ -1184,6 +1184,152 @@
           </a-tab-pane>
         </a-tabs>
       </div>
+
+      <!-- 标题文本 -->
+      <div v-if="curItem.type == 'title'" class="editor-content">
+        <a-tabs>
+          <a-tab-pane key="1" tab="内容设置">
+            <div class="block-box">
+              <div class="block-title">标题内容</div>
+              <div class="block-item">
+                <span class="label">标题文字</span>
+                <a-input v-model="curItem.params.title" />
+              </div>
+              <div class="block-item">
+                <span class="label">标题大小</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.params.titleFontSize" :min="12" :max="18" />
+                  <span class="unit-text">
+                    <span>{{ curItem.params.titleFontSize }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">标题字体</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.titleFontWeight">
+                  <a-radio-button value="normal">常规</a-radio-button>
+                  <a-radio-button value="bold">加粗</a-radio-button>
+                </a-radio-group>
+              </div>
+            </div>
+            <div class="block-box">
+              <div class="block-title">描述内容</div>
+              <div class="block-item">
+                <span class="label">描述文字</span>
+                <a-input v-model="curItem.params.desc" />
+              </div>
+              <div class="block-item">
+                <span class="label">描述大小</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.params.descFontSize" :min="12" :max="16" />
+                  <span class="unit-text">
+                    <span>{{ curItem.params.descFontSize }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">描述字体</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.descFontWeight">
+                  <a-radio-button value="normal">常规</a-radio-button>
+                  <a-radio-button value="bold">加粗</a-radio-button>
+                </a-radio-group>
+              </div>
+            </div>
+            <div class="block-box">
+              <div class="block-title">查看更多</div>
+              <div class="block-item">
+                <span class="label">是否显示</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.more.enable">
+                  <a-radio-button :value="true">显示</a-radio-button>
+                  <a-radio-button :value="false">隐藏</a-radio-button>
+                </a-radio-group>
+              </div>
+              <div class="block-item">
+                <span class="label">文字内容</span>
+                <a-input v-model="curItem.params.more.text" />
+              </div>
+              <div class="block-item">
+                <span class="label">箭头图标</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.params.more.enableIcon">
+                  <a-radio-button :value="true">显示</a-radio-button>
+                  <a-radio-button :value="false">隐藏</a-radio-button>
+                </a-radio-group>
+              </div>
+              <div class="block-item">
+                <span class="label">跳转链接</span>
+                <SLink v-model="curItem.params.more.link" textAlign="right" />
+              </div>
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="样式设置">
+            <div class="block-box">
+              <div class="block-title">内容样式</div>
+              <!-- <div class="block-item">
+                <span class="label">显示位置</span>
+                <a-radio-group buttonStyle="solid" v-model="curItem.style.textAlign">
+                  <a-radio-button value="left">居左</a-radio-button>
+                  <a-radio-button value="center">居中</a-radio-button>
+                </a-radio-group>
+              </div>-->
+              <div class="block-item">
+                <span class="label">标题文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'titleTextColor', '#323233')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.titleTextColor" defaultColor="#323233" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">描述文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'descTextColor', '#969799')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.descTextColor" defaultColor="#969799" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">更多文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'moreTextColor', '#969799')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.moreTextColor" defaultColor="#969799" />
+                </div>
+              </div>
+            </div>
+            <div class="block-box">
+              <div class="block-title">组件样式</div>
+              <div class="block-item">
+                <span class="label">上下边距</span>
+                <div class="item-slider">
+                  <a-slider v-model="curItem.style.paddingY" :min="0" :max="50" />
+                  <span class="unit-text">
+                    <span>{{ curItem.style.paddingY }}</span>
+                    <span>像素</span>
+                  </span>
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">背景颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'background', '#fff')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.background" defaultColor="#fff" />
+                </div>
+              </div>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
+      </div>
     </template>
   </div>
 </template>

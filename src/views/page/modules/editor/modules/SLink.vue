@@ -1,9 +1,9 @@
 <template>
-  <div class="select-link" :style="{ fontSize: fontSize + 'px' }">
+  <div class="select-link" :style="{ fontSize: fontSize + 'px', textAlign  }">
     <template v-if="!sLink">
       <a class="choice" @click="handleSelectLink()">选择链接</a>
     </template>
-    <div class="flex" v-else>
+    <div v-else>
       <span class="link-title">{{ sLink.title }}</span>
       <a class="choice ml-10" @click="handleSelectLink()">修改</a>
     </div>
@@ -30,6 +30,8 @@ export default {
     value: PropTypes.object.def({}),
     // 文字大小
     fontSize: PropTypes.integer.def(12),
+    // 显示位置
+    textAlign: PropTypes.string.def('left'), // left居左 right居右
   },
   data () {
     return {
@@ -85,7 +87,7 @@ export default {
 }
 .choice,
 .link-title {
-  display: block;
+  // display: block;
   white-space: nowrap;
 }
 </style>
