@@ -703,6 +703,26 @@
                 </div>
               </div>
               <div class="block-item">
+                <span class="label">购物车背景颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'btnCartColor', '#27c29a')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.btnCartColor" defaultColor="#27c29a" />
+                </div>
+              </div>
+              <div class="block-item">
+                <span class="label">购物车文字颜色</span>
+                <div class="item-colorPicker">
+                  <span
+                    class="rest-color"
+                    @click="onEditorResetColor(curItem.style, 'btnFontColor', '#ffffff')"
+                  >重置</span>
+                  <colorPicker v-model="curItem.style.btnFontColor" defaultColor="#ffffff" />
+                </div>
+              </div>
+              <div class="block-item">
                 <span class="label">商品卖点颜色</span>
                 <div class="item-colorPicker">
                   <span
@@ -712,6 +732,26 @@
                   <colorPicker v-model="curItem.style.sellingColor" defaultColor="#e3771f" />
                 </div>
               </div>
+              <template v-if="inArray('cartBtn', curItem.style.show)">
+                <div class="block-item">
+                  <span class="label">购物车按钮样式</span>
+                  <a-radio-group buttonStyle="solid" v-model="curItem.style.btnCartStyle">
+                    <a-radio-button :value="1">样式1</a-radio-button>
+                    <a-radio-button :value="2">样式2</a-radio-button>
+                    <a-radio-button :value="3">样式3</a-radio-button>
+                  </a-radio-group>
+                </div>
+                <div class="block-item">
+                  <span class="label">购物车按钮颜色</span>
+                  <div class="item-colorPicker">
+                    <span
+                      class="rest-color"
+                      @click="onEditorResetColor(curItem.style, 'btnCartColor', '#27c29a')"
+                    >重置</span>
+                    <colorPicker v-model="curItem.style.btnCartColor" defaultColor="#27c29a" />
+                  </div>
+                </div>
+              </template>
             </div>
             <div class="block-box">
               <div class="block-title">卡片样式</div>
@@ -1465,6 +1505,7 @@ import Vue from 'vue'
 import vcolorpicker from 'vcolorpicker'
 import PropTypes from 'ant-design-vue/es/_util/vue-types'
 import draggable from 'vuedraggable'
+import { inArray } from '@/utils/util'
 import { Ueditor, SelectCategory } from '@/components'
 import { SImage, SArticleCate, SGoods, SLink, SHotZone, SCoupon } from './modules'
 
@@ -1494,6 +1535,9 @@ export default {
   },
   data () {
     return {}
+  },
+  beforeCreate () {
+    this.inArray = inArray
   },
   methods: {
 

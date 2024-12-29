@@ -301,11 +301,11 @@
                             v-show="inArray('cartBtn', item.style.show) && item.style.column < 3"
                             class="action"
                           >
-                            <div
-                              class="btn-cart"
-                              :style="{ background: item.style.btnCartColor, color: item.style.btnFontColor }"
-                            >
-                              <a-icon class="cart-icon" :component="PageIcon.plus" />
+                            <div class="btn-cart" :style="{ color: item.style.btnCartColor }">
+                              <a-icon
+                                class="cart-icon"
+                                :component="PageIcon[`jiagou${item.style.btnCartStyle}`]"
+                              />
                             </div>
                           </div>
                         </div>
