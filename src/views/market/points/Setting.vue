@@ -68,7 +68,7 @@
               v-decorator="['discount.discount_ratio', { rules: [{ required: true, message: '积分抵扣比例不能为空' }] }]"
             />
             <div class="form-item-help">
-              <small>例如：设置1个积分可抵扣0.1元，则10积分可抵扣1元，100积分可抵扣10元</small>
+              <small>例：设置1个积分可抵扣0.1元，则10积分可抵扣1元，100积分可抵扣10元</small>
             </div>
           </a-form-item>
           <a-form-item label="最高可抵扣金额">
@@ -88,7 +88,7 @@
                 v-decorator="['discount.max_money_ratio', { rules: [{ required: true, message: '最高可抵扣金额不能为空' }] }]"
               />
               <div class="form-item-help">
-                <small>例如：设置最高可抵扣10%，订单金额100元，此时用户可抵扣10元</small>
+                <small>例：设置最高可抵扣10%，订单金额100元，此时用户可抵扣10元</small>
               </div>
             </a-form-item>
           </a-form-item>

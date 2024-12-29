@@ -89,7 +89,7 @@ export const asyncRouterMap = [
                 component: () => import(/* webpackChunkName: "page" */ '@/views/page/Index'),
                 meta: { title: '页面设计', keepAlive: false, permission: ['/page/index'] },
                 // 访问其他页面时激活该菜单(router-link-active)
-                activePath: ['/page/create', '/page/update', '/page/copy']
+                activePath: ['/page/create', '/page/update']
               },
               {
                 path: '/page/create',
@@ -101,12 +101,6 @@ export const asyncRouterMap = [
                 path: '/page/update',
                 component: () => import(/* webpackChunkName: "page" */ '@/views/page/Update'),
                 meta: { title: '编辑页面', keepAlive: false, permission: ['/page/update'] },
-                hidden: true
-              },
-              {
-                path: '/page/copy',
-                component: () => import(/* webpackChunkName: "page" */ '@/views/page/Update'),
-                meta: { title: '复制页面', keepAlive: false, permission: ['/page/copy'] },
                 hidden: true
               },
               {

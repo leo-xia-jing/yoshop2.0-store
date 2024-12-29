@@ -31,7 +31,6 @@
       <!-- 操作 -->
       <span class="actions" slot="action" slot-scope="item">
         <a v-if="$auth('/page/update')" @click="handleEdit(item)">编辑</a>
-        <a v-if="$auth('/page/copy')" @click="handleCopy(item)">复制</a>
         <a
           v-action:setHome
           v-if="item.page_type != PageTypeEnum.HOME.value"
@@ -118,11 +117,6 @@ export default {
     // 编辑页面
     handleEdit (item) {
       this.$router.push({ path: './update', query: { pageId: item.page_id } })
-    },
-
-    // 复制页面
-    handleCopy (item) {
-      this.$router.push({ path: './copy', query: { pageId: item.page_id } })
     },
 
     // 设置为首页

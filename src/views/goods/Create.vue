@@ -242,7 +242,7 @@
               label="主图视频"
               :labelCol="labelCol"
               :wrapperCol="wrapperCol"
-              extra="建议视频宽高比19:9，建议时长8-45秒"
+              extra="建议视频宽高比16:9，建议时长8-45秒"
             >
               <SelectVideo :multiple="false" v-decorator="['video_id']" />
             </a-form-item>
