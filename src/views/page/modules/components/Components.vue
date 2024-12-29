@@ -152,10 +152,17 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 // 组件库
 .components {
   width: 310px;
   background: #f8f9fa;
+  height: 100%;
+  overflow-y: auto;
 
   /deep/.ant-collapse-header {
     padding: 14px 16px;

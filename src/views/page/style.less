@@ -6,9 +6,20 @@
 
 // 页面设计工作区
 .work-content {
+  min-width: 1300px;
+  height: calc(100vh - 156px); // 80px + 60px + 16px
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+
+// 手机预览
+.preview-wrap {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0 10px;
+  padding-bottom: 60px;
 }
 
 // 底部操作栏

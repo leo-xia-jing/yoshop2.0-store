@@ -1,12 +1,17 @@
 @import "~ant-design-vue/es/style/themes/default.less";
 
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 // 编辑器
 .editor {
   min-width: 370px;
-  min-height: 648px;
-  padding: 10px 15px;
+  padding: 10px 15px 20px 15px;
   background: #f8f9fa;
-  // overflow: hidden;
+  height: 100%;
+  overflow-y: auto;
 
   // 标题
   &-title {

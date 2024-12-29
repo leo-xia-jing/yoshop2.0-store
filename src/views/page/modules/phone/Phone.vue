@@ -1,5 +1,5 @@
 <template>
-  <div class="phone-content">
+  <div ref="phone-content" class="phone-content">
     <!-- 顶部导航栏 -->
     <div
       class="phone-top optional"
@@ -461,9 +461,22 @@
             </p>
           </div>
 
-          <!-- 删除操作 -->
-          <div class="btn-edit-del">
-            <div class="btn-del" @click="handleDeleleItem(index)">删除</div>
+          <!-- 操作工具栏 -->
+          <div class="action-tools">
+            <div class="tools-content">
+              <div class="tools-item" v-for="(itm, idx) in actionTools(item, index)" :key="idx">
+                <a-tooltip placement="right" :getPopupContainer="() => $refs['phone-content']">
+                  <span class="tooltip-text" slot="title">{{ itm.title }}</span>
+                  <div
+                    class="item-btn"
+                    :class="{ disabled: itm.disabled }"
+                    @click.stop="handleActionToolItem(itm, index)"
+                  >
+                    <a-icon class="tools-icon" :type="itm.type" />
+                  </div>
+                </a-tooltip>
+              </div>
+            </div>
           </div>
         </div>
       </draggable>
@@ -499,12 +512,47 @@ export default {
       undragList
     }
   },
+  computed: {
+
+  },
   beforeCreate () {
     this.Icon = Icon
     this.PageIcon = PageIcon
     this.inArray = inArray
   },
   methods: {
+
+    /**
+     * 操作工具栏
+     * @param item
+     * @param index
+     */
+    actionTools (item, index) {
+      const { data: { items } } = this
+      const isUndrag = inArray(item.type, undragList)
+      return [
+        {
+          title: '上移',
+          type: 'up',
+          disabled: isUndrag || index == 0 || inArray(items[index - 1].type, undragList)
+        },
+        {
+          title: '下移',
+          type: 'down',
+          disabled: isUndrag || items.length <= index + 1 || inArray(items[index + 1].type, undragList)
+        },
+        {
+          title: '复制',
+          type: 'copy',
+          disabled: false
+        },
+        {
+          title: '删除',
+          type: 'delete',
+          disabled: false
+        }
+      ]
+    },
 
     /**
      * 拖动diy元素更新当前索引
@@ -522,12 +570,9 @@ export default {
       this.$emit('onEditer', index)
     },
 
-    /**
-     * 删除当前选中的Diy元素
-     * @param index
-     */
-    handleDeleleItem (index) {
-      this.$emit('onDeleleItem', index)
+    // 操作工具栏点击事件
+    handleActionToolItem (acItem, index) {
+      !acItem.disabled && this.$emit('onActionItem', acItem.type, index)
     },
 
     // 渲染组件外层容器的样式

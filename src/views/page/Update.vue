@@ -6,13 +6,15 @@
         <!-- 组件库 -->
         <Components @handleClickItem="onAddItem" />
         <!--手机容器-->
-        <Phone
-          v-if="!isLoading"
-          :data="data"
-          :selectedIndex="selectedIndex"
-          @onEditer="onEditer"
-          @onDeleleItem="onDeleleItem"
-        />
+        <div class="preview-wrap">
+          <Phone
+            v-if="!isLoading"
+            :data="data"
+            :selectedIndex="selectedIndex"
+            @onEditer="onEditer"
+            @onActionItem="onActionItem"
+          />
+        </div>
         <!-- 编辑器 -->
         <Editor
           v-if="!isLoading"
@@ -41,6 +43,22 @@ import * as Api from '@/api/page'
 import { SelectImage } from '@/components'
 import { Components, Phone, Editor } from './modules'
 
+// 页面类型
+const pageTypes = {
+  '/page/create': {
+    name: 'create',
+    apiMothod: Api.add
+  },
+  '/page/update': {
+    name: 'update',
+    apiMothod: Api.edit
+  },
+  '/page/copy': {
+    name: 'copy',
+    apiMothod: Api.add
+  }
+}
+
 export default {
   components: {
     SelectImage,
@@ -51,6 +69,8 @@ export default {
   },
   data () {
     return {
+      // 页面类型
+      pageType: pageTypes[this.$route.path],
       // loading状态
       isLoading: false,
       // 页面装修默认数据
@@ -81,10 +101,20 @@ export default {
         // 获取默认数据
         this.getDefaultData(),
         // 获取当前页面数据
-        this.getPageData()
-      ]).then(() => {
-        this.isLoading = false
-      })
+        this.pageType.name != 'create' && this.getPageData()
+      ])
+        .then(() => {
+          // 生成默认的data
+          this.pageType.name == 'create' && this.createNewData()
+          this.isLoading = false
+        })
+    },
+
+    // 生成默认的data
+    createNewData () {
+      const { defaultData, data } = this
+      data.page = defaultData.page
+      data.items = []
     },
 
     // 获取默认数据
@@ -158,6 +188,61 @@ export default {
         : data.items[index]
     },
 
+    // 操作工具栏事件
+    onActionItem (type, index) {
+      const methods = { 'up': 'onUpItem', 'down': 'onDownItem', 'copy': 'onCopyItem', 'delete': 'onDeleleItem' }
+      typeof this[methods[type]] === 'function' && this[methods[type]](index)
+    },
+
+    /**
+     * 上移diy元素
+     * @param index
+     */
+    onUpItem (index) {
+      const { data: { items } } = this
+      const newIndex = index - 1
+      // 判断已经最顶
+      if (index == 0) {
+        return
+      }
+      const item = items.splice(index, 1)[0]
+      items.splice(newIndex, 0, item)
+      if (this.selectedIndex == index) {
+        this.selectedIndex = newIndex
+      }
+    },
+
+    /**
+     * 下移diy元素
+     * @param index
+     */
+    onDownItem (index) {
+      const { data: { items } } = this
+      const newIndex = index + 1
+      // 判断已经最底
+      if (items.length <= newIndex) {
+        return
+      }
+      const item = items.splice(index, 1)[0]
+      items.splice(newIndex, 0, item)
+      if (this.selectedIndex == index) {
+        this.selectedIndex = newIndex
+      }
+    },
+
+    /**
+     * 复制diy元素
+     * @param index
+     */
+    onCopyItem (index) {
+      const { data: { items } } = this
+      if (!this.onCheckAddItem(items[index].type)) {
+        return false
+      }
+      const newItem = _.cloneDeep(items[index])
+      items.splice(index, 0, newItem)
+    },
+
     /**
      * 删除diy元素
      * @param index
@@ -181,11 +266,13 @@ export default {
     // 提交到后端api
     onFormSubmit () {
       this.isLoading = true
-      const { pageId, data, $message } = this
-      Api.edit({ pageId, form: data })
+      const { pageId, data, $message, pageType } = this
+      pageType.apiMothod({ pageId, form: data })
         .then(result => {
           // 显示成功
           $message.success(result.message, 1.5)
+          // 跳转到列表页
+          setTimeout(() => this.$router.push('./index'), 1500)
         })
         .finally(() => this.isLoading = false)
     }
